@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Banco {
 
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
-	private static final String banco = "dbproduto";
+	private static final String banco = "DBreviewFilmes";
 	private static final String conexao = "jdbc:mysql://localhost:3306/" + banco +"?useTimezone=true&serverTimezone=UTC&useSSL=false";
 	private static final String user = "root";
 	private static final String password = "";

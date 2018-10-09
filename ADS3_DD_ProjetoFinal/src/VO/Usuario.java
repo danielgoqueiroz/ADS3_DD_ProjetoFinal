@@ -1,15 +1,20 @@
 package VO;
 
 public class Usuario {
-
+	int idusuario;
 	String nome;
 	String nickname;
 	String email;
 	String telefone;
 	String senha;
 	
-	public Usuario(String nome, String nickname, String email, String telefone, String senha) {
+	
+
+
+
+	public Usuario(int idusuario, String nome, String nickname, String email, String telefone, String senha) {
 		super();
+		this.idusuario = idusuario;
 		this.nome = nome;
 		this.nickname = nickname;
 		this.email = email;
@@ -18,10 +23,23 @@ public class Usuario {
 	}
 	
 	
-
 	public Usuario() {
 		super();
 	}
+
+
+	public int getIdusuario() {
+		return idusuario;
+	}
+
+
+
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
+	}
+
+
+
 
 
 
@@ -64,7 +82,11 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
+	@Override
+	public String toString(){
+		return this.getNome() + " " + this.getTelefone();
+	};
 	
 	
 }
