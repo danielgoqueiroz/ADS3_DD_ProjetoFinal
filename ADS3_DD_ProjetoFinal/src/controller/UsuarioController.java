@@ -15,11 +15,11 @@ public class UsuarioController {
 		if (validacao == "") {
 			if (usuario.getIdusuario() > 0) {
 				//ATUALIZAR
-				if (bo.atualizar(usuario)) {
-					validacao = "Usuário atualizado com sucesso";
-				} else {
-					validacao = "Erro au atualizar o usuário";
-				}
+//				if (bo.atualizar(usuario)) {
+//					validacao = "Usuário atualizado com sucesso";
+//				} else {
+//					validacao = "Erro au atualizar o usuário";
+//				}
 			
 			} else {
 				 if (bo.inserir(usuario)) {

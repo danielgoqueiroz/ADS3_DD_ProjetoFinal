@@ -7,64 +7,76 @@ import java.util.ArrayList;
 
 import VO.Usuario;
 
-public class UsuarioDAO extends BaseDAO {
+public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public String getColunasDelete() {
 		// TODO Auto-generated method stub
-		return "idusuario";
+		return " idusuario ";
 	}
 
 	@Override
 	public String getColunaPrimaria() {
 		// TODO Auto-generated method stub
-		return "idusuario";
+		return " idusuario ";
 	}
 
-	@Override
-	public String getValoresEntidadesUpdate(Object entidade) {
-		String clausulaSet = (" idusuario = ?, nickname = ? , email = ?, senha = ?");
-		return clausulaSet;
-	}
-
+	
 	@Override
 	public String getInterrogacoesInsert() {
 		// TODO Auto-generated method stub
-		return "?,?,?,?";
+		return " ?,?,?,?,? ";
 	}
 
 	@Override
 	public String getNomeTabela() {
 		// TODO Auto-generated method stub
-		return "USUARIO";
+		return " USUARIO ";
 	}
 	
 	@Override
 	public String getColunasInsert() {
-		// TODO Auto-generated method stub
-		return "idusuario , nickname, email, senha";
+		return " nome, nickname, email, telefone, senha ";
 	}
 
 
-	@Override
-	public Object construirObjetoConsultado(ResultSet resultado) throws SQLException {
+	
+	
+
+	public Usuario buscaUsuarioPorNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
+
 	@Override
-	public void setValoresAtributosInsert(Object entidade, PreparedStatement prepareStm) {
+	public String getValoresEntidadesUpdate(Usuario entidade) {
+		String clausulaSet = (" idusuario = ?, nickname = ? , email = ?, senha = ? ");
+		return clausulaSet;
+	}
+
+	@Override
+	public void setValoresAtributosInsert(Usuario entidade, PreparedStatement prepareStm) {
+		try {
+			prepareStm.setString(1, entidade.getNome() + "");
+			prepareStm.setString(2, entidade.getNickname() + "");
+			prepareStm.setString(3, entidade.getEmail() + "");
+			prepareStm.setString(4, entidade.getTelefone() + "");
+			prepareStm.setString(5, entidade.getSenha() + "");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void setValoresAtributosUpdate(Usuario entidade, PreparedStatement stmt) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setValoresAtributosUpdate(Object entidade, PreparedStatement stmt) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Usuario buscaUsuarioPorNome(String nome) {
+	public Usuario construirObjetoConsultado(ResultSet resultado) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
