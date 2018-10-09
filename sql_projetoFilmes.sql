@@ -12,6 +12,7 @@ create table usuario(
 );
 
 create table filme (
+	idfilme int not null auto_increment primary key,
 	titulo varchar(45),
 	ano int,
 	Genero varchar(45),
@@ -24,6 +25,7 @@ create table filme (
 );
 
 create table serie (
+	idserie int not null auto_increment primary key,
 	titulo varchar(45),
 	ano int,
 	Genero varchar(45),
