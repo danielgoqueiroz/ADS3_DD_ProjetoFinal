@@ -1,10 +1,11 @@
-package VO;
+package src.VO;
 
 public class Producao {
+	
 	String titulo;
 	int ano;
-	String[] Genero;
-	String Diretor;
+	Genero[] generos;
+	String diretor;
 	String[] atores;
 	String sinopse;
 	String Nota;
@@ -15,8 +16,8 @@ public class Producao {
 		super();
 		this.titulo = titulo;
 		this.ano = ano;
-		Genero = genero;
-		Diretor = diretor;
+		this.generos = generos;
+		diretor = diretor;
 		this.atores = atores;
 		this.sinopse = sinopse;
 		Nota = nota;
@@ -43,20 +44,20 @@ public class Producao {
 		this.ano = ano;
 	}
 
-	public String[] getGenero() {
-		return Genero;
+	public Genero[] getGenero() {
+		return generos;
 	}
 
-	public void setGenero(String[] genero) {
-		Genero = genero;
+	public void setGeneros(Genero[] generos) {
+		this.generos = generos;
 	}
 
 	public String getDiretor() {
-		return Diretor;
+		return diretor;
 	}
 
 	public void setDiretor(String diretor) {
-		Diretor = diretor;
+		this.diretor = diretor;
 	}
 
 	public String[] getAtores() {

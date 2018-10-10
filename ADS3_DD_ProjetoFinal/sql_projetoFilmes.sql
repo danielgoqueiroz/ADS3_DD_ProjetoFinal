@@ -1,5 +1,6 @@
 create database DBreviewFilmes;
 
+drop database DBreviewFilmes;
 use DBreviewFilmes;
 
 create table usuario(
@@ -11,8 +12,11 @@ create table usuario(
 	senha varchar(45)
 );
 
+
+
 create table filme (
-	titulo varchar(45),
+	idfilme int not null auto_increment primary key,
+    titulo varchar(45),
 	ano int,
 	Genero varchar(45),
 	Diretor varchar(45),
@@ -23,8 +27,23 @@ create table filme (
 	
 );
 
+create table assistidos (
+    idusuario int,
+    idfilme int,
+    primary key(idfilme, idusuario)
+);
+
+create table artista (
+	idartista int not null auto_increment primary key,
+    idartistafuncao int,
+    nome varchar(45),
+	dt_nascimento date,
+    foreign key (idartistafuncao) references artistaFuncao (idartistafuncao)
+);
+
 create table serie (
-	titulo varchar(45),
+	idserie int not null auto_increment primary key,
+    titulo varchar(45),
 	ano int,
 	Genero varchar(45),
 	Diretor varchar(45),
@@ -35,4 +54,14 @@ create table serie (
 	captulo int
 );
 
+
+create table artistaFuncao (
+	idartistafuncao int not null auto_increment primary key,
+    descricao varchar(45)
+);
+
+drop table artistaFuncao;
+show tables;
+
+select * from artistaFuncao;
 

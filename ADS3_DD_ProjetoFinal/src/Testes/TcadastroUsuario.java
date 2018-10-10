@@ -1,12 +1,11 @@
-package view;
+package src.Testes;
 
 import java.sql.SQLException;
 
-import BO.UsuarioBO;
-import VO.Usuario;
-import controller.UsuarioController;
+import src.VO.Usuario;
+import src.controller.UsuarioController;
 
-public class Teste {
+public class TcadastroUsuario {
 
 	public static void main(String[] args) throws SQLException {
 		Usuario user1 = new Usuario();

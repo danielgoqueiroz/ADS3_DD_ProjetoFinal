@@ -1,17 +1,24 @@
-package VO;
+package src.VO;
 
 public class Filme extends Producao{
+	int idFilme;
 	int Duracao;
+	Genero[] generos;
 
+	
+	
+	
 	public Filme(String titulo, int ano, String[] genero, String diretor, String[] atores, String sinopse, String nota,
-			int duracao) {
+			int idFilme, int duracao, src.VO.Genero[] generos) {
 		super(titulo, ano, genero, diretor, atores, sinopse, nota);
+		this.idFilme = idFilme;
 		Duracao = duracao;
+		this.generos = generos;
 	}
 
-	public Filme(String titulo, int ano, String[] genero, String diretor, String[] atores, String sinopse,
-			String nota) {
-		super(titulo, ano, genero, diretor, atores, sinopse, nota);
+	
+	public Filme() {
+		super();
 	}
 
 	public int getDuracao() {
@@ -22,5 +29,16 @@ public class Filme extends Producao{
 		Duracao = duracao;
 	}
 
-	
+	public int getIdFilme() {
+		return idFilme;
+	}
+
+	public void setIdFilme(int idFilme) {
+		this.idFilme = idFilme;
+	}
+
+	public String toString(Filme filme) {
+		return filme.getTitulo() + "/" + filme.getAno();
+		
+	}
 }

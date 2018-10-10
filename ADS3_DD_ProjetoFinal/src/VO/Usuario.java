@@ -1,4 +1,4 @@
-package VO;
+package src.VO;
 
 public class Usuario {
 	int idusuario;

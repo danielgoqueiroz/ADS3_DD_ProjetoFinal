@@ -1,6 +1,7 @@
-package VO;
+package src.VO;
 
 public class Series extends Producao{
+	int idSerie;
 	int temporada;
 	int captulo;
 	

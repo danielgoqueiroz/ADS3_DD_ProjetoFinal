@@ -1,9 +1,9 @@
-package controller;
+package src.controller;
 
 import java.sql.SQLException;
 
-import BO.UsuarioBO;
-import VO.Usuario;
+import src.BO.UsuarioBO;
+import src.VO.Usuario;
 
 public class UsuarioController {
 

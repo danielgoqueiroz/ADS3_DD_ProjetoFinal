@@ -1,4 +1,4 @@
-package DAO;
+package src.DAO;
 
 public class SerieDAO {
 
