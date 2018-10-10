@@ -1,28 +1,27 @@
 package src.VO;
 
 public class Artista {
-	int idartista;
-	String nome;
-	String[] função;
-	String dt_nascimento;
+	private int idArtista;
+	private String nome;
+	private String[] funcao;
+	private String dtNascimento;
 	
-	public Artista(int idartista, String nome, String[] função, String dt_nascimento) {
+	public Artista(int idArtista, String nome, String[] funcao, String dtNascimento) {
 		super();
-		this.idartista = idartista;
+		this.idArtista = idArtista;
 		this.nome = nome;
-		this.função = função;
-		this.dt_nascimento = dt_nascimento;
+		this.funcao = funcao;
+		this.dtNascimento = dtNascimento;
 	}
 	public Artista() {
 		super();
 	}
 	
-	
-	public int getIdartista() {
-		return idartista;
+	public int getIdArtista() {
+		return idArtista;
 	}
-	public void setIdartista(int idartista) {
-		this.idartista = idartista;
+	public void setIdArtista(int idArtista) {
+		this.idArtista = idArtista;
 	}
 	public String getNome() {
 		return nome;
@@ -30,20 +29,17 @@ public class Artista {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String[] getFunção() {
-		return função;
+	public String[] getFuncao() {
+		return funcao;
 	}
-	public void setFunção(String[] função) {
-		this.função = função;
-	}
-	
-	public String getDt_nascimento() {
-		return dt_nascimento;
-	}
-	public void setDt_nascimento(String dt_nascimento) {
-		this.dt_nascimento = dt_nascimento;
+	public void setFunção(String[] funcao) {
+		this.funcao = funcao;
 	}
 	
-	
-	
+	public String getDtNascimento() {
+		return dtNascimento;
+	}
+	public void setDtNascimento(String dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
 }

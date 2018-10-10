@@ -15,6 +15,11 @@ public class Banco {
 	private static final String user = "root";
 	private static final String password = "";
 	
+	//oa^fmgQ+6B~O
+	//daniel648_db_ads3_dd_filme
+	//daniel648_ads3
+
+	
 	public static Connection getConnection(){
 		try {
 			Connection conn = null;

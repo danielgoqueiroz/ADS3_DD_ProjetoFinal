@@ -1,31 +1,27 @@
 package src.VO;
 
+import java.util.ArrayList;
+
 public class Producao {
 	
-	String titulo;
-	int ano;
-	Genero[] generos;
-	String diretor;
-	Artista[] artistas;
-	String sinopse;
-	String Nota;
-	private String[] atores;
+	private String titulo;
+	private int ano;
+	private Genero[] generos;
+	private String diretor;
+	private ArrayList<Artista> artistas;
+	private String sinopse;
+	private String nota;
 	
-
-	
-	public Producao(String titulo, int ano, String[] genero, String diretor, String[] atores, String sinopse,
-			String nota) {
-		super();
+	public Producao(String titulo, int ano, Genero[] generos, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
 		this.titulo = titulo;
 		this.ano = ano;
 		this.generos = generos;
-		diretor = diretor;
-		this.atores = atores;
+		this.diretor = diretor;
+		this.artistas = artistas;
 		this.sinopse = sinopse;
-		Nota = nota;
+		this.nota = nota;
 	}
-	
-	
+
 	public Producao() {
 		super();
 	}
@@ -62,12 +58,12 @@ public class Producao {
 		this.diretor = diretor;
 	}
 
-	public String[] getAtores() {
-		return atores;
+	public ArrayList<Artista> getArtistas() {
+		return artistas;
 	}
 
-	public void setAtores(String[] atores) {
-		this.atores = atores;
+	public void setArtistas(ArrayList<Artista> artistas) {
+		this.artistas = artistas;
 	}
 
 	public String getSinopse() {
@@ -79,14 +75,10 @@ public class Producao {
 	}
 
 	public String getNota() {
-		return Nota;
+		return nota;
 	}
 
 	public void setNota(String nota) {
-		Nota = nota;
-	}
-	
-	
-	
-	
+		this.nota = nota;
+	}	
 }

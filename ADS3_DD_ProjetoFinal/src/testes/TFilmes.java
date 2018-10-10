@@ -1,22 +1,20 @@
-package src.Testes;
+package src.testes;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import src.VO.Artista;
 import src.VO.Filme;
 import src.VO.Genero;
 import src.controller.FilmeController;
 
-public class Tfilmes {
+public class TFilmes {
 
 	public static void main(String[] args) throws SQLException {
 		
 		Filme filme = new Filme();
-		Artista art1 = new Artista();
-		art1.setNome("Daniel");
-		art1.setFunção(new String[] {"Ator", "Diretor"});
-		art1.setDt_nascimento("1990-02-06");
-		filme.setAtores(new String [] {"Daniel"});
+		ArrayList<Artista> artistas = criarArtistas();
+		filme.setArtistas(artistas);
 		filme.setTitulo("Teste");
 		filme.setAno(2018);
 		filme.setDiretor("EU");
@@ -28,13 +26,24 @@ public class Tfilmes {
 		
 		gen1.setDescricao("Comédia");
 		
-		
 		filme.setGeneros(generos);
-
 		
 		FilmeController controller = new FilmeController();
 		System.out.println(controller.salvar(filme));
+	}
 
+	private static ArrayList<Artista> criarArtistas() {
+		
+		ArrayList<Artista> artistas = new ArrayList<>();
+		
+		Artista art1 = new Artista();
+		art1.setNome("Daniel");
+		art1.setFunção(new String[] {"Ator", "Diretor"});
+		art1.setDtNascimento("1990-02-06");
+		
+		artistas.add(art1);
+		
+		return artistas;
 	}
 
 }

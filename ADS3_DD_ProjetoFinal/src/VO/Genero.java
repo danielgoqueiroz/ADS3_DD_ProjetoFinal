@@ -2,12 +2,12 @@ package src.VO;
 
 public class Genero {
 
-		int idgenero ;
-		String descricao;
+	private int idGenero;
+	private String descricao;
 		
 		public Genero(int idgenero, String descricao) {
 			super();
-			this.idgenero = idgenero;
+			this.idGenero = idgenero;
 			this.descricao = descricao;
 		}
 
@@ -15,12 +15,12 @@ public class Genero {
 			super();
 		}
 
-		public int getIdgenero() {
-			return idgenero;
+		public int getIdGenero() {
+			return idGenero;
 		}
 
-		public void setIdgenero(int idgenero) {
-			this.idgenero = idgenero;
+		public void setIdGenero(int idGenero) {
+			this.idGenero = idGenero;
 		}
 
 		public String getDescricao() {

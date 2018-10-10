@@ -24,7 +24,7 @@ public class UsuarioBO {
 	}
 
 	public boolean atualizar(Usuario usuario) throws SQLException {
-		boolean sucesso = dao.atualizar(usuario, usuario.getIdusuario());
+		boolean sucesso = dao.atualizar(usuario, usuario.getIdUsuario());
 		return sucesso;
 	}
 	
