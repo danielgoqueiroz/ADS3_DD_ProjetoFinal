@@ -2,8 +2,8 @@ package src.VO;
 
 public class Genero {
 
-		int idgenero ;
-		String descricao;
+	private int idgenero ;
+	private String descricao;
 		
 		public Genero(int idgenero, String descricao) {
 			super();

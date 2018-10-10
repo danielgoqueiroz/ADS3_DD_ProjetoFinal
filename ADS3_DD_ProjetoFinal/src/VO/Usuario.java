@@ -1,20 +1,15 @@
 package src.VO;
 
 public class Usuario {
-	int idusuario;
-	String nome;
-	String nickname;
-	String email;
-	String telefone;
-	String senha;
+	private int idUsuario;
+	private String nome;
+	private String nickname;
+	private String email;
+	private String telefone;
+	private String senha;
 	
-	
-
-
-
-	public Usuario(int idusuario, String nome, String nickname, String email, String telefone, String senha) {
-		super();
-		this.idusuario = idusuario;
+	public Usuario(int idUsuario, String nome, String nickname, String email, String telefone, String senha) {
+		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.nickname = nickname;
 		this.email = email;
@@ -28,14 +23,14 @@ public class Usuario {
 	}
 
 
-	public int getIdusuario() {
-		return idusuario;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 
 
 
-	public void setIdusuario(int idusuario) {
-		this.idusuario = idusuario;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 

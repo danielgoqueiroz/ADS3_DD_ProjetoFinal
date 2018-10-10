@@ -2,28 +2,24 @@ package src.VO;
 
 public class Producao {
 	
-	String titulo;
-	int ano;
-	Genero[] generos;
-	String diretor;
-	String[] atores;
-	String sinopse;
-	String Nota;
-
+	private String titulo;
+	private int ano;
+	private Genero[] generos;
+	private String diretor;
+	private Artista[] artistas;
+	private String sinopse;
+	private String nota;
 	
-	public Producao(String titulo, int ano, String[] genero, String diretor, String[] atores, String sinopse,
-			String nota) {
-		super();
+	public Producao(String titulo, int ano, Genero[] generos, String diretor, Artista[] artistas, String sinopse,String nota) {
 		this.titulo = titulo;
 		this.ano = ano;
 		this.generos = generos;
-		diretor = diretor;
-		this.atores = atores;
+		this.diretor = diretor;
+		this.artistas = artistas;
 		this.sinopse = sinopse;
-		Nota = nota;
+		this.nota = nota;
 	}
-	
-	
+
 	public Producao() {
 		super();
 	}
@@ -60,12 +56,12 @@ public class Producao {
 		this.diretor = diretor;
 	}
 
-	public String[] getAtores() {
-		return atores;
+	public Artista[] getAtores() {
+		return artistas;
 	}
 
-	public void setAtores(String[] atores) {
-		this.atores = atores;
+	public void setAtores(Artista[] artistas) {
+		this.artistas = artistas;
 	}
 
 	public String getSinopse() {
@@ -77,11 +73,11 @@ public class Producao {
 	}
 
 	public String getNota() {
-		return Nota;
+		return nota;
 	}
 
 	public void setNota(String nota) {
-		Nota = nota;
+		nota = nota;
 	}
 	
 	
