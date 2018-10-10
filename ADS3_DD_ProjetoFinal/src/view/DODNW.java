@@ -4,13 +4,14 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.sun.glass.ui.Screen;
 
 public class DODNW {
 
 	private JFrame frame;
-	
+	JPanel contentPane;
 
 	/**
 	 * Launch the application.

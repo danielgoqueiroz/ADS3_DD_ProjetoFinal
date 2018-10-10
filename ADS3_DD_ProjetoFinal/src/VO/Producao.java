@@ -6,9 +6,11 @@ public class Producao {
 	int ano;
 	Genero[] generos;
 	String diretor;
-	String[] atores;
+	Artista[] artistas;
 	String sinopse;
 	String Nota;
+	private String[] atores;
+	
 
 	
 	public Producao(String titulo, int ano, String[] genero, String diretor, String[] atores, String sinopse,

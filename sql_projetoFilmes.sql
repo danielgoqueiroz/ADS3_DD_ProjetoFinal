@@ -38,5 +38,5 @@ create table serie (
 );
 
 
-select * from usuario;
+select * from filme;
 
