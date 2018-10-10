@@ -63,5 +63,5 @@ create table artistaFuncao (
 drop table artistaFuncao;
 show tables;
 
-select * from artistaFuncao;
+select * from filme;
 

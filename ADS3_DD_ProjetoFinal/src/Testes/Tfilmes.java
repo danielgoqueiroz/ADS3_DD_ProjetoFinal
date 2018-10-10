@@ -25,13 +25,12 @@ public class Tfilmes {
 		filme.setSinopse("Um filme muito louco que está sendo testado");
 		filme.setNota("5");
 		Genero gen1 = new Genero();
-		
-
+		Genero[] generos = {gen1};
 		
 		gen1.setDescricao("Comédia");
 		
 		
-		filme.setGeneros();
+		filme.setGeneros(generos);
 
 		
 		FilmeController controller = new FilmeController();
