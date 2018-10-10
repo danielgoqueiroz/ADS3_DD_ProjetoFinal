@@ -2,7 +2,6 @@ package src.Testes;
 
 import java.sql.SQLException;
 
-import Generos;
 import src.VO.Artista;
 import src.VO.Filme;
 import src.VO.Genero;
