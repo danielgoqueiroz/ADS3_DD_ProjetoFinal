@@ -31,7 +31,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 	@Override
 	public String getNomeTabela() {
 		// TODO Auto-generated method stub
-		return " FILME ";
+		return " filme ";
 	}
 	
 	@Override

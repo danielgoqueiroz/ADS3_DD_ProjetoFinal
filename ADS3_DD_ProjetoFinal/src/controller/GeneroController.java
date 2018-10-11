@@ -1,5 +1,37 @@
 package src.controller;
 
+import src.BO.GeneroBO;
+import src.VO.Genero;
+
 public class GeneroController {
+
+	GeneroBO bo = new GeneroBO();
+	
+	public String salvar(Genero genero) {
+		String validacao = validarGenero(genero);
+
+		if (validacao == "") {
+			if (genero.getIdGenero() > 0) {
+				//ATUALIZAR
+				//				if (bo.atualizar(usuario)) {
+				//					validacao = "Usuário atualizado com sucesso";
+				//				} else {
+				//					validacao = "Erro au atualizar o usuário";
+				//				}
+			} else {
+				if (bo.inserir(genero) == 0) {
+					validacao = "Usuário cadastrado com sucesso";
+				} else {
+					validacao = "Erro ao cadastrar usuário";
+				}
+			}
+		}
+		return validacao;
+	}
+
+	private String validarGenero(Genero genero) {
+		// TODO Auto-generated method stub
+		return "";
+	}
 
 }

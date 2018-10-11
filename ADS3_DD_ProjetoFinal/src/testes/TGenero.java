@@ -1,7 +1,5 @@
 package src.testes;
 
-import com.sun.javafx.image.impl.General;
-
 import src.VO.Genero;
 import src.controller.GeneroController;
 
@@ -9,10 +7,12 @@ public class TGenero {
 
 	public static void main(String[] args) {
 		
-//		Genero gen = new General();
-//		GeneroController controller = new GeneroController();
-//		
-//		gen.setDescricao("Terror");
+		Genero gen = new Genero();
+		GeneroController controller = new GeneroController();
+		
+		gen.setDescricao("Terror");
+		System.out.println(controller.salvar(gen) + "");
+		
 	}
 
 }

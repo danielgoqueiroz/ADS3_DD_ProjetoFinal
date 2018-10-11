@@ -54,6 +54,10 @@ create table serie (
 	captulo int
 );
 
+create table genero (
+	idgenero int not null auto_increment primary key,
+	descricao varchar(45)
+);
 
 create table artistaFuncao (
 	idartistafuncao int not null auto_increment primary key,
