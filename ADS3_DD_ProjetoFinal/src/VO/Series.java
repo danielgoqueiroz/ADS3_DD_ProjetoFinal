@@ -7,6 +7,11 @@ public class Series extends Producao{
 	private int temporada;
 	private int capitulo;
 	
+
+	public Series() {
+		
+	}	
+	
 	public int getIdSerie() {
 		return idSerie;
 	}
@@ -36,5 +41,6 @@ public class Series extends Producao{
 		this.idSerie=idSerie;
 		this.temporada=temporada;
 		this.capitulo=capitulo;
-	}	
+	}
+		
 }
