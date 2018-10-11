@@ -21,6 +21,7 @@ public class TFilmes {
 		filme.setDuracao(60);
 		filme.setSinopse("Um filme muito louco que está sendo testado");
 		filme.setNota("5");
+		
 		Genero gen1 = new Genero();
 		Genero[] generos = {gen1};
 		
