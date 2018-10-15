@@ -32,7 +32,7 @@ public class UsuarioController {
 	}
 
 	private String validarFuncioanrio(Usuario usuario) {
-
+		
 		return "";
 	}
 }

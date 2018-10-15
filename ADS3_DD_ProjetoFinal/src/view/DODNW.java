@@ -1,20 +1,20 @@
 package src.view;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import com.sun.glass.ui.Screen;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class DODNW {
+public class DODNW extends JFrame {
 
-	private JFrame frame;
-	JPanel contentPane;
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -23,8 +23,8 @@ public class DODNW {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DODNW window = new DODNW();
-					window.frame.setVisible(true);
+					DODNW frame = new DODNW();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -33,24 +33,32 @@ public class DODNW {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public DODNW() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		
-		frame.setBounds(100, 100, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 754, 613);
 		
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
+		
+		JMenu mnUsuario = new JMenu("Usu\u00E1rio");
+		menuBar.add(mnUsuario);
+		
+		JMenuItem mntmInserir = new JMenuItem("Inserir");
+		mntmInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				contentPane = new CadastroUsuarioPanel();
+				setContentPane(contentPane);
+				revalidate();
+				
+			}
+		});
+		mnUsuario.add(mntmInserir);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
 	}
 
 }
