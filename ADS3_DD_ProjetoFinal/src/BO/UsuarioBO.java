@@ -39,4 +39,14 @@ public class UsuarioBO {
 		UsuarioDAO dao = new UsuarioDAO();
 		return dao.excluir(idUsuario);
 	}
+
+	public Usuario verificaNickName(String nick) {
+		UsuarioDAO dao = new UsuarioDAO();
+		return dao.buscaUsuarioPorNick(nick);
+	}
+
+	public Usuario realizarLogin(Usuario usuario) {
+		UsuarioDAO dao = new UsuarioDAO();
+		return dao.realizarLogin(usuario);
+	}
 }

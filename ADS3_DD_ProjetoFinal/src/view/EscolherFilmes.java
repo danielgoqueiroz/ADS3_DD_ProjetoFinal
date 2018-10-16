@@ -2,12 +2,12 @@ package src.view;
 
 import javax.swing.JPanel;
 
-public class LoginPanel extends JPanel {
+public class EscolherFilmes extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public LoginPanel() {
+	public EscolherFilmes() {
 
 	}
 

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import javafx.scene.layout.Border;
 import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class CadastroUsuarioPanel extends JPanel {
+public class CadastrarUsuarioPanel extends JPanel {
 	private JTextField textNome;
 	private JTextField textEmail;
 	private JTextField textNick;
@@ -43,7 +44,7 @@ public class CadastroUsuarioPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CadastroUsuarioPanel() {
+	public CadastrarUsuarioPanel() {
 		
 		textNome = new JTextField();
 		textNome.setColumns(10);
@@ -52,6 +53,8 @@ public class CadastroUsuarioPanel extends JPanel {
 		textEmail.setColumns(10);
 		
 		textNick = new JTextField();
+		textNick.setToolTipText("");
+		
 		textNick.setColumns(10);
 		
 		textTelefone = new JTextField();
@@ -61,25 +64,6 @@ public class CadastroUsuarioPanel extends JPanel {
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JButton btnNewButton = new JButton("Salvar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Usuario usuario = new Usuario();
-				usuario.setNome(textNome.getText());
-				usuario.setEmail(textEmail.getText());
-				usuario.setNickname(textNick.getText());
-				usuario.setSenha(password.getPassword() + "");
-				usuario.setTelefone(textTelefone.getText());
-				
-				UsuarioController controle = new UsuarioController();
-				try {
-					controle.salvar(usuario);
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage() + "");
-					
-				}
-			
-			}
-		});
 		
 		
 		lblEmail = new JLabel("Email");
@@ -100,18 +84,17 @@ public class CadastroUsuarioPanel extends JPanel {
 		passwordConfirmacao.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if (!(passwordConfirmacao.equals(password))) {
-					passwordConfirmacao.setBackground(Color.RED);
-				}
-				
-				if (passwordConfirmacao.equals(password)) {
-					passwordConfirmacao.setBackground(Color.white);
-				} 
+				if (verificaCampoSenha().equals("")) {
+					JOptionPane.showMessageDialog(null, "Senhas não conferem.");
+				};
 			}
 		});
 		
 		lblConfirmacaosenha = new JLabel("Confirmacao da Senha");
 		lblConfirmacaosenha.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		JLabel lblinfo = new JLabel("info");
+		lblinfo.setHorizontalAlignment(SwingConstants.RIGHT);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -125,16 +108,16 @@ public class CadastroUsuarioPanel extends JPanel {
 						.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblTelefone, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(textTelefone, Alignment.LEADING)
-						.addComponent(passwordConfirmacao, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(password)
-							.addComponent(textNick)
-							.addComponent(textEmail)
-							.addComponent(textNome, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnNewButton, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(191, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(textTelefone)
+						.addComponent(passwordConfirmacao, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+						.addComponent(password)
+						.addComponent(textNick)
+						.addComponent(textEmail)
+						.addComponent(textNome, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(60, Short.MAX_VALUE))
+				.addComponent(lblinfo, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -165,9 +148,86 @@ public class CadastroUsuarioPanel extends JPanel {
 						.addComponent(lblTelefone))
 					.addGap(90)
 					.addComponent(btnNewButton)
-					.addContainerGap(93, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+					.addComponent(lblinfo))
 		);
 		setLayout(groupLayout);
 
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Usuario usuario = new Usuario();
+				
+				usuario.setNome(textNome.getText());
+				usuario.setEmail(textEmail.getText());
+				usuario.setNickname(textNick.getText());
+				String senha = verificaCampoSenha();
+				if (senha.equals("")) {
+					JOptionPane.showMessageDialog(null, "Senhas não conferem.");
+				} else {
+					usuario.setSenha(senha);
+
+				}
+				usuario.setTelefone(textTelefone.getText());
+				
+				UsuarioController controle = new UsuarioController();
+				
+				try {
+					JOptionPane.showMessageDialog(null, controle.salvar(usuario));
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage() + "");
+					
+				}
+			
+			}
+
+			
+		});
+		
+		textNick.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				UsuarioController controller = new UsuarioController();
+				Usuario usuario = controller.verificaNickUsuario(textNick.getText()+"");
+				
+				if (usuario != null) {
+					textNick.setForeground(Color.RED);
+					lblinfo.setText("Usuário já cadastrado.");
+//					textNome.setText(usuario.getNome());
+//					textTelefone.setText(usuario.getTelefone());
+//					textEmail.setText(usuario.getEmail());
+//					textNick.setSelectedTextColor(Color.red);
+				} else {
+					
+				}
+			}
+		});
+		
+		
+	}
+	
+	private String verificaCampoSenha() {
+		char[] senhaChar = password.getPassword(); 
+		char[] senha2Char = passwordConfirmacao.getPassword(); 
+		String senhaVerificada = "";
+		String senha = "";
+		String senha2 = "";
+		
+		for (int i = 0; i < senhaChar.length; i ++ ) {
+			senha += senhaChar[i];
+		}
+		
+		
+		for (int i = 0; i < senha2Char.length; i ++ ) {
+			senha2 += senha2Char[i];
+		}
+		
+		if (senha.equals(senha2)) {
+			senhaVerificada = senha;
+		} else {
+			senhaVerificada = "";
+		}
+		
+		return senhaVerificada;
+		
 	}
 }

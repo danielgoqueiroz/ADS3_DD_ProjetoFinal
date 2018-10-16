@@ -80,7 +80,7 @@ public class Usuario {
 
 	@Override
 	public String toString(){
-		return this.getNome() + " " + this.getTelefone();
+		return ("Id " +this.getIdUsuario() +" Nickname: " + this.getNickname() + "\nE-mail: " +this.getEmail());
 	};
 	
 	
