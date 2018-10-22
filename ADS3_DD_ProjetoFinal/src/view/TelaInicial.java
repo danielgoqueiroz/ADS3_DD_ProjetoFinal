@@ -104,7 +104,7 @@ public class TelaInicial extends JFrame {
 		setContentPane(contentPane);
 		revalidate();
 		
-		
+		menuBar.setVisible(false);
 		
 	}
 	

@@ -72,7 +72,8 @@ public class Login extends JPanel {
 				usuarioLogin = controle.realizaLogin(usuario);
 				
 				if (usuarioLogin.getIdUsuario() > 0) {
-					JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");	
+					JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");
+					
 				}
 				
 				
