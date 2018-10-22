@@ -65,22 +65,36 @@ public class LoginFrame extends JFrame {
 		);
 		
 		JLabel label = new JLabel("Senha");
+		label.setBounds(44, 109, 89, 14);
+		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		password = new JPasswordField();
+		password.setBounds(145, 106, 186, 20);
 		
 		textUsuario = new JTextField();
+		textUsuario.setBounds(145, 80, 186, 20);
 		
 		textUsuario.setColumns(10);
 		
 		JLabel label_1 = new JLabel("Usuario");
+		label_1.setBounds(44, 83, 89, 14);
+		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JButton btnNovoUsuario = new JButton("Criar Usu\u00E1rio");
+		btnNovoUsuario.setBounds(97, 138, 114, 21);
+		btnNovoUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastrarUsuario novoUsuarioTela = new CadastrarUsuario();
+				novoUsuarioTela.setVisible(true);
+			}
+		});
 		btnNovoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNovoUsuario.setEnabled(false);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(217, 138, 114, 21);
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,59 +114,24 @@ public class LoginFrame extends JFrame {
 					usuarioLogin = controle.realizaLogin(usuario);
 					
 					if (usuarioLogin.getIdUsuario() > 0) {
-						JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");
+//						JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");
 						TelaInicial tela = new TelaInicial();
 						tela.setVisible(true);
-						
+						tela.setUser(usuarioLogin);
+						tela.setTitle(usuarioLogin.toString());
 						
 					}
 					
 			}
 		});
 		btnLogin.setEnabled(false);
-		GroupLayout groupLayout_1 = new GroupLayout(getContentPane());
-		groupLayout_1.setHorizontalGroup(
-			groupLayout_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout_1.createSequentialGroup()
-					.addGap(97)
-					.addGroup(groupLayout_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout_1.createSequentialGroup()
-							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(textUsuario, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout_1.createSequentialGroup()
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(password, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout_1.createSequentialGroup()
-							.addGap(46)
-							.addComponent(btnNovoUsuario, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(129, Short.MAX_VALUE))
-		);
-		groupLayout_1.setVerticalGroup(
-			groupLayout_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout_1.createSequentialGroup()
-					.addGap(80)
-					.addGroup(groupLayout_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout_1.createSequentialGroup()
-							.addGap(3)
-							.addComponent(label_1))
-						.addComponent(textUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(6)
-					.addGroup(groupLayout_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout_1.createSequentialGroup()
-							.addGap(3)
-							.addComponent(label))
-						.addComponent(password, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(6)
-					.addGroup(groupLayout_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNovoUsuario)
-						.addComponent(btnLogin))
-					.addContainerGap(106, Short.MAX_VALUE))
-		);
-		getContentPane().setLayout(groupLayout_1);
+		getContentPane().setLayout(null);
+		getContentPane().add(label_1);
+		getContentPane().add(textUsuario);
+		getContentPane().add(label);
+		getContentPane().add(password);
+		getContentPane().add(btnNovoUsuario);
+		getContentPane().add(btnLogin);
 		
 		textUsuario.addFocusListener(new FocusAdapter() {
 			@Override
@@ -165,6 +144,11 @@ public class LoginFrame extends JFrame {
 				} else {
 					btnLogin.setEnabled(true);
 				};
+			}
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				btnLogin.setEnabled(false);
+				btnNovoUsuario.setEnabled(false);
 			}
 		});
 	}

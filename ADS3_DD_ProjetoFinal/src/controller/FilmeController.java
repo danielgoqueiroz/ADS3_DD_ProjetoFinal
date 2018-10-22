@@ -39,6 +39,12 @@ public class FilmeController {
 		return "";
 	}
 
+		public Filme buscaFilme() {
+			FilmeBO bo = new FilmeBO();
+			
+			return bo.buscarFilme();
+		}
+
 
 	
 }

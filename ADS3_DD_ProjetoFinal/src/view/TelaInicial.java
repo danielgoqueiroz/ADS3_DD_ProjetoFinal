@@ -9,7 +9,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+import src.VO.Filme;
 import src.VO.Usuario;
+import src.controller.FilmeController;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,6 +21,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class TelaInicial extends JFrame {
 
@@ -28,11 +34,13 @@ public class TelaInicial extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Usuario usuarioLogado;
-
+	private static Filme filmeTemp;
+	
+	
 	public static Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
-
+	
 	public static void setUsuarioLogado(Usuario usuarioLogado) {
 		usuarioLogado = usuarioLogado;
 	}
@@ -57,8 +65,12 @@ public class TelaInicial extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaInicial() {
+		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 754, 518);		
+		//Método busca Filme
+		
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -100,11 +112,109 @@ public class TelaInicial extends JFrame {
 		});
 		menuBar.add(mntmNewMenuItem_1);
 		
-		Login contentPane = new Login();
-		setContentPane(contentPane);
-		revalidate();
+		JButton btnNao = new JButton("N\u00C3O");
+		btnNao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscaFilme();
+			}
+		});
+		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		getContentPane().add(btnNao, BorderLayout.WEST);
+		
+		JButton btnSim = new JButton("SIM");
+		btnSim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscaFilme();
+			}
+		});
+		
+		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		getContentPane().add(btnSim, BorderLayout.EAST);
+		
+		JLabel lblJVi = new JLabel("J\u00E1 Viu?");
+		lblJVi.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblJVi.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(lblJVi, BorderLayout.NORTH);
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblTitulo = new JLabel("Nome");
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setBounds(169, 167, 267, 14);
+		panel.add(lblTitulo);
+		
+		JLabel lblAno = new JLabel("Ano");
+		lblAno.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAno.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAno.setBounds(169, 192, 267, 14);
+		panel.add(lblAno);
+		
+		JLabel lblGenero = new JLabel("Genero");
+		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblGenero.setBounds(169, 217, 267, 14);
+		panel.add(lblGenero);
+		
+		JLabel lblDiretor = new JLabel("Diretor");
+		lblDiretor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDiretor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDiretor.setBounds(169, 242, 267, 17);
+		panel.add(lblDiretor);
+		
+		JLabel lblAtores = new JLabel("Atores");
+		lblAtores.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAtores.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAtores.setBounds(169, 267, 267, 14);
+		panel.add(lblAtores);
+		
+		JLabel label = new JLabel("Categoria");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label.setBounds(169, 292, 267, 14);
+		panel.add(label);
+		
+		JLabel lblSinopse = new JLabel("Sinopse");
+		lblSinopse.setVerticalAlignment(SwingConstants.TOP);
+		lblSinopse.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSinopse.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSinopse.setBounds(169, 317, 267, 80);
+		panel.add(lblSinopse);
+		
+		JLabel lblNota = new JLabel("Nota");
+		lblNota.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNota.setBounds(169, 408, 267, 14);
+		panel.add(lblNota);
+		
+		JLabel lblDurao = new JLabel("Dura\u00E7\u00E3o");
+		lblDurao.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDurao.setBounds(169, 393, 267, 14);
+		panel.add(lblDurao);
+		
+//		Login contentPane = new Login();
+//		setContentPane(contentPane);
+//		revalidate();
 		
 		menuBar.setVisible(false);
+		
+		
+		filmeTemp = buscaFilme();
+		lblTitulo.setText(filmeTemp.getTitulo());
+		lblAno.setText(filmeTemp.getAno() + "");
+		lblDiretor.setText(filmeTemp.getDuracao() + "");
+		lblGenero.setText(filmeTemp.getGenero() + "");
+		lblNota.setText(filmeTemp.getNota());
+		lblSinopse.setText(filmeTemp.getSinopse());
+		lblAtores.setText(filmeTemp.getArtistas() + "");
+		lblDurao.setText(filmeTemp.getDuracao() + "");
+		
+
+		
+		
 		
 	}
 	
@@ -122,9 +232,19 @@ public class TelaInicial extends JFrame {
 //
 //	};
 	
-//	public void setUser(Usuario usuario) {
-//		this.usuarioLogado = usuario;
-//		System.out.println("Usuário logado: " + usuario.toString());
-//	}
+	public void setUser(Usuario usuario) {
+		this.usuarioLogado = usuario;
+		System.out.println("Usuário logado: " + usuario.toString());
+	}
+	
+	public Filme buscaFilme() {
+		FilmeController controle = new FilmeController();
+		Filme filme = controle.buscaFilme();
+		System.out.println(filme.toString());
+		
+		return filme;
+		
+		
+	}
 
 }
