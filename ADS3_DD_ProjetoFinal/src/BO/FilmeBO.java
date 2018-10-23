@@ -38,4 +38,9 @@ public class FilmeBO {
 		return dao.excluir(idFilme);
 	}
 
+	public Filme buscarFilme() {
+		FilmeDAO dao = new FilmeDAO();
+		return dao.buscaFilme();
+	}
+
 }

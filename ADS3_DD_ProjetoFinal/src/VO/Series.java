@@ -36,8 +36,8 @@ public class Series extends Producao{
 		this.capitulo = capitulo;
 	}
 
-	public Series(String titulo, int ano, Genero[] generos, String diretor, ArrayList<Artista> artistas, String sinopse,String nota, int idSerie,int temporada, int capitulo) {
-		super(titulo, ano, generos, diretor, artistas, sinopse, nota);
+	public Series(String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String nota, int idSerie,int temporada, int capitulo) {
+		super(titulo, ano, genero, diretor, artistas, sinopse, nota);
 		this.idSerie=idSerie;
 		this.temporada=temporada;
 		this.capitulo=capitulo;

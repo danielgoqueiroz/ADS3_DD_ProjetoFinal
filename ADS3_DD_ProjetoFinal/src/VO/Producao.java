@@ -6,16 +6,16 @@ public class Producao {
 	
 	private String titulo;
 	private int ano;
-	private Genero[] generos;
+	private Genero genero;
 	private String diretor;
 	private ArrayList<Artista> artistas;
 	private String sinopse;
 	private String nota;
 	
-	public Producao(String titulo, int ano, Genero[] generos, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
+	public Producao(String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
 		this.titulo = titulo;
 		this.ano = ano;
-		this.generos = generos;
+		this.genero = genero;
 		this.diretor = diretor;
 		this.artistas = artistas;
 		this.sinopse = sinopse;
@@ -42,13 +42,13 @@ public class Producao {
 		this.ano = ano;
 	}
 
-	public Genero[] getGenero() {
-		return generos;
-	}
-
-	public void setGeneros(Genero[] generos) {
-		this.generos = generos;
-	}
+//	public Genero[] getGeneros() {
+//		return generos;
+//	}
+//
+//	public void setGeneros(Genero[] generos) {
+//		this.generos = generos;
+//	}
 
 	public String getDiretor() {
 		return diretor;

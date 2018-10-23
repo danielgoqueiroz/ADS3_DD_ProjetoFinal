@@ -3,8 +3,17 @@ package src.VO;
 public class Filme extends Producao{
 	private int idFilme;
 	private int duracao;
-	private Genero[] generos;
+//	private Genero[] generos;
+	private String genero;
 	
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String string) {
+		this.genero = string;
+	}
+
 	public Filme() {
 		super();
 	}
@@ -25,13 +34,13 @@ public class Filme extends Producao{
 		this.idFilme = idFilme;
 	}
 
-	public Genero[] getGeneros() {
-		return generos;
-	}
-
-	public void setGeneros(Genero[] generos) {
-		this.generos = generos;
-	}
+//	public Genero[] getGeneros() {
+//		return generos;
+//	}
+//
+//	public void setGeneros(Genero[] generos) {
+//		this.generos = generos;
+//	}
 	
 	@Override
 	public String toString() {
