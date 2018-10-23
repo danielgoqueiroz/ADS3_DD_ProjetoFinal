@@ -12,13 +12,13 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	@Override
 	public String getColunasDelete() {
 		// TODO Auto-generated method stub
-		return " idGenero ";
+		return " idgenero ";
 	}
 
 	@Override
 	public String getColunaPrimaria() {
 		// TODO Auto-generated method stub
-		return " idGenero ";
+		return " idgenero ";
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	@Override
 	public String getNomeTabela() {
 		// TODO Auto-generated method stub
-		return " GENERO ";
+		return " genero ";
 	}
 
 	@Override
