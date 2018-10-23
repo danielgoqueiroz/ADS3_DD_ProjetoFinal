@@ -38,5 +38,11 @@ create table serie (
 );
 
 
+create table genero (
+	idgenero int not null auto_increment primary key,
+	descricao varchar(45)
+);
+
+
 select * from filme;
 

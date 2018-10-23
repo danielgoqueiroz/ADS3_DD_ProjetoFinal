@@ -1,10 +1,12 @@
 package src.DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import src.VO.Filme;
+import src.VO.Usuario;
 
 public class FilmeDAO extends BaseDAO<Filme> {
 
@@ -80,8 +82,39 @@ public class FilmeDAO extends BaseDAO<Filme> {
 
 	@Override
 	public Filme construirObjetoConsultado(ResultSet resultado) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Filme filme = new Filme();
+		filme.setIdFilme(resultado.getInt("idfilme"));
+		filme.setTitulo(resultado.getString("titulo"));
+		filme.setAno(resultado.getInt("ano"));
+		filme.setGenero(resultado.getString("Genero"));
+		filme.setDiretor(resultado.getString("Diretor"));
+//		filme.setArtistas(resultado.getString("Artista"));
+		
+		return filme;
+	}
+
+	public Filme buscaFilme() {
+		String sql = (" SELECT * FROM filme limit 1 ");
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Filme objetoPesquisado = null;
+		
+		try {
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next()) {
+				objetoPesquisado = construirObjetoConsultado(resultado);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+		
+		return objetoPesquisado;
 	}
 
 	

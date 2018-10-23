@@ -27,8 +27,9 @@ public class TFilmes {
 		
 		gen1.setDescricao("Comédia");
 		
-		filme.setGeneros(generos);
-		
+//		String genero;
+//		filme.setGenero();
+//		
 		FilmeController controller = new FilmeController();
 		System.out.println(controller.salvar(filme));
 	}
