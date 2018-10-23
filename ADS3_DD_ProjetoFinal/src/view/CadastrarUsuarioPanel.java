@@ -63,7 +63,7 @@ public class CadastrarUsuarioPanel extends JPanel {
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		JButton btnNewButton = new JButton("Salvar");
+		JButton btnSalvar = new JButton("Salvar");
 		
 		
 		lblEmail = new JLabel("Email");
@@ -115,7 +115,7 @@ public class CadastrarUsuarioPanel extends JPanel {
 						.addComponent(textNick)
 						.addComponent(textEmail)
 						.addComponent(textNome, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnSalvar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(60, Short.MAX_VALUE))
 				.addComponent(lblinfo, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
 		);
@@ -147,13 +147,13 @@ public class CadastrarUsuarioPanel extends JPanel {
 						.addComponent(textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblTelefone))
 					.addGap(90)
-					.addComponent(btnNewButton)
+					.addComponent(btnSalvar)
 					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
 					.addComponent(lblinfo))
 		);
 		setLayout(groupLayout);
 
-		btnNewButton.addActionListener(new ActionListener() {
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Usuario usuario = new Usuario();
 				

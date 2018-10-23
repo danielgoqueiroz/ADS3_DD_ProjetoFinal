@@ -1,5 +1,7 @@
 package src.controller;
 
+import java.sql.SQLException;
+
 import src.BO.GeneroBO;
 import src.VO.Genero;
 
@@ -7,7 +9,7 @@ public class GeneroController {
 
 	GeneroBO bo = new GeneroBO();
 	
-	public String salvar(Genero genero) {
+	public String salvar(Genero genero) throws SQLException {
 		String validacao = validarGenero(genero);
 
 		if (validacao == "") {
@@ -19,10 +21,10 @@ public class GeneroController {
 				//					validacao = "Erro au atualizar o usuário";
 				//				}
 			} else {
-				if (bo.inserir(genero) == 0) {
-					validacao = "Usuário cadastrado com sucesso";
+				if (bo.inserir(genero) > 0) {
+					validacao = "Gênero cadastrado com sucesso";
 				} else {
-					validacao = "Erro ao cadastrar usuário";
+					validacao = "Erro ao cadastrar gênero";
 				}
 			}
 		}
