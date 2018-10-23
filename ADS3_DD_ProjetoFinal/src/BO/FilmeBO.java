@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import src.DAO.FilmeDAO;
 import src.VO.Filme;
+import src.VO.Usuario;
 
 public class FilmeBO {
 
@@ -41,6 +42,11 @@ public class FilmeBO {
 	public Filme buscarFilme() {
 		FilmeDAO dao = new FilmeDAO();
 		return dao.buscaFilme();
+	}
+
+	public Filme buscarFilmeNaoAssistido(Usuario usuario) {
+		FilmeDAO dao = new FilmeDAO();
+		return dao.buscaFilmeNaoAssistido(usuario);
 	}
 
 }

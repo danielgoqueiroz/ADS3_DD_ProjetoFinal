@@ -117,6 +117,31 @@ public class FilmeDAO extends BaseDAO<Filme> {
 		return objetoPesquisado;
 	}
 
+	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
+		String sql = (" SELECT idfilme, titulo,	ano, Genero, Diretor, atores, sinopse, Nota , Duracao "
+				+ " FROM filme where idfilme not in (select idfilme from filmesassistidos where idusuario = " + usuario.getIdUsuario() + " ) order by rand() limit 1 ");
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Filme objetoPesquisado = null;
+		
+		try {
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next()) {
+				objetoPesquisado = construirObjetoConsultado(resultado);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+		
+		return objetoPesquisado;
+	}
+
 	
 	
 

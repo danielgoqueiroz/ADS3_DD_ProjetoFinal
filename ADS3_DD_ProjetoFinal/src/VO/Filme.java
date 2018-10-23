@@ -44,6 +44,6 @@ public class Filme extends Producao{
 	
 	@Override
 	public String toString() {
-		return this.getTitulo() + "/" + this.getAno();		
+		return this.getIdFilme() + " " + this.getTitulo() + " " + this.getAno();		
 	}
 }

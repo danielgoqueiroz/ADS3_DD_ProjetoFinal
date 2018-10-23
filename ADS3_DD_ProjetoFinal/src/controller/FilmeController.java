@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import src.BO.FilmeBO;
 import src.VO.Filme;
+import src.VO.Usuario;
 
 public class FilmeController {
 
@@ -43,6 +44,12 @@ public class FilmeController {
 			FilmeBO bo = new FilmeBO();
 			
 			return bo.buscarFilme();
+		}
+
+		public Filme buscaFilmeNaoAssistido(Usuario usuario) {
+			FilmeBO bo = new FilmeBO();
+			return bo.buscarFilmeNaoAssistido(usuario);
+		
 		}
 
 

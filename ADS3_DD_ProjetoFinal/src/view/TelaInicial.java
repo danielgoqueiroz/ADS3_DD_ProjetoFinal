@@ -113,20 +113,12 @@ public class TelaInicial extends JFrame {
 		menuBar.add(mntmNewMenuItem_1);
 		
 		JButton btnNao = new JButton("N\u00C3O");
-		btnNao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscaFilme();
-			}
-		});
+		
 		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		getContentPane().add(btnNao, BorderLayout.WEST);
 		
 		JButton btnSim = new JButton("SIM");
-		btnSim.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscaFilme();
-			}
-		});
+		
 		
 		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		getContentPane().add(btnSim, BorderLayout.EAST);
@@ -213,7 +205,30 @@ public class TelaInicial extends JFrame {
 		lblDurao.setText(filmeTemp.getDuracao() + "");
 		
 
+		btnSim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				filmeTemp = registraFilmeAssistido(filmeTemp);
+				
+				
+				
+			}
+		});
 		
+		btnNao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
+				
+				lblTitulo.setText(filmeTemp.getTitulo());
+				lblAno.setText(filmeTemp.getAno() + "");
+				lblDiretor.setText(filmeTemp.getDuracao() + "");
+				lblGenero.setText(filmeTemp.getGenero() + "");
+				lblNota.setText(filmeTemp.getNota());
+				lblSinopse.setText(filmeTemp.getSinopse());
+				lblAtores.setText(filmeTemp.getArtistas() + "");
+				lblDurao.setText(filmeTemp.getDuracao() + "");
+				revalidate();
+			}
+		});
 		
 		
 	}
@@ -243,8 +258,14 @@ public class TelaInicial extends JFrame {
 		System.out.println(filme.toString());
 		
 		return filme;
+	}
+	
+	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
+		FilmeController controle = new FilmeController();
+		Filme filme = controle.buscaFilmeNaoAssistido(usuario);
+		System.out.println(filme.toString());
 		
-		
+		return filme;
 	}
 
 }
