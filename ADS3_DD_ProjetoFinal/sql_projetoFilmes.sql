@@ -97,7 +97,7 @@ insert into filmesassistidos (idusuario, idfilme,nota) values (1,1,4);
 
 drop table filmesassitidos;
 
-SELECT idfilme, titulo,	ano, Genero, Diretor, atores, sinopse, Nota ,Duracao FROM filme where idfilme not in (select idfilme from filmesassistidos where idusuario = 1);
+SELECT idfilme, titulo,	ano, Genero, Diretor, atores, sinopse, Nota ,Duracao FROM filme where idfilme not in (select idfilme from filmesassistidos where idusuario = 1) order by rand() limit 1;
 
 select idfilme from filme;
 

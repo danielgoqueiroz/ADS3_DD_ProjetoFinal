@@ -120,6 +120,7 @@ public class LoginFrame extends JFrame {
 						tela.setUser(usuarioLogin);
 						tela.setTitle(usuarioLogin.toString());
 						
+						hide();
 					}
 					
 			}

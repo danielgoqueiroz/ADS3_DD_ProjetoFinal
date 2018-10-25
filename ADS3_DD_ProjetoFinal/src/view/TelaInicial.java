@@ -10,8 +10,10 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 import src.VO.Filme;
+import src.VO.FilmesAssistidos;
 import src.VO.Usuario;
 import src.controller.FilmeController;
+import src.controller.FilmesAssistidosController;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -25,6 +27,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JSlider;
+import javax.swing.ImageIcon;
 
 public class TelaInicial extends JFrame {
 
@@ -111,81 +115,7 @@ public class TelaInicial extends JFrame {
 			}
 		});
 		menuBar.add(mntmNewMenuItem_1);
-		
-		JButton btnNao = new JButton("N\u00C3O");
-		
-		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		getContentPane().add(btnNao, BorderLayout.WEST);
-		
-		JButton btnSim = new JButton("SIM");
-		
-		
-		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		getContentPane().add(btnSim, BorderLayout.EAST);
-		
-		JLabel lblJVi = new JLabel("J\u00E1 Viu?");
-		lblJVi.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblJVi.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(lblJVi, BorderLayout.NORTH);
-		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-		
-		JLabel lblTitulo = new JLabel("Nome");
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setBounds(169, 167, 267, 14);
-		panel.add(lblTitulo);
-		
-		JLabel lblAno = new JLabel("Ano");
-		lblAno.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAno.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAno.setBounds(169, 192, 267, 14);
-		panel.add(lblAno);
-		
-		JLabel lblGenero = new JLabel("Genero");
-		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblGenero.setBounds(169, 217, 267, 14);
-		panel.add(lblGenero);
-		
-		JLabel lblDiretor = new JLabel("Diretor");
-		lblDiretor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiretor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDiretor.setBounds(169, 242, 267, 17);
-		panel.add(lblDiretor);
-		
-		JLabel lblAtores = new JLabel("Atores");
-		lblAtores.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAtores.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAtores.setBounds(169, 267, 267, 14);
-		panel.add(lblAtores);
-		
-		JLabel label = new JLabel("Categoria");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		label.setBounds(169, 292, 267, 14);
-		panel.add(label);
-		
-		JLabel lblSinopse = new JLabel("Sinopse");
-		lblSinopse.setVerticalAlignment(SwingConstants.TOP);
-		lblSinopse.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSinopse.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSinopse.setBounds(169, 317, 267, 80);
-		panel.add(lblSinopse);
-		
-		JLabel lblNota = new JLabel("Nota");
-		lblNota.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNota.setBounds(169, 408, 267, 14);
-		panel.add(lblNota);
-		
-		JLabel lblDurao = new JLabel("Dura\u00E7\u00E3o");
-		lblDurao.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDurao.setBounds(169, 393, 267, 14);
-		panel.add(lblDurao);
+		getContentPane().setLayout(null);
 		
 //		Login contentPane = new Login();
 //		setContentPane(contentPane);
@@ -195,24 +125,106 @@ public class TelaInicial extends JFrame {
 		
 		
 		filmeTemp = buscaFilme();
+		
+		JButton btnNao = new JButton("N\u00C3O");
+		btnNao.setBounds(7, 7, 89, 433);
+		getContentPane().add(btnNao);
+		
+		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JLabel lblJVi = new JLabel("J\u00E1 Viu?");
+		lblJVi.setBounds(106, 11, 529, 22);
+		getContentPane().add(lblJVi);
+		lblJVi.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblJVi.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel lblTitulo = new JLabel("Nome");
+		lblTitulo.setBounds(106, 167, 267, 14);
+		getContentPane().add(lblTitulo);
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setText(filmeTemp.getTitulo());
+		
+		JLabel lblAno = new JLabel("Ano");
+		lblAno.setBounds(106, 192, 267, 14);
+		getContentPane().add(lblAno);
+		lblAno.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAno.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAno.setText(filmeTemp.getAno() + "");
-		lblDiretor.setText(filmeTemp.getDuracao() + "");
+		
+		JLabel lblGenero = new JLabel("Genero");
+		lblGenero.setBounds(106, 217, 267, 14);
+		getContentPane().add(lblGenero);
+		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblGenero.setText(filmeTemp.getGenero() + "");
-		lblNota.setText(filmeTemp.getNota());
-		lblSinopse.setText(filmeTemp.getSinopse());
+		
+		JLabel lblDiretor = new JLabel("Diretor");
+		lblDiretor.setBounds(106, 242, 267, 17);
+		getContentPane().add(lblDiretor);
+		lblDiretor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDiretor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDiretor.setText(filmeTemp.getDuracao() + "");
+		
+		JLabel lblAtores = new JLabel("Atores");
+		lblAtores.setBounds(106, 267, 267, 14);
+		getContentPane().add(lblAtores);
+		lblAtores.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAtores.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAtores.setText(filmeTemp.getArtistas() + "");
+		
+		JLabel lblSinopse = new JLabel("Sinopse");
+		lblSinopse.setBounds(106, 292, 267, 68);
+		getContentPane().add(lblSinopse);
+		lblSinopse.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSinopse.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblDurao = new JLabel("Dura\u00E7\u00E3o");
+		lblDurao.setBounds(106, 393, 267, 14);
+		getContentPane().add(lblDurao);
+		lblDurao.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDurao.setText(filmeTemp.getDuracao() + "");
 		
-
-		btnSim.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				filmeTemp = registraFilmeAssistido(filmeTemp);
-				
-				
-				
-			}
-		});
+		JButton btnSim = new JButton("SIM");
+		btnSim.setBounds(645, 7, 83, 433);
+		getContentPane().add(btnSim);
+		
+		
+		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		
+		JButton btnS1 = new JButton("");
+		
+		btnS1.setBounds(645, 348, 83, 59);
+		getContentPane().add(btnS1);
+		btnS1.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-1 - Copia.png")));
+		
+		JButton btnS2 = new JButton("");
+		btnS2.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-2.png")));
+		btnS2.setBounds(645, 278, 83, 59);
+		getContentPane().add(btnS2);
+		
+		JButton btnS3 = new JButton("");
+		btnS3.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-3.png")));
+		btnS3.setBounds(645, 208, 83, 59);
+		getContentPane().add(btnS3);
+		
+		JButton btnS4 = new JButton("");
+		btnS4.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-4.png")));
+		btnS4.setBounds(645, 138, 83, 59);
+		getContentPane().add(btnS4);
+		
+		JButton btnS5 = new JButton("");
+		btnS5.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-5.png")));
+		btnS5.setBounds(645, 68, 83, 59);
+		getContentPane().add(btnS5);
+		
+		JLabel lblNota = new JLabel("Nota");
+		lblNota.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNota.setBounds(106, 368, 267, 14);
+		getContentPane().add(lblNota);
 		
 		btnNao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,26 +243,121 @@ public class TelaInicial extends JFrame {
 		});
 		
 		
+		
+		btnS1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				lblNota.setText("1");
+				filmeTemp.setNota("1");
+				btnSim.show();
+				revalidate();
+				
+				btnS1.hide();
+				btnS2.hide();
+				btnS3.hide();
+				btnS4.hide();
+				btnS5.hide();
+				
+				cadastrarFilmeAssitido(usuarioLogado, filmeTemp);
+				
+			}
+
+			
+		});
+		
+		
+		btnS2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblNota.setText("2");
+				filmeTemp.setNota("2");
+				btnSim.show();
+				revalidate();
+				
+				btnS1.hide();
+				btnS2.hide();
+				btnS3.hide();
+				btnS4.hide();
+				btnS5.hide();
+				
+			}
+		});
+		
+		btnS3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblNota.setText("3");
+				filmeTemp.setNota("3");
+				btnSim.show();
+				revalidate();
+				
+				btnS1.hide();
+				btnS2.hide();
+				btnS3.hide();
+				btnS4.hide();
+				btnS5.hide();
+				
+			}
+		});
+		
+		btnS4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblNota.setText("4");
+				filmeTemp.setNota("4");
+				btnSim.show();
+				revalidate();
+				
+				btnS1.hide();
+				btnS2.hide();
+				btnS3.hide();
+				btnS4.hide();
+				btnS5.hide();
+				
+			}
+		});
+		
+		btnS5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblNota.setText("5");
+				filmeTemp.setNota("5");
+				btnSim.show();
+				revalidate();
+				
+				btnS1.hide();
+				btnS2.hide();
+				btnS3.hide();
+				btnS4.hide();
+				btnS5.hide();
+				
+			}
+		});
+		
+		
+		btnSim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnSim.hide();
+				revalidate();
+				
+				
+				btnS1.show();
+				btnS2.show();
+				btnS3.show();
+				btnS4.show();
+				btnS5.show();
+				
+			}
+
+			
+		});
 	}
 	
-	
-//	public void  login() {
-////		Usuario usuario = null;
-//		
-//		
-//	}
-	
-//	public void iniciaTelaEscolha() {
-//		JPanel contentPane2 = new CadastrarUsuarioPanel();
-//		this.setContentPane(contentPane2);
-//		this.revalidate();
-//
-//	};
+
 	
 	public void setUser(Usuario usuario) {
 		this.usuarioLogado = usuario;
 		System.out.println("Usuário logado: " + usuario.toString());
 	}
+	
+	
+	
 	
 	public Filme buscaFilme() {
 		FilmeController controle = new FilmeController();
@@ -267,5 +374,14 @@ public class TelaInicial extends JFrame {
 		
 		return filme;
 	}
-
+	
+	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Filme filmeTemp) {
+		FilmesAssistidosController controle = new FilmesAssistidosController();
+		FilmesAssistidos filmeAssitido = new FilmesAssistidos(usuarioLogado, filmeTemp);
+		
+		controle.cadastrarFilmeAssitido(filmeAssitido);
+//		
+	}
+	
+	
 }
