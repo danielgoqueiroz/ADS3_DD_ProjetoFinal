@@ -13,6 +13,7 @@ public class Producao {
 	private String nota;
 	
 	public Producao(String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
+		super();
 		this.titulo = titulo;
 		this.ano = ano;
 		this.genero = genero;
@@ -20,10 +21,6 @@ public class Producao {
 		this.artistas = artistas;
 		this.sinopse = sinopse;
 		this.nota = nota;
-	}
-
-	public Producao() {
-		super();
 	}
 
 	public String getTitulo() {
@@ -42,13 +39,13 @@ public class Producao {
 		this.ano = ano;
 	}
 
-//	public Genero[] getGeneros() {
-//		return generos;
-//	}
-//
-//	public void setGeneros(Genero[] generos) {
-//		this.generos = generos;
-//	}
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
 
 	public String getDiretor() {
 		return diretor;
@@ -81,4 +78,5 @@ public class Producao {
 	public void setNota(String nota) {
 		this.nota = nota;
 	}	
+	
 }

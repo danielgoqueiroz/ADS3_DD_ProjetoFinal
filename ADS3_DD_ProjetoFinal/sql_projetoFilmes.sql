@@ -12,18 +12,15 @@ create table usuario(
 	senha varchar(45)
 );
 
-
-
-create table filme (
-	idfilme int not null auto_increment primary key,
+create table producao (
+	idProducao int not null auto_increment primary key,
     titulo varchar(45),
 	ano int,
-	Genero varchar(45),
-	Diretor varchar(45),
-	atores varchar(45),
-	sinopse varchar(45),
-	Nota varchar(45),
-	Duracao int
+	genero varchar(45),
+	diretor varchar(45),
+	sinopse varchar(200)
+	duracao int,
+	qtdTemporada int
 	
 );
 
@@ -39,19 +36,6 @@ create table artista (
     nome varchar(45),
 	dt_nascimento date,
     foreign key (idartistafuncao) references artistaFuncao (idartistafuncao)
-);
-
-create table serie (
-	idserie int not null auto_increment primary key,
-    titulo varchar(45),
-	ano int,
-	Genero varchar(45),
-	Diretor varchar(45),
-	atores varchar(45),
-	sinopse varchar(45),
-	Nota varchar(45),
-	temporada int,
-	captulo int
 );
 
 create table genero (

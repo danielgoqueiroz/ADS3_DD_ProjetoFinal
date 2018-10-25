@@ -14,13 +14,13 @@ public class TSeries {
 		Series serie = new Series();
 		ArrayList<Artista> artistas = criarArtistas();
 		ArrayList<Genero> generos = criarGeneros();
-		serie.setArtistas(artistas);
-		serie.setAno(2018);
-		serie.setCapitulo(22);
-		serie.setTemporada(5);
-		serie.setTitulo("testee");
-		serie.setNota("5");
-		serie.setSinopse("filme top no teste");
+//		serie.setArtistas(artistas);
+//		serie.setAno(2018);
+//		serie.setCapitulo(22);
+//		serie.setTemporada(5);
+//		serie.setTitulo("testee");
+//		serie.setNota("5");
+//		serie.setSinopse("filme top no teste");
 		
 		
 	}

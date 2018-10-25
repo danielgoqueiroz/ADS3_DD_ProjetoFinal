@@ -195,14 +195,14 @@ public class TelaInicial extends JFrame {
 		
 		
 		filmeTemp = buscaFilme();
-		lblTitulo.setText(filmeTemp.getTitulo());
-		lblAno.setText(filmeTemp.getAno() + "");
-		lblDiretor.setText(filmeTemp.getDuracao() + "");
-		lblGenero.setText(filmeTemp.getGenero() + "");
-		lblNota.setText(filmeTemp.getNota());
-		lblSinopse.setText(filmeTemp.getSinopse());
-		lblAtores.setText(filmeTemp.getArtistas() + "");
-		lblDurao.setText(filmeTemp.getDuracao() + "");
+		//lblTitulo.setText(filmeTemp.getTitulo());
+		//lblAno.setText(filmeTemp.getAno() + "");
+		//lblDiretor.setText(filmeTemp.getDuracao() + "");
+		//lblGenero.setText(filmeTemp.getGenero() + "");
+		//lblNota.setText(filmeTemp.getNota());
+		//lblSinopse.setText(filmeTemp.getSinopse());
+		//lblAtores.setText(filmeTemp.getArtistas() + "");
+		//lblDurao.setText(filmeTemp.getDuracao() + "");
 		
 
 		btnSim.addActionListener(new ActionListener() {
@@ -218,13 +218,13 @@ public class TelaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
 				
-				lblTitulo.setText(filmeTemp.getTitulo());
-				lblAno.setText(filmeTemp.getAno() + "");
-				lblDiretor.setText(filmeTemp.getDuracao() + "");
-				lblGenero.setText(filmeTemp.getGenero() + "");
-				lblNota.setText(filmeTemp.getNota());
-				lblSinopse.setText(filmeTemp.getSinopse());
-				lblAtores.setText(filmeTemp.getArtistas() + "");
+				//lblTitulo.setText(filmeTemp.getTitulo());
+				//lblAno.setText(filmeTemp.getAno() + "");
+				//lblDiretor.setText(filmeTemp.getDuracao() + "");
+				//lblGenero.setText(filmeTemp.getGenero() + "");
+				//lblNota.setText(filmeTemp.getNota());
+				//lblSinopse.setText(filmeTemp.getSinopse());
+				//lblAtores.setText(filmeTemp.getArtistas() + "");
 				lblDurao.setText(filmeTemp.getDuracao() + "");
 				revalidate();
 			}

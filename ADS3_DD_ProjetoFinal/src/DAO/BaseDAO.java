@@ -12,8 +12,6 @@ public abstract class BaseDAO<T> {
 
 	private static final int CODIGO_RETORNO_SQL = 1;
 	
-	
-	// CRUD DAO
 	public int inserir(T entidade) {
 		String sql = ("INSERT INTO " + getNomeTabela() + " ( " + getColunasInsert() + " ) VALUES ( " + getInterrogacoesInsert() + " ) ");
 		
@@ -40,8 +38,6 @@ public abstract class BaseDAO<T> {
 		return idEntidade;
 	}
 	
-
-
 	public boolean atualizar(T entidade, int idEntidade){
 		String sql = (" UPDATE " + getNomeTabela() + " SET " + getValoresEntidadesUpdate(entidade) + " WHERE " + getColunaPrimaria() + " = " + idEntidade );
 		
@@ -65,8 +61,6 @@ public abstract class BaseDAO<T> {
 		return sucessoUpdate;
 	}
 
-	
-
 	public boolean excluir(int idEntidade) {
 		String sql = ("DELETE FROM " + getNomeTabela() + " WHERE " + getColunasDelete() + " = " + idEntidade);
 		
@@ -88,10 +82,6 @@ public abstract class BaseDAO<T> {
 		return sucessoDelete;
 	}
 	
-	
-
-
-
 	public T pesquisaPorId (int idEntidade){
 		String sql = ("SELECT * FROM" + getNomeTabela() + " WHERE " + getColunaPrimaria() + " = " + idEntidade);
 		
@@ -139,41 +129,27 @@ public abstract class BaseDAO<T> {
 		}
 		return listaObjetos;
 	}
-	
-	
-	// métodos abstracts GET
+
 	public abstract String getColunasDelete();
 	
 	public abstract String getColunaPrimaria();
-	
 	
 	public abstract String getValoresEntidadesUpdate(T entidade);
 	
 	public abstract String getInterrogacoesInsert();
 	
-	public abstract String getNomeTabela();
-		
-	//Método CONTUCTOR
+	public abstract String getNomeTabela();		
+
 	public abstract T construirObjetoConsultado(ResultSet resultado) throws SQLException;
-	
-	//Métodos SET
+
 	public abstract void setValoresAtributosInsert(T entidade, PreparedStatement prepareStm);
 	
 	public abstract void setValoresAtributosUpdate(T entidade, PreparedStatement stmt);
 	
 	public abstract String getColunasInsert();
 
-
-
-
-
-
-
-
-
 	public String getColunaInsert() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
