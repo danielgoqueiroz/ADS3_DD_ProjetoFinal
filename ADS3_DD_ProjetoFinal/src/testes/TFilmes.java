@@ -1,12 +1,12 @@
-package src.testes;
+package testes;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import src.VO.Artista;
-import src.VO.Filme;
-import src.VO.Genero;
-import src.controller.FilmeController;
+import VO.Artista;
+import VO.Filme;
+import VO.Genero;
+import controller.FilmeController;
 
 public class TFilmes {
 

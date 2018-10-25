@@ -1,11 +1,11 @@
-package src.testes;
+package testes;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import src.VO.Artista;
-import src.VO.Genero;
-import src.VO.Series;
+import VO.Artista;
+import VO.Genero;
+import VO.Series;
 
 public class TSeries {
 

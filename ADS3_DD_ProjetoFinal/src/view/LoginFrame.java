@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -22,8 +22,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
-import src.VO.Usuario;
-import src.controller.UsuarioController;
+import VO.Usuario;
+import controller.UsuarioController;
 import java.awt.Font;
 
 public class LoginFrame extends JFrame {

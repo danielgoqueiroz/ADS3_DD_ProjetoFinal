@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -20,8 +20,8 @@ import com.sun.glass.ui.GestureSupport;
 import javax.swing.SwingConstants;
 
 import jdk.nashorn.internal.scripts.JO;
-import src.VO.Usuario;
-import src.controller.UsuarioController;
+import VO.Usuario;
+import controller.UsuarioController;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;

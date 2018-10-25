@@ -1,11 +1,11 @@
-package src.DAO;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import src.VO.Usuario;
+import VO.Usuario;
 
 public class UsuarioDAO extends BaseDAO<Usuario> {
 

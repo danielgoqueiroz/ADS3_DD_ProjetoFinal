@@ -1,4 +1,4 @@
-package src.VO;
+package VO;
 
 public class Filme extends Producao{
 	private int duracao;

@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,11 +9,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-import src.VO.Filme;
-import src.VO.FilmesAssistidos;
-import src.VO.Usuario;
-import src.controller.FilmeController;
-import src.controller.FilmesAssistidosController;
+import VO.Filme;
+import VO.FilmesAssistidos;
+import VO.Usuario;
+import controller.FilmeController;
+import controller.FilmesAssistidosController;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;

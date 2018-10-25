@@ -1,4 +1,4 @@
-package src.BO;
+package BO;
 
 public class SerieBO {
 

@@ -1,11 +1,11 @@
-package src.BO;
+package BO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import src.DAO.FilmeDAO;
-import src.VO.Filme;
-import src.VO.Usuario;
+import DAO.FilmeDAO;
+import VO.Filme;
+import VO.Usuario;
 
 public class FilmeBO {
 

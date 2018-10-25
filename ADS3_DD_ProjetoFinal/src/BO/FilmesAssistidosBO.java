@@ -1,14 +1,12 @@
-package src.BO;
+package BO;
 
-import src.DAO.FilmesAssistidosDAO;
-import src.VO.FilmesAssistidos;
+import DAO.FilmesAssistidosDAO;
+import VO.FilmesAssistidos;
 
 public class FilmesAssistidosBO {
 
 	public void cadastrarFilme(FilmesAssistidos filmeAssitido) {
 		FilmesAssistidosDAO dao = new FilmesAssistidosDAO();
-		dao.cadastrarFilmesAssitidos(filmeAssitido);
-		
+		dao.cadastrarFilmesAssistidos(filmeAssitido);
 	}
-
 }

@@ -1,10 +1,10 @@
-package src.controller;
+package controller;
 
 import java.sql.SQLException;
 
-import src.BO.FilmeBO;
-import src.VO.Filme;
-import src.VO.Usuario;
+import BO.FilmeBO;
+import VO.Filme;
+import VO.Usuario;
 
 public class FilmeController {
 

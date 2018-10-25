@@ -1,4 +1,4 @@
-package src.VO;
+package VO;
 
 public class Artista {
 	private int idArtista;

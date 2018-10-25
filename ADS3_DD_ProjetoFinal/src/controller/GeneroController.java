@@ -1,9 +1,9 @@
-package src.controller;
+package controller;
 
 import java.sql.SQLException;
 
-import src.BO.GeneroBO;
-import src.VO.Genero;
+import BO.GeneroBO;
+import VO.Genero;
 
 public class GeneroController {
 

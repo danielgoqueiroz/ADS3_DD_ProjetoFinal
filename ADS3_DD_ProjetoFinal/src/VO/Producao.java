@@ -1,4 +1,4 @@
-package src.VO;
+package VO;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,11 @@ public class Producao {
 	private ArrayList<Artista> artistas;
 	private String sinopse;
 	private String nota;
+	
+	
+	public Producao() {
+		
+	}
 	
 	public Producao(String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
 		super();

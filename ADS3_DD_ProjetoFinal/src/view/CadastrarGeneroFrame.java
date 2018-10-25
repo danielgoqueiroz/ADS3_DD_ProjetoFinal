@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,10 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import src.VO.Genero;
-import src.VO.Usuario;
-import src.controller.GeneroController;
-import src.controller.UsuarioController;
+import VO.Genero;
+import VO.Usuario;
+import controller.GeneroController;
+import controller.UsuarioController;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

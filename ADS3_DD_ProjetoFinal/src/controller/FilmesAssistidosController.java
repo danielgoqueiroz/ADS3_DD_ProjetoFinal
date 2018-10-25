@@ -1,7 +1,7 @@
-package src.controller;
+package controller;
 
-import src.BO.FilmesAssistidosBO;
-import src.VO.FilmesAssistidos;
+import BO.FilmesAssistidosBO;
+import VO.FilmesAssistidos;
 
 public class FilmesAssistidosController {
 

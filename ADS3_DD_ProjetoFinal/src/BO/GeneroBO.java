@@ -1,7 +1,7 @@
-package src.BO;
+package BO;
 
-import src.DAO.GeneroDAO;
-import src.VO.Genero;
+import DAO.GeneroDAO;
+import VO.Genero;
 
 public class GeneroBO {
 

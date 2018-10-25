@@ -1,4 +1,4 @@
-package src.testes;
+package testes;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

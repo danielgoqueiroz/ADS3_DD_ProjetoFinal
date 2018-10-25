@@ -1,9 +1,9 @@
-package src.testes;
+package testes;
 
 import java.sql.SQLException;
 
-import src.VO.Usuario;
-import src.controller.UsuarioController;
+import VO.Usuario;
+import controller.UsuarioController;
 
 public class TCadastroUsuario {
 

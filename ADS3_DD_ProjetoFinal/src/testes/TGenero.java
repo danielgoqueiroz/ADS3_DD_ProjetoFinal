@@ -1,9 +1,9 @@
-package src.testes;
+package testes;
 
 import java.sql.SQLException;
 
-import src.VO.Genero;
-import src.controller.GeneroController;
+import VO.Genero;
+import controller.GeneroController;
 
 public class TGenero {
 

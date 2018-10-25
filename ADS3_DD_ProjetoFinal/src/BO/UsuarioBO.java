@@ -1,10 +1,10 @@
-package src.BO;
+package BO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import src.DAO.UsuarioDAO;
-import src.VO.Usuario;
+import DAO.UsuarioDAO;
+import VO.Usuario;
 
 
 

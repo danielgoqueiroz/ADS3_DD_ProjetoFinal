@@ -1,10 +1,10 @@
-package src.DAO;
+package DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import src.VO.Genero;
+import VO.Genero;
 
 public class GeneroDAO extends BaseDAO<Genero>{
 

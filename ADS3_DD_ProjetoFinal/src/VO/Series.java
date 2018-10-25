@@ -1,4 +1,4 @@
-package src.VO;
+package VO;
 
 import java.util.ArrayList;
 

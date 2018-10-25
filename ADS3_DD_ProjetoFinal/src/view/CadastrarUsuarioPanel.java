@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -6,8 +6,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import src.VO.Usuario;
-import src.controller.UsuarioController;
+import VO.Usuario;
+import controller.UsuarioController;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
