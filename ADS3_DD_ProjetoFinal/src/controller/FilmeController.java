@@ -13,25 +13,25 @@ public class FilmeController {
 	public String salvar(Filme filme) throws SQLException {
 		String validacao = validarFilme(filme);
 		
-		if (validacao == "") {
-			if (filme.getIdFilme() > 0) {
-				//ATUALIZAR
-//				if (bo.atualizar(usuario)) {
-//					validacao = "Usuário atualizado com sucesso";
-//				} else {
-//					validacao = "Erro au atualizar o usuário";
-//				}
-			
-			} else {
-				 if (bo.inserir(filme)) {
-					 validacao = "Filme cadastrado com sucesso";
-				 } else {
-					 validacao = "Erro ao cadastrar filme";
-				 }
-			}
-			
-			
-		}
+//		if (validacao == "") {
+//			if (filme.getIdFilme() > 0) {
+//				//ATUALIZAR
+////				if (bo.atualizar(usuario)) {
+////					validacao = "Usuário atualizado com sucesso";
+////				} else {
+////					validacao = "Erro au atualizar o usuário";
+////				}
+//			
+//			} else {
+//				 if (bo.inserir(filme)) {
+//					 validacao = "Filme cadastrado com sucesso";
+//				 } else {
+//					 validacao = "Erro ao cadastrar filme";
+//				 }
+//			}
+//			
+//			
+//		}
 		return validacao;
 	}
 		

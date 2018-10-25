@@ -14,13 +14,13 @@ public class TFilmes {
 		
 		Filme filme = new Filme();
 		ArrayList<Artista> artistas = criarArtistas();
-		filme.setArtistas(artistas);
-		filme.setTitulo("Teste");
-		filme.setAno(2018);
-		filme.setDiretor("EU");
-		filme.setDuracao(60);
-		filme.setSinopse("Um filme muito louco que está sendo testado");
-		filme.setNota("5");
+//		filme.setArtistas(artistas);
+//		filme.setTitulo("Teste");
+//		filme.setAno(2018);
+//		filme.setDiretor("EU");
+//		filme.setDuracao(60);
+//		filme.setSinopse("Um filme muito louco que está sendo testado");
+//		filme.setNota("5");
 		
 		Genero gen1 = new Genero();
 		Genero[] generos = {gen1};

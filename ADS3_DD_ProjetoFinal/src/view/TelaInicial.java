@@ -125,6 +125,7 @@ public class TelaInicial extends JFrame {
 		
 		
 		filmeTemp = buscaFilme();
+<<<<<<< HEAD
 		
 		JButton btnNao = new JButton("N\u00C3O");
 		btnNao.setBounds(7, 7, 89, 433);
@@ -185,6 +186,16 @@ public class TelaInicial extends JFrame {
 		lblDurao.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDurao.setText(filmeTemp.getDuracao() + "");
+=======
+		//lblTitulo.setText(filmeTemp.getTitulo());
+		//lblAno.setText(filmeTemp.getAno() + "");
+		//lblDiretor.setText(filmeTemp.getDuracao() + "");
+		//lblGenero.setText(filmeTemp.getGenero() + "");
+		//lblNota.setText(filmeTemp.getNota());
+		//lblSinopse.setText(filmeTemp.getSinopse());
+		//lblAtores.setText(filmeTemp.getArtistas() + "");
+		//lblDurao.setText(filmeTemp.getDuracao() + "");
+>>>>>>> branch 'master' of https://github.com/danielgoqueiroz/ADS3_DD_ProjetoFinal.git
 		
 		JButton btnSim = new JButton("SIM");
 		btnSim.setBounds(645, 7, 83, 433);
@@ -230,13 +241,13 @@ public class TelaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
 				
-				lblTitulo.setText(filmeTemp.getTitulo());
-				lblAno.setText(filmeTemp.getAno() + "");
-				lblDiretor.setText(filmeTemp.getDuracao() + "");
-				lblGenero.setText(filmeTemp.getGenero() + "");
-				lblNota.setText(filmeTemp.getNota());
-				lblSinopse.setText(filmeTemp.getSinopse());
-				lblAtores.setText(filmeTemp.getArtistas() + "");
+				//lblTitulo.setText(filmeTemp.getTitulo());
+				//lblAno.setText(filmeTemp.getAno() + "");
+				//lblDiretor.setText(filmeTemp.getDuracao() + "");
+				//lblGenero.setText(filmeTemp.getGenero() + "");
+				//lblNota.setText(filmeTemp.getNota());
+				//lblSinopse.setText(filmeTemp.getSinopse());
+				//lblAtores.setText(filmeTemp.getArtistas() + "");
 				lblDurao.setText(filmeTemp.getDuracao() + "");
 				revalidate();
 			}
