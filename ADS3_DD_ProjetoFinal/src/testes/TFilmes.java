@@ -39,9 +39,8 @@ public class TFilmes {
 		ArrayList<Artista> artistas = new ArrayList<>();
 		
 		Artista art1 = new Artista();
-		art1.setNome("Daniel");
-		art1.setFunção(new String[] {"Ator", "Diretor"});
-		art1.setDtNascimento("1990-02-06");
+		art1.setNome("Daniel");		
+		//art1.setDtNascimento("1990-02-06");
 		
 		artistas.add(art1);
 		

@@ -32,10 +32,8 @@ create table assistidos (
 
 create table artista (
 	idartista int not null auto_increment primary key,
-    idartistafuncao int,
     nome varchar(45),
-	dt_nascimento date,
-    foreign key (idartistafuncao) references artistaFuncao (idartistafuncao)
+	dt_nascimento date
 );
 
 create table genero (
@@ -43,12 +41,6 @@ create table genero (
 	descricao varchar(45)
 );
 
-create table artistaFuncao (
-	idartistafuncao int not null auto_increment primary key,
-    descricao varchar(45)
-);
-
-drop table artistaFuncao;
 show tables;
 
 select * from filme;

@@ -12,7 +12,9 @@ import javax.swing.border.EmptyBorder;
 
 import com.sun.xml.internal.ws.api.Component;
 
+import VO.Artista;
 import VO.Genero;
+import controller.ArtistaController;
 import controller.GeneroController;
 
 import javax.swing.JLabel;
@@ -25,6 +27,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -40,7 +44,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JButton btnCadastrar;
 	private JButton btnAdicionar;
 	private JComboBox cbTipo;
-	private JComboBox cbAtores;
+	private JComboBox<Artista> cbAtores;
 
 	/**
 	 * Launch the application.
@@ -141,7 +145,29 @@ public class CadastrarProducaoFrame extends JFrame {
                 return this;
             }
         });
+		
+		ArtistaController ac = new ArtistaController();
+		final List<Artista> artistas = ac.listarTodos();
+		cbAtores = new JComboBox<>(new Vector<>(artistas));
+		cbAtores.setBounds(410, 15, 145, 20);
+		contentPane.add(cbAtores);
+		
+		cbAtores.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(final JList<?> list,
+                                                          final Object value,
+                                                          final int index,
+                                                          final boolean isSelected,
+                                                          final boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected,
+                                                   cellHasFocus);
+                if (value instanceof Artista)
+                    setText(((Artista) value).getNome());
 
+                return this;
+            }
+        });
+		
 		textAno = new JTextField();
 		textAno.setColumns(10);
 		textAno.setBounds(105, 65, 86, 20);
@@ -153,6 +179,15 @@ public class CadastrarProducaoFrame extends JFrame {
 		contentPane.add(textTitulo);
 		
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			private Object teste;
+
+			public void actionPerformed(ActionEvent e) {
+				teste = cbGenero.getSelectedItem();
+			
+				
+			}
+		});
 		btnCadastrar.setBounds(565, 206, 81, 23);
 		contentPane.add(btnCadastrar);
 		
@@ -179,11 +214,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		cbTipo = new JComboBox();
 		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Filme", "S\u00E9rie"}));
 		cbTipo.setBounds(105, 11, 236, 20);
-		contentPane.add(cbTipo);
-		
-		cbAtores = new JComboBox();
-		cbAtores.setBounds(410, 15, 145, 20);
-		contentPane.add(cbAtores);
+		contentPane.add(cbTipo);	
 		
 		btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.setBounds(565, 14, 81, 23);

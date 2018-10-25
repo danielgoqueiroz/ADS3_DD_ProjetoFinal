@@ -49,13 +49,11 @@ public class TSeries {
 		
 		Artista art1 = new Artista();
 		art1.setNome("Henrique");
-		art1.setDtNascimento("02/05/1992");
-		art1.setFunção(new String[] {"Ator"});
+		//art1.setDtNascimento("02/05/1992");
 		
 		Artista art2 = new Artista();
 		art2.setNome("Tiago");
-		art2.setDtNascimento("12/12/1990");
-		art1.setFunção(new String[] {"Diretor"});	
+		//art2.setDtNascimento("12/12/1990");	
 		
 		artistas.add(art1);
 		artistas.add(art2);
