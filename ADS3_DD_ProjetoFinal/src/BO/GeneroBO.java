@@ -1,5 +1,7 @@
 package BO;
 
+import java.util.ArrayList;
+
 import DAO.GeneroDAO;
 import VO.Genero;
 
@@ -10,6 +12,11 @@ public class GeneroBO {
 	public int inserir(Genero genero) {
 		
 		return dao.inserir(genero);
+	}
+	
+	public ArrayList<Genero> listarTodos() {
+		GeneroDAO dao = new GeneroDAO();
+		return dao.listarTodos();
 	}
 
 }

@@ -2,20 +2,28 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.xml.internal.ws.api.Component;
+
 import VO.Genero;
+import controller.GeneroController;
 
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTable;
 
 public class CadastrarProducaoFrame extends JFrame {
@@ -28,7 +36,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JTextField textField;
 	private JTextPane textPaneSinopse;
 	private JTable table;
-	private JComboBox cbGenero;
+	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
 	private JButton btnAdicionar;
 	private JComboBox cbTipo;
@@ -102,7 +110,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		
 		textDuracao = new JTextField();
 		textDuracao.setColumns(10);
-		textDuracao.setBounds(255, 65, 86, 20);
+		textDuracao.setBounds(255, 65, 85, 20);
 		contentPane.add(textDuracao);
 		
 		textDiretor = new JTextField();
@@ -110,20 +118,30 @@ public class CadastrarProducaoFrame extends JFrame {
 		textDiretor.setBounds(105, 123, 236, 20);
 		contentPane.add(textDiretor);
 		
-		cbGenero = new JComboBox();
+		GeneroController gc = new GeneroController();
+		
+		final List<Genero> generos = gc.listarTodos();
+		
+		cbGenero = new JComboBox<>(new Vector<>(generos));
 		cbGenero.setBounds(105, 94, 236, 20);
 		contentPane.add(cbGenero);
 		
-		
-//		java.util.List<Genero> list=new java.util.ArrayList<Genero>();
-//
-//		list.add(new Genero(1, "Sanjeev", "Saha"));
-//		list.add(new Genero(2, "Ben", "Yap"));
-//		JComboBox<Genero> comboBox = new JComboBox<Genero>();
-//		comboBox.setModel(new DefaultComboBoxModel<Person>(list.toArray(new Person[0])));
-		
-		
-		
+		cbGenero.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(final JList<?> list,
+                                                          final Object value,
+                                                          final int index,
+                                                          final boolean isSelected,
+                                                          final boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected,
+                                                   cellHasFocus);
+                if (value instanceof Genero)
+                    setText(((Genero) value).getDescricao());
+
+                return this;
+            }
+        });
+
 		textAno = new JTextField();
 		textAno.setColumns(10);
 		textAno.setBounds(105, 65, 86, 20);

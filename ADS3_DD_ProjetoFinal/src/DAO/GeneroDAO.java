@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import VO.Filme;
 import VO.Genero;
 
 public class GeneroDAO extends BaseDAO<Genero>{
@@ -41,8 +42,11 @@ public class GeneroDAO extends BaseDAO<Genero>{
 
 	@Override
 	public Genero construirObjetoConsultado(ResultSet resultado) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Genero genero = new Genero();
+		genero.setIdGenero(resultado.getInt("idgenero"));
+		genero.setDescricao(resultado.getString("descricao"));
+		
+		return genero;
 	}
 
 	@Override

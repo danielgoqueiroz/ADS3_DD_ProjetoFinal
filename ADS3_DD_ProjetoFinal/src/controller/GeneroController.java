@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import BO.GeneroBO;
 import VO.Genero;
@@ -14,12 +15,7 @@ public class GeneroController {
 
 		if (validacao == "") {
 			if (genero.getIdGenero() > 0) {
-				//ATUALIZAR
-				//				if (bo.atualizar(usuario)) {
-				//					validacao = "Usuário atualizado com sucesso";
-				//				} else {
-				//					validacao = "Erro au atualizar o usuário";
-				//				}
+
 			} else {
 				if (bo.inserir(genero) > 0) {
 					validacao = "Gênero cadastrado com sucesso";
@@ -29,6 +25,10 @@ public class GeneroController {
 			}
 		}
 		return validacao;
+	}
+	
+	public ArrayList<Genero> listarTodos() {
+		return bo.listarTodos();
 	}
 
 	private String validarGenero(Genero genero) {
