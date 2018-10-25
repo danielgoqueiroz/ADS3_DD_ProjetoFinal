@@ -145,6 +145,35 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 		return usuario;
 	}
 
+	public Usuario buscaUsuarioPorEmail(String email) {
+String sql = (" SELECT * FROM danie648_db_ads3_dd_filme.usuario where email = '" + email + "'");
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Usuario usuario = null;
+		
+		try {
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next()) {
+				usuario = construirObjetoConsultado(resultado);
+//				usuario.setNome(resultado.getString(2));
+				
+
+			}
+		} catch (Exception e) {
+			System.out.println("Erro " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+		
+		return usuario;
+		
+		
+	}
+
 	
 	
 

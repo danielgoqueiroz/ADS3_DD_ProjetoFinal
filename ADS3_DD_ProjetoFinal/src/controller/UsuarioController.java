@@ -61,4 +61,9 @@ public class UsuarioController {
 		return bo.realizarLogin(usuario);
 		
 	}
+
+	public Usuario verificaEmailUsuario(String email) {
+		UsuarioBO bo = new UsuarioBO();
+		return bo.verificaEmailUsuario(email);
+	}
 }

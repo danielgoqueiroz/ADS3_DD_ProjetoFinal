@@ -49,4 +49,10 @@ public class UsuarioBO {
 		UsuarioDAO dao = new UsuarioDAO();
 		return dao.realizarLogin(usuario);
 	}
+
+	public Usuario verificaEmailUsuario(String email) {
+		UsuarioDAO dao = new UsuarioDAO();
+		return dao.buscaUsuarioPorEmail(email);
+	}
+
 }

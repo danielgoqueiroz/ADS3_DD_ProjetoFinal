@@ -63,17 +63,17 @@ public class CadastrarUsuarioFrame extends JFrame {
 		
 		lblNome = new JLabel("Nome");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNome.setBounds(45, 14, 108, 14);
+		lblNome.setBounds(45, 39, 108, 14);
 		getContentPane().add(lblNome);
 		
 		lblEmail = new JLabel("Email");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setBounds(45, 40, 108, 14);
+		lblEmail.setBounds(45, 67, 108, 14);
 		getContentPane().add(lblEmail);
 		
 		lblNick = new JLabel("Nick");
 		lblNick.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNick.setBounds(45, 66, 108, 14);
+		lblNick.setBounds(45, 14, 108, 14);
 		getContentPane().add(lblNick);
 		
 		lblConfSenha = new JLabel("Confirmacao da Senha");
@@ -112,17 +112,17 @@ public class CadastrarUsuarioFrame extends JFrame {
 		textNick = new JTextField();
 		textNick.setToolTipText("");
 		textNick.setColumns(10);
-		textNick.setBounds(157, 63, 207, 20);
+		textNick.setBounds(157, 11, 207, 20);
 		getContentPane().add(textNick);
 		
 		textEmail = new JTextField();
 		textEmail.setColumns(10);
-		textEmail.setBounds(157, 37, 207, 20);
+		textEmail.setBounds(157, 64, 207, 20);
 		getContentPane().add(textEmail);
 		
 		textNome = new JTextField();
 		textNome.setColumns(10);
-		textNome.setBounds(157, 11, 207, 20);
+		textNome.setBounds(157, 36, 207, 20);
 		getContentPane().add(textNome);
 		
 		JButton btnSalvar = new JButton("Salvar");
@@ -159,6 +159,28 @@ public class CadastrarUsuarioFrame extends JFrame {
 			
 		});
 		
+		textEmail.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				UsuarioController controller = new UsuarioController();
+				Usuario usuario = controller.verificaEmailUsuario(textEmail.getText()+"");
+				
+				if (usuario != null) {
+					textEmail.setForeground(Color.RED);
+					lblInfo.setText("Email já cadastrado.");
+					textConfSenha.setEnabled(false);
+					textTelefone.setEnabled(false);
+					btnSalvar.setEnabled(false);
+				} else {
+						textEmail.setForeground(Color.BLACK);
+						lblInfo.setText("Email valido.");
+						textConfSenha.setEnabled(true);
+						textTelefone.setEnabled(true);
+						btnSalvar.setEnabled(true);
+				}
+			}
+		});
+		
 		textNick.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -172,10 +194,25 @@ public class CadastrarUsuarioFrame extends JFrame {
 //					textTelefone.setText(usuario.getTelefone());
 //					textEmail.setText(usuario.getEmail());
 //					textNick.setSelectedTextColor(Color.red);
-				} else {
+					textEmail.setEnabled(false);
+					textSenha.setEnabled(false);
+					textConfSenha.setEnabled(false);
+					textTelefone.setEnabled(false);
+					btnSalvar.setEnabled(false);
+				} else if
+					(usuario == null) {
+						textNick.setForeground(Color.BLACK);
+						lblInfo.setText("Usuário valido.");
+						textEmail.setEnabled(true);
+						textSenha.setEnabled(true);
+						textConfSenha.setEnabled(true);
+						textTelefone.setEnabled(true);
+						btnSalvar.setEnabled(true);
+					
+					}
 					
 				}
-			}
+			
 		});
 		
 		
