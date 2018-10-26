@@ -9,6 +9,9 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.sun.xml.internal.ws.api.Component;
 
@@ -16,9 +19,11 @@ import VO.Artista;
 import VO.Genero;
 import controller.ArtistaController;
 import controller.GeneroController;
+import helpers.TableData;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
@@ -29,6 +34,9 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -39,12 +47,14 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JTextField textTitulo;
 	private JTextField textField;
 	private JTextPane textPaneSinopse;
-	private JTable table;
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
 	private JButton btnAdicionar;
 	private JComboBox cbTipo;
 	private JComboBox<Artista> cbAtores;
+	private JTable table;
+	private JButton btnRemover;
+	private JTextField textDuracaoQtdTemp;
 
 	/**
 	 * Launch the application.
@@ -67,7 +77,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	 */
 	public CadastrarProducaoFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 672, 281);
+		setBounds(100, 100, 703, 281);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -95,7 +105,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		
 		JLabel lblAtor = new JLabel("Atores");
 		lblAtor.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAtor.setBounds(348, 18, 52, 14);
+		lblAtor.setBounds(348, 14, 52, 14);
 		contentPane.add(lblAtor);
 		
 		JLabel lblDuracao = new JLabel("Dura\u00E7\u00E3o");
@@ -149,13 +159,13 @@ public class CadastrarProducaoFrame extends JFrame {
 		ArtistaController ac = new ArtistaController();
 		final List<Artista> artistas = ac.listarTodos();
 		cbAtores = new JComboBox<>(new Vector<>(artistas));
-		cbAtores.setBounds(410, 15, 145, 20);
+		cbAtores.setBounds(410, 11, 145, 20);
 		contentPane.add(cbAtores);
 		
 		cbAtores.setRenderer(new DefaultListCellRenderer() {
-            @Override
+           @Override
             public java.awt.Component getListCellRendererComponent(final JList<?> list,
-                                                          final Object value,
+                                                         final Object value,
                                                           final int index,
                                                           final boolean isSelected,
                                                           final boolean cellHasFocus) {
@@ -188,7 +198,7 @@ public class CadastrarProducaoFrame extends JFrame {
 				
 			}
 		});
-		btnCadastrar.setBounds(565, 206, 81, 23);
+		btnCadastrar.setBounds(565, 206, 91, 23);
 		contentPane.add(btnCadastrar);
 		
 		textField = new JTextField();
@@ -216,12 +226,87 @@ public class CadastrarProducaoFrame extends JFrame {
 		cbTipo.setBounds(105, 11, 236, 20);
 		contentPane.add(cbTipo);	
 		
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(565, 14, 81, 23);
+		btnAdicionar = new JButton("Adicionar");		
+		btnAdicionar.setBounds(565, 10, 91, 23);
 		contentPane.add(btnAdicionar);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(371, 39, 285, 108);
+		contentPane.add(scrollPane);
+		
 		table = new JTable();
-		table.setBounds(410, 46, 236, 126);
-		contentPane.add(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+					"Codigo", "Artista"
+			}
+		));
+		scrollPane.setViewportView(table);
+		
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		
+		btnRemover = new JButton("Remover");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				model.removeRow(table.getSelectedRow());
+				
+				if(model.getRowCount()==0) {
+					btnRemover.setEnabled(false);
+				}
+			}
+		});
+		btnRemover.setBounds(565, 151, 91, 23);
+		contentPane.add(btnRemover);
+		btnRemover.setEnabled(false);
+		
+		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o/qtdTemp");
+		lblDuraoqtdtemp.setBounds(371, 155, 85, 14);
+		contentPane.add(lblDuraoqtdtemp);
+		
+		textDuracaoQtdTemp = new JTextField();
+		textDuracaoQtdTemp.setBounds(469, 152, 86, 20);
+		contentPane.add(textDuracaoQtdTemp);
+		textDuracaoQtdTemp.setColumns(10);
+		
+		table.removeColumn(table.getColumnModel().getColumn(0));
+		
+		
+		
+		
+		btnAdicionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] values = new Object[2];
+				
+				values[0] = ((Artista)cbAtores.getSelectedItem()).getIdArtista();
+				values[1] = ((Artista)cbAtores.getSelectedItem()).getNome();
+								
+				boolean encontrado = false;
+				
+				for (int i = 0; i < model.getRowCount(); i++) 
+				{
+					if(values[0] == model.getValueAt(i, 0)) 
+					{
+						encontrado=true;
+						JOptionPane.showMessageDialog(null, "Artista já inserido");
+						break;
+					}					
+				}
+				
+				if(!encontrado)
+					model.addRow(values);
+			}
+		});
+		
+		
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) 
+		    {
+		    	btnRemover.setEnabled(true);
+	        }
+	    });
 	}
 }
