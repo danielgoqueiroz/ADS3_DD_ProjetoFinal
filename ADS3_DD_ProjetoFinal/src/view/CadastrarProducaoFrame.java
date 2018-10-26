@@ -19,7 +19,6 @@ import VO.Artista;
 import VO.Genero;
 import controller.ArtistaController;
 import controller.GeneroController;
-import helpers.TableData;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
