@@ -1,7 +1,4 @@
-create database DBreviewFilmes;
-
-drop database DBreviewFilmes;
-use DBreviewFilmes;
+use danie648_db_ads3_dd_filme;
 
 create table usuario
 (
@@ -25,13 +22,6 @@ create table producao
 	qtdTemporada int	
 );
 
-create table assistidos 
-(
-    idUsuario int,
-    idProducao int,
-    primary key(idProducao, idUsuario)
-);
-
 create table artista 
 (
 	idArtista int not null auto_increment primary key,
@@ -53,43 +43,12 @@ create table genero
 	descricao varchar(45)
 );
 
-show tables;
 
-select * from filme;
-
-use danie648_db_ads3_dd_filme;
-
-select * from filme limit 1;
-alter table filme add column imagem blob after duracao;
-insert into filme (titulo, ano, genero, diretor, atores) values ("Filme2", 2015, "teste genero", "Luiz", "Pedro");
-show tables;
-
-use danie648_db_ads3_dd_filme;
-
-create table filmesassistidos (
-	idusuario int,
-	idfilme int,
-	foreign key (idusuario) references usuario (idusuario),
-	foreign key (idfilme) references filme (idfilme),
-	primary key (idusuario, idfilme)
-	
+CREATE TABLE `producoesAssistidas` (
+  `idProducoesAssistidas` int(11) DEFAULT NULL,
+  `idUsuario` int(11) NOT NULL DEFAULT '0',
+  `idProducao` int(11) NOT NULL DEFAULT '0',
+  `nota` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idUsuario`,`idProducao`),
+  KEY `idProducao` (`idProducao`)
 );
-
-alter table filmesassistidos add column nota int;
-
-show tables;
-
-select * from filmesassistidos;
-
-insert into filmesassistidos (idusuario, idfilme,nota) values (1,1,4);
-
-drop table filmesassitidos;
-
-SELECT idfilme, titulo,	ano, Genero, Diretor, atores, sinopse, Nota ,Duracao FROM filme where idfilme not in (select idfilme from filmesassistidos where idusuario = 1) order by rand() limit 1;
-
-select idfilme from filme;
-
- #notfilmeassistidos where idusuario = " + usuario.getIdUsuario() + " limit 1
-
-
-

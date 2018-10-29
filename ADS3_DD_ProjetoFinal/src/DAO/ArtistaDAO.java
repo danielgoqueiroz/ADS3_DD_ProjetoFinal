@@ -15,17 +15,17 @@ public class ArtistaDAO extends BaseDAO<Artista>{
 
 	@Override
 	public String getColunasDelete() {
-		return " idartista ";
+		return " idArtista ";
 	}
 
 	@Override
 	public String getColunaPrimaria() {
-		return " idartista ";
+		return " idArtista ";
 	}
 
 	@Override
 	public String getValoresEntidadesUpdate(Artista entidade) {
-		String clausulaSet = " idartista = ?, nome = ? , dt_nascimento = ? ";
+		String clausulaSet = " idArtista = ?, nome = ? , dataNascimento = ? ";
 		return clausulaSet;
 	}
 
@@ -42,9 +42,9 @@ public class ArtistaDAO extends BaseDAO<Artista>{
 	@Override
 	public Artista construirObjetoConsultado(ResultSet resultado) throws SQLException {
 		Artista artista = new Artista();
-		artista.setIdArtista(resultado.getInt("idartista"));		
+		artista.setIdArtista(resultado.getInt("idArtista"));		
 		artista.setNome(resultado.getString("nome"));
-		artista.setDtNascimento(resultado.getDate("dt_nascimento"));		
+		artista.setDtNascimento(resultado.getDate("dataNascimento"));		
 		return artista;
 	}
 

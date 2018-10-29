@@ -11,26 +11,22 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public String getColunasDelete() {
-		// TODO Auto-generated method stub
-		return " idusuario ";
+		return " idUsuario ";
 	}
 
 	@Override
 	public String getColunaPrimaria() {
-		// TODO Auto-generated method stub
-		return " idusuario ";
+		return " idUsuario ";
 	}
 
 	
 	@Override
 	public String getInterrogacoesInsert() {
-		// TODO Auto-generated method stub
 		return " ?,?,?,?,? ";
 	}
 
 	@Override
 	public String getNomeTabela() {
-		// TODO Auto-generated method stub
 		return " usuario ";
 	}
 	
@@ -44,7 +40,6 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 	
 
 	public Usuario buscaUsuarioPorNome(String nome) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -52,7 +47,7 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public String getValoresEntidadesUpdate(Usuario entidade) {
-		String clausulaSet = (" idusuario = ?, nickname = ? , email = ?, senha = ? ");
+		String clausulaSet = (" idUsuario = ?, nickname = ? , email = ?, senha = ? ");
 		return clausulaSet;
 	}
 
@@ -71,14 +66,13 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public void setValoresAtributosUpdate(Usuario entidade, PreparedStatement stmt) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Usuario construirObjetoConsultado(ResultSet resultado) throws SQLException {
 		Usuario usuario = new Usuario();
-		usuario.setIdUsuario(resultado.getInt("idusuario"));
+		usuario.setIdUsuario(resultado.getInt("idUsuario"));
 		usuario.setEmail(resultado.getString("email"));
 		usuario.setNome(resultado.getString("nome"));
 		usuario.setTelefone(resultado.getString("telefone"));

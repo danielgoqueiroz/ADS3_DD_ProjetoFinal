@@ -13,13 +13,13 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	@Override
 	public String getColunasDelete() {
 		// TODO Auto-generated method stub
-		return " idgenero ";
+		return " idGenero ";
 	}
 
 	@Override
 	public String getColunaPrimaria() {
 		// TODO Auto-generated method stub
-		return " idgenero ";
+		return " idGenero ";
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	@Override
 	public Genero construirObjetoConsultado(ResultSet resultado) throws SQLException {
 		Genero genero = new Genero();
-		genero.setIdGenero(resultado.getInt("idgenero"));
+		genero.setIdGenero(resultado.getInt("idGenero"));
 		genero.setDescricao(resultado.getString("descricao"));
 		
 		return genero;
