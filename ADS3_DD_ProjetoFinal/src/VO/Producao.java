@@ -11,13 +11,13 @@ public class Producao {
 	private String diretor;
 	private ArrayList<Artista> artistas;
 	private String sinopse;
-	
-	
+	private String capa;
+
 	public Producao() {
 		
 	}
 	
-	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse) {
+	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String capa) {
 		super();
 		this.idProducao = idProducao;
 		this.titulo = titulo;
@@ -26,6 +26,7 @@ public class Producao {
 		this.diretor = diretor;
 		this.artistas = artistas;
 		this.sinopse = sinopse;
+		this.capa=capa;
 	}
 	
 	public int getIdProducao() {
@@ -82,5 +83,13 @@ public class Producao {
 
 	public void setSinopse(String sinopse) {
 		this.sinopse = sinopse;
-	}	
+	}
+	
+	public String getCapa() {
+		return capa;
+	}
+
+	public void setCapa(String capa) {
+		this.capa = capa;
+	}
 }

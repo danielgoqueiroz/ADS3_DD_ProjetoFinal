@@ -3,14 +3,39 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.sun.imageio.spi.InputStreamImageInputStreamSpi;
+import com.sun.org.apache.bcel.internal.generic.CALOAD;
+
+import javafx.scene.image.Image;
+import jdk.internal.org.xml.sax.InputSource;
+import jdk.internal.util.xml.impl.Input;
+
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JSeparator;
 
 public class CadastrarFilmePanel extends JPanel {
 	private JTextField txtTitulo;
@@ -25,6 +50,7 @@ public class CadastrarFilmePanel extends JPanel {
 	private JTextField textDuracao;
 	private JLabel lblDuracao;
 	private JButton btnNewButton;
+	private JLabel lblImagem;
 
 	/**
 	 * Create the panel.
@@ -32,138 +58,120 @@ public class CadastrarFilmePanel extends JPanel {
 	public CadastrarFilmePanel() {
 		
 		JLabel lblNewLabel = new JLabel("Titulo");
+		lblNewLabel.setBounds(10, 87, 85, 14);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		txtTitulo = new JTextField();
+		txtTitulo.setBounds(105, 84, 185, 20);
 		txtTitulo.setColumns(10);
 		
 		JLabel lblAno = new JLabel("Ano");
+		lblAno.setBounds(10, 115, 85, 14);
 		lblAno.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textAno = new JTextField();
+		textAno.setBounds(105, 112, 86, 20);
 		textAno.setColumns(10);
 		
 		lblGenero = new JLabel("Genero");
+		lblGenero.setBounds(10, 144, 85, 14);
 		lblGenero.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textDiretor = new JTextField();
+		textDiretor.setBounds(105, 170, 185, 20);
 		textDiretor.setColumns(10);
 		
 		lblDiretor = new JLabel("Diretor");
+		lblDiretor.setBounds(10, 173, 85, 14);
 		lblDiretor.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textAtorAtriz = new JTextField();
+		textAtorAtriz.setBounds(105, 197, 185, 20);
 		textAtorAtriz.setColumns(10);
 		
 		lblAtoratriz = new JLabel("AtorAtriz");
+		lblAtoratriz.setBounds(10, 199, 85, 14);
 		lblAtoratriz.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textSinopse = new JTextPane();
+		textSinopse.setBounds(105, 251, 322, 141);
 		
 		lblSinopse = new JLabel("Sinopse");
+		lblSinopse.setBounds(10, 251, 85, 14);
 		lblSinopse.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		textDuracao = new JTextField();
+		textDuracao.setBounds(105, 225, 86, 20);
 		textDuracao.setColumns(10);
 		
 		lblDuracao = new JLabel("Duracao");
+		lblDuracao.setBounds(10, 228, 85, 14);
 		lblDuracao.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		btnNewButton = new JButton("+");
+		btnNewButton.setBounds(300, 196, 41, 23);
 		
 		JComboBox cmbGenero = new JComboBox();
+		cmbGenero.setBounds(105, 141, 185, 20);
 		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {"", "Terror", "A\u00E7\u00E3o", "Suspense", "Com\u00E9dia", "Drama", "Policial"}));
 		
 		JButton btnNewButton_1 = new JButton("Cadastrar");
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(txtTitulo, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblAno, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(textAno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblAtoratriz, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(textAtorAtriz, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnNewButton))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblDuracao, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(textDuracao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblGenero, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(cmbGenero, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-								.addComponent(lblDiretor, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-								.addGap(10)
-								.addComponent(textDiretor, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(btnNewButton_1)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblSinopse, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-								.addGap(10)
-								.addComponent(textSinopse, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(117, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(83)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(txtTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(9)
-							.addComponent(lblAno))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textAno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(9)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblGenero)
-						.addComponent(cmbGenero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(9)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblDiretor))
-						.addComponent(textDiretor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblAtoratriz))
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textAtorAtriz, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnNewButton)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(9)
-							.addComponent(lblDuracao))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textDuracao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textSinopse, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSinopse))
-					.addGap(18)
-					.addComponent(btnNewButton_1)
-					.addContainerGap(26, Short.MAX_VALUE))
-		);
-		setLayout(groupLayout);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton_1.setBounds(346, 410, 81, 23);
+		
+		JLabel lblImagemText = new JLabel("Imagem");
+		lblImagemText.setBounds(436, 42, 178, 14);
+		lblImagemText.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		JButton btnCarregarImagem = new JButton("Carregar Imagem");
+		btnCarregarImagem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JFileChooser chooser = new JFileChooser();
+				chooser.showSaveDialog(null);
+				File f = chooser.getSelectedFile();
+				ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+				lblImagemText.setText(f.getName());
+				lblImagem.setIcon(icon);
+				revalidate();
+				
+				
+			}
+		});
+		btnCarregarImagem.setBounds(497, 247, 125, 23);
+		setLayout(null);
+		add(lblImagemText);
+		add(btnCarregarImagem);
+		add(lblNewLabel);
+		add(txtTitulo);
+		add(lblAno);
+		add(textAno);
+		add(lblAtoratriz);
+		add(textAtorAtriz);
+		add(btnNewButton);
+		add(lblDuracao);
+		add(textDuracao);
+		add(lblGenero);
+		add(cmbGenero);
+		add(lblDiretor);
+		add(textDiretor);
+		add(btnNewButton_1);
+		add(lblSinopse);
+		add(textSinopse);
+		
+		lblImagem = new JLabel("imagemLabel");
+		lblImagem.setBackground(Color.GRAY);
+		lblImagem.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImagem.setBounds(497, 67, 125, 175);
+		add(lblImagem);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(461, 42, 8, 223);
+		add(separator);
 
 	}
 }

@@ -20,14 +20,17 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -36,7 +39,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JTextField textDiretor;
 	private JTextField textAno;
 	private JTextField textTitulo;
-	private JTextField textField;
+	private JTextField textImage;
 	private JTextPane textPaneSinopse;
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
@@ -204,6 +207,7 @@ public class CadastrarProducaoFrame extends JFrame {
 				producao.setDiretor(textTitulo.getText());
 				producao.setGenero((Genero)cbGenero.getSelectedItem());
 				
+				
 				ArrayList<Artista> listArtistas = new ArrayList<Artista>();
 				
 				for (int i = 0; i < model.getRowCount(); i++) 
@@ -231,13 +235,26 @@ public class CadastrarProducaoFrame extends JFrame {
 		btnCadastrar.setBounds(565, 206, 91, 23);
 		contentPane.add(btnCadastrar);
 		
-		textField = new JTextField();
-		textField.setText("");
-		textField.setBounds(105, 152, 185, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textImage = new JTextField();
+		textImage.setEditable(false);
+		textImage.setText("");
+		textImage.setBounds(105, 152, 185, 20);
+		contentPane.add(textImage);
+		textImage.setColumns(10);
 		
 		JButton btnImagem = new JButton("...");
+		btnImagem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showSaveDialog(null);
+				File f = chooser.getSelectedFile();
+				ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+				textImage.setText(f.getAbsolutePath());
+//				lblImagem.setIcon(icon);
+				revalidate();
+				
+			}
+		});
 		btnImagem.setBounds(300, 151, 41, 23);
 		contentPane.add(btnImagem);
 		
