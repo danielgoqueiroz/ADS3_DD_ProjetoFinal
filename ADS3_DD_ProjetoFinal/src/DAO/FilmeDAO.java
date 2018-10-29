@@ -1,4 +1,8 @@
 package DAO;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +24,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 
 	@Override
 	public String getInterrogacoesInsert() {
-		return " ?,?,?,?,?,? ";
+		return " ?,?,?,?,?,?,? ";
 	}
 
 	@Override
@@ -30,25 +34,36 @@ public class FilmeDAO extends BaseDAO<Filme> {
 
 	@Override
 	public String getColunasInsert() {
-		return " titulo, ano, genero, diretor, sinopse, duracao ";
+		return " titulo, ano, genero, diretor, sinopse, capa, duracao ";
 	}
 
 	@Override
 	public String getValoresEntidadesUpdate(Filme entidade) {
-		return " titulo = ? , ano = ? , genero = ? ,diretor = ?, sinopse = ?, duracao = ? ";
+		return " titulo = ? , ano = ? , genero = ? ,diretor = ?, sinopse = ?, capa = ?, duracao = ? ";
 	}
 
 	@Override
 	public void setValoresAtributosInsert(Filme entidade, PreparedStatement prepareStm) {
-		try {
+		try {			
+			File image = new File(entidade.getCapa());
+			FileInputStream fis = new FileInputStream(image);
+			
 			prepareStm.setString(1, entidade.getTitulo() + "");
 			prepareStm.setInt(2, entidade.getAno());
 			prepareStm.setString(3, entidade.getGenero().getIdGenero() + "");
 			prepareStm.setString(4, entidade.getDiretor() + "");
 			prepareStm.setString(5, entidade.getSinopse() + "");
-			prepareStm.setInt(6, entidade.getDuracao());
+			prepareStm.setString(6, entidade.getSinopse() + "");
+			prepareStm.setBinaryStream(3, (InputStream) fis, (int) (image.length()));
+			
+			prepareStm.setInt(7, entidade.getDuracao());
 
-		} catch (SQLException e) {
+		}
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
