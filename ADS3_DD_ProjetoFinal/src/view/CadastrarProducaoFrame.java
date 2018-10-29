@@ -1,25 +1,17 @@
 package view;
-
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import com.sun.xml.internal.ws.api.Component;
-
 import VO.Artista;
 import VO.Genero;
+import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -49,15 +41,13 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
 	private JButton btnAdicionar;
-	private JComboBox cbTipo;
+	private JComboBox<String> cbTipo;
 	private JComboBox<Artista> cbAtores;
 	private JTable table;
 	private JButton btnRemover;
 	private JTextField textDuracaoQtdTemp;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -71,9 +61,8 @@ public class CadastrarProducaoFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
+
 	public CadastrarProducaoFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 703, 281);
@@ -135,7 +124,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		
 		final List<Genero> generos = gc.listarTodos();
 		
-		cbGenero = new JComboBox<>(new Vector<>(generos));
+		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 		cbGenero.setBounds(105, 94, 236, 20);
 		contentPane.add(cbGenero);
 		
@@ -157,7 +146,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		
 		ArtistaController ac = new ArtistaController();
 		final List<Artista> artistas = ac.listarTodos();
-		cbAtores = new JComboBox<>(new Vector<>(artistas));
+		cbAtores = new JComboBox<Artista>(new Vector<>(artistas));
 		cbAtores.setBounds(410, 11, 145, 20);
 		contentPane.add(cbAtores);
 		
@@ -187,14 +176,56 @@ public class CadastrarProducaoFrame extends JFrame {
 		textTitulo.setBounds(105, 39, 236, 20);
 		contentPane.add(textTitulo);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(371, 39, 285, 108);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+					"Codigo", "Artista"
+			}
+		));
+		scrollPane.setViewportView(table);
+		
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		
 		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
-			private Object teste;
-
+		btnCadastrar.addActionListener(new ActionListener() 
+		{			
 			public void actionPerformed(ActionEvent e) {
-				teste = cbGenero.getSelectedItem();
-			
 				
+				Producao producao = new Producao();
+				
+				producao.setTitulo(textTitulo.getText());
+				producao.setSinopse(textPaneSinopse.getText());
+				producao.setDiretor(textTitulo.getText());
+				producao.setGenero((Genero)cbGenero.getSelectedItem());
+				
+				ArrayList<Artista> listArtistas = new ArrayList<Artista>();
+				
+				for (int i = 0; i < model.getRowCount(); i++) 
+				{
+					Artista artista = new Artista();
+					
+					artista.setIdArtista((int)model.getValueAt(i, 0));
+					artista.setNome((String)model.getValueAt(i, 1));
+
+					listArtistas.add(artista);
+				}
+				
+				producao.setArtistas(listArtistas);
+				
+//				ProducaoController controle = new ProducaoController();
+//				
+//				try {
+//					JOptionPane.showMessageDialog(null, controle.salvar(producao));
+//				} catch (SQLException ex) {
+//					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
+//					
+//				}
 			}
 		});
 		btnCadastrar.setBounds(565, 206, 91, 23);
@@ -220,8 +251,27 @@ public class CadastrarProducaoFrame extends JFrame {
 		lblTipo.setBounds(10, 14, 85, 14);
 		contentPane.add(lblTipo);
 		
-		cbTipo = new JComboBox();
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Filme", "S\u00E9rie"}));
+		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
+		lblDuraoqtdtemp.setBounds(371, 155, 85, 14);
+		contentPane.add(lblDuraoqtdtemp);
+		
+		cbTipo = new JComboBox<String>();
+		cbTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(cbTipo.getSelectedIndex() == 0) 
+				{
+					lblDuraoqtdtemp.setText("Duração");
+				}
+				else if(cbTipo.getSelectedIndex() == 1) 
+				{
+					lblDuraoqtdtemp.setText("Temporadas");
+				}
+				
+				//lblDuraoqtdtemp
+			}
+		});
+		cbTipo.setModel(new DefaultComboBoxModel<String>(new String[] {"Filme", "S\u00E9rie"}));
 		cbTipo.setBounds(105, 11, 236, 20);
 		contentPane.add(cbTipo);	
 		
@@ -229,21 +279,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		btnAdicionar.setBounds(565, 10, 91, 23);
 		contentPane.add(btnAdicionar);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(371, 39, 285, 108);
-		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					"Codigo", "Artista"
-			}
-		));
-		scrollPane.setViewportView(table);
-		
-		DefaultTableModel model = (DefaultTableModel)table.getModel();
 		
 		btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
@@ -260,19 +296,12 @@ public class CadastrarProducaoFrame extends JFrame {
 		contentPane.add(btnRemover);
 		btnRemover.setEnabled(false);
 		
-		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o/qtdTemp");
-		lblDuraoqtdtemp.setBounds(371, 155, 85, 14);
-		contentPane.add(lblDuraoqtdtemp);
-		
 		textDuracaoQtdTemp = new JTextField();
 		textDuracaoQtdTemp.setBounds(469, 152, 86, 20);
 		contentPane.add(textDuracaoQtdTemp);
 		textDuracaoQtdTemp.setColumns(10);
 		
 		table.removeColumn(table.getColumnModel().getColumn(0));
-		
-		
-		
 		
 		btnAdicionar.addMouseListener(new MouseAdapter() {
 			@Override

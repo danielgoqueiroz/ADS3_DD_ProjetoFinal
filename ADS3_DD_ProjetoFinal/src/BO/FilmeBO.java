@@ -1,8 +1,6 @@
 package BO;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import DAO.FilmeDAO;
 import VO.Filme;
 import VO.Usuario;
@@ -15,15 +13,8 @@ public class FilmeBO {
 		int idGerado = dao.inserir(filme);
 		return idGerado > 0;
 	}
-	
-	public Filme buscarFilmePorNome(String nome) {
-		FilmeDAO dao = new FilmeDAO();
-		Filme Filme = dao.buscaFilmePorNome(nome);
-		return Filme;
-	}
 
 	public boolean atualizar(Filme filme) throws SQLException {
-//		boolean sucesso = dao.atualizar(filme, filme.getIdFilme());
 		return true;
 	}
 	
@@ -39,9 +30,8 @@ public class FilmeBO {
 		return dao.excluir(idFilme);
 	}
 
-	public Filme buscarFilme() {
-		FilmeDAO dao = new FilmeDAO();
-		return dao.buscaFilme();
+	public Filme buscarFilme(int idProducao) {
+		return dao.buscaFilme(idProducao);
 	}
 
 	public Filme buscarFilmeNaoAssistido(Usuario usuario) {

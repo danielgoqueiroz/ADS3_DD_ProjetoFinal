@@ -4,30 +4,38 @@ import java.util.ArrayList;
 
 public class Producao {
 	
+	private int idProducao;
 	private String titulo;
 	private int ano;
 	private Genero genero;
 	private String diretor;
 	private ArrayList<Artista> artistas;
 	private String sinopse;
-	private String nota;
 	
 	
 	public Producao() {
 		
 	}
 	
-	public Producao(String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String nota) {
+	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse) {
 		super();
+		this.idProducao = idProducao;
 		this.titulo = titulo;
 		this.ano = ano;
 		this.genero = genero;
 		this.diretor = diretor;
 		this.artistas = artistas;
 		this.sinopse = sinopse;
-		this.nota = nota;
+	}
+	
+	public int getIdProducao() {
+		return idProducao;
 	}
 
+	public void setIdProducao(int idProducao) {
+		this.idProducao = idProducao;
+	}
+	
 	public String getTitulo() {
 		return titulo;
 	}
@@ -74,14 +82,5 @@ public class Producao {
 
 	public void setSinopse(String sinopse) {
 		this.sinopse = sinopse;
-	}
-
-	public String getNota() {
-		return nota;
-	}
-
-	public void setNota(String nota) {
-		this.nota = nota;
 	}	
-	
 }

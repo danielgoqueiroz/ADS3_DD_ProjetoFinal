@@ -1,17 +1,15 @@
 package testes;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import VO.Artista;
 import VO.Genero;
-import VO.Series;
+import VO.Serie;
 
 public class TSeries {
 
 	public static void main(String[] args) throws SQLException {
 	
-		Series serie = new Series();
+		Serie serie = new Serie();
 		ArrayList<Artista> artistas = criarArtistas();
 		ArrayList<Genero> generos = criarGeneros();
 //		serie.setArtistas(artistas);

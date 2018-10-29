@@ -55,8 +55,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 			prepareStm.setString(1, entidade.getDescricao() + "");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
-		
+		}
 	}
 
 	@Override

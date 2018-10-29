@@ -121,7 +121,7 @@ public class TelaInicial extends JFrame {
 		menuBar.setVisible(false);
 		
 		
-		filmeTemp = buscaFilme();
+		filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
 		
 		JButton btnNao = new JButton("N\u00C3O");
 		btnNao.setBounds(7, 7, 89, 433);
@@ -246,7 +246,6 @@ public class TelaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				lblNota.setText("1");
-				filmeTemp.setNota("1");
 				btnSim.show();
 				revalidate();
 				
@@ -266,8 +265,7 @@ public class TelaInicial extends JFrame {
 		
 		btnS2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblNota.setText("2");
-				filmeTemp.setNota("2");
+				lblNota.setText("2");				
 				btnSim.show();
 				revalidate();
 				
@@ -283,7 +281,6 @@ public class TelaInicial extends JFrame {
 		btnS3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("3");
-				filmeTemp.setNota("3");
 				btnSim.show();
 				revalidate();
 				
@@ -299,7 +296,6 @@ public class TelaInicial extends JFrame {
 		btnS4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("4");
-				filmeTemp.setNota("4");
 				btnSim.show();
 				revalidate();
 				
@@ -315,7 +311,6 @@ public class TelaInicial extends JFrame {
 		btnS5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("5");
-				filmeTemp.setNota("5");
 				btnSim.show();
 				revalidate();
 				
@@ -353,17 +348,7 @@ public class TelaInicial extends JFrame {
 		this.usuarioLogado = usuario;
 		System.out.println("Usuário logado: " + usuario.toString());
 	}
-	
-	
-	
-	
-	public Filme buscaFilme() {
-		FilmeController controle = new FilmeController();
-		Filme filme = controle.buscaFilme();
-		System.out.println(filme.toString());
-		
-		return filme;
-	}
+
 	
 	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
 		FilmeController controle = new FilmeController();

@@ -1,9 +1,15 @@
 package DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import VO.Artista;
+import VO.Filme;
+import VO.Producao;
+import VO.Usuario;
 
 public class ArtistaDAO extends BaseDAO<Artista>{
 
@@ -64,6 +70,30 @@ public class ArtistaDAO extends BaseDAO<Artista>{
 	@Override
 	public String getColunasInsert() {
 		return " nome, dt_nascimento ";
+	}
+	
+	public ArrayList<Artista> buscaArtistasPorProducao(Producao producao) {
+		String sql = (" SELECT T0.idArtista, T1.nome FROM producaoArtista T0 INNER JOIN artista T1 on T0.idArtista = T1.idArtista where T0.idProducao = " + producao.getIdProducao());
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		ArrayList<Artista> listArtistas = new ArrayList<>();
+		
+		try {
+			resultado = stmt.executeQuery(sql);
+			while(resultado.next()) {
+				listArtistas.add(construirObjetoConsultado(resultado));
+			}
+		} catch (Exception e) {
+			System.out.println("Erro " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+		
+		return listArtistas;
 	}
 
 }
