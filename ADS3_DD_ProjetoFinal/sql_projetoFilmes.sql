@@ -18,6 +18,7 @@ create table producao
 	genero varchar(45),
 	diretor varchar(45),
 	sinopse varchar(200),
+    capa blob,
 	duracao int,
 	qtdTemporada int	
 );
