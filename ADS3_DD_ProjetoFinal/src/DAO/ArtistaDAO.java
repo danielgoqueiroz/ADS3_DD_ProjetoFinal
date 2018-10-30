@@ -69,7 +69,7 @@ public class ArtistaDAO extends BaseDAO<Artista>{
 
 	@Override
 	public String getColunasInsert() {
-		return " nome, dt_nascimento ";
+		return " nome, dataNascimento ";
 	}
 	
 	public ArrayList<Artista> buscaArtistasPorProducao(Producao producao) {
