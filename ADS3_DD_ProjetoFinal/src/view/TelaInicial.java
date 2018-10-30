@@ -224,17 +224,22 @@ public class TelaInicial extends JFrame {
 		lblNota.setBounds(106, 368, 267, 14);
 		getContentPane().add(lblNota);
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(387, 113, 224, 294);
+		getContentPane().add(lblNewLabel);
+		
 		btnNao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
 				
-				//lblTitulo.setText(filmeTemp.getTitulo());
-				//lblAno.setText(filmeTemp.getAno() + "");
-				//lblDiretor.setText(filmeTemp.getDuracao() + "");
-				//lblGenero.setText(filmeTemp.getGenero() + "");
-				//lblNota.setText(filmeTemp.getNota());
-				//lblSinopse.setText(filmeTemp.getSinopse());
-				//lblAtores.setText(filmeTemp.getArtistas() + "");
+				lblTitulo.setText(filmeTemp.getTitulo());
+				lblAno.setText(filmeTemp.getAno() + "");
+				lblDiretor.setText(filmeTemp.getDuracao() + "");
+				lblGenero.setText(filmeTemp.getGenero() + "");
+//				lblNota.setText(filmeTemp.getNota());
+				lblSinopse.setText(filmeTemp.getSinopse());
+				lblAtores.setText(filmeTemp.getArtistas() + "");
 				lblDurao.setText(filmeTemp.getDuracao() + "");
 				revalidate();
 			}
