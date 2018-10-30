@@ -45,24 +45,20 @@ public class FilmeDAO extends BaseDAO<Filme> {
 	@Override
 	public void setValoresAtributosInsert(Filme entidade, PreparedStatement prepareStm) {
 		try {			
-			File image = new File(entidade.getCapa());
-			FileInputStream fis = new FileInputStream(image);
+//			File image = new File(entidade.getCapa());
+//			
+//			FileInputStream fis = new FileInputStream(image);
 			
 			prepareStm.setString(1, entidade.getTitulo() + "");
 			prepareStm.setInt(2, entidade.getAno());
 			prepareStm.setString(3, entidade.getGenero().getIdGenero() + "");
 			prepareStm.setString(4, entidade.getDiretor() + "");
 			prepareStm.setString(5, entidade.getSinopse() + "");
-			prepareStm.setString(6, entidade.getSinopse() + "");
-			prepareStm.setBinaryStream(3, (InputStream) fis, (int) (image.length()));
-			
+			prepareStm.setBytes(7, entidade.getCapa());
+//			prepareStm.setBinaryStream(3, (InputStream) fis, (int) (image.length()));
 			prepareStm.setInt(7, entidade.getDuracao());
 
 		}
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		} 
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,7 +81,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 		filme.setDiretor(resultado.getString("diretor"));
 		filme.setGenero(genDao.pesquisaPorId(Integer.parseInt(resultado.getString("genero"))));
 		filme.setArtistas(artDao.buscaArtistasPorProducao(filme));
-
+		filme.setCapa(resultado.getBytes("capa"));
 		return filme;
 	}
 
@@ -114,8 +110,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 	}
 
 	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
-		String sql = (" SELECT idProducao, titulo,	ano, genero, diretor, sinopse, duracao FROM producao where idProducao not in (select idProducao from producoesAssistidos where idUsuario = " + usuario.getIdUsuario() + " ) order by rand() limit 1 ");
-
+		String sql = (" SELECT ano, genero, diretor, sinopse, capa, duracao, qtdTemporada FROM producao where idproducao not in (select idProducao from producoesAssistidas where idUsuario = " + usuario.getIdUsuario() + " ) order by rand() limit 1 ");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;

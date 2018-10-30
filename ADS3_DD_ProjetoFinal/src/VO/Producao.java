@@ -11,13 +11,13 @@ public class Producao {
 	private String diretor;
 	private ArrayList<Artista> artistas;
 	private String sinopse;
-	private String capa;
+	private byte[] capa;
 
 	public Producao() {
 		
 	}
 	
-	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,String capa) {
+	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,byte[] capa) {
 		super();
 		this.idProducao = idProducao;
 		this.titulo = titulo;
@@ -85,11 +85,11 @@ public class Producao {
 		this.sinopse = sinopse;
 	}
 	
-	public String getCapa() {
+	public byte[] getCapa() {
 		return capa;
 	}
 
-	public void setCapa(String capa) {
-		this.capa = capa;
+	public void setCapa(byte[] bs) {
+		this.capa = bs;
 	}
 }
