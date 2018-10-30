@@ -12,6 +12,7 @@ public class Producao {
 	private ArrayList<Artista> artistas;
 	private String sinopse;
 	private byte[] capa;
+	private int duracao;
 
 	public Producao() {
 		
@@ -91,5 +92,13 @@ public class Producao {
 
 	public void setCapa(byte[] bs) {
 		this.capa = bs;
+	}
+
+	public int getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(int duracao) {
+		this.duracao = duracao;
 	}
 }

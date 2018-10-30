@@ -115,9 +115,10 @@ public class LoginFrame extends JFrame {
 					
 					if (usuarioLogin.getIdUsuario() > 0) {
 //						JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");
-						TelaInicial tela = new TelaInicial();
+						TelaInicial tela = new TelaInicial(usuarioLogin);
 						tela.setVisible(true);
-						tela.setUser(usuarioLogin);
+						
+//						tela.setUser(usuarioLogin);
 						tela.setTitle(usuarioLogin.toString());
 						
 						hide();

@@ -11,6 +11,7 @@ import javax.swing.event.AncestorListener;
 
 import VO.Filme;
 import VO.FilmesAssistidos;
+import VO.Producao;
 import VO.Usuario;
 import controller.FilmeController;
 import controller.FilmesAssistidosController;
@@ -38,43 +39,20 @@ public class TelaInicial extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Usuario usuarioLogado;
-	private static Filme filmeTemp;
+	private static Producao producaoTemp;
 	
-	
-	public static Usuario getUsuarioLogado() {
-		return usuarioLogado;
-	}
-	
-	public static void setUsuarioLogado(Usuario usuarioLogado) {
-		usuarioLogado = usuarioLogado;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicial frame = new TelaInicial();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public TelaInicial() {
+	public TelaInicial(Usuario usuario) {
+		this.usuarioLogado = usuario;
+		
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 754, 518);		
 		//Método busca Filme
 		
-		
+		producaoTemp = buscaFilmeNaoAssistido(usuarioLogado);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -121,7 +99,7 @@ public class TelaInicial extends JFrame {
 		menuBar.setVisible(false);
 		
 		
-		filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
+		
 		
 		JButton btnNao = new JButton("N\u00C3O");
 		btnNao.setBounds(7, 7, 89, 433);
@@ -140,35 +118,35 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(lblTitulo);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setText(filmeTemp.getTitulo());
+		lblTitulo.setText(producaoTemp.getTitulo());
 		
 		JLabel lblAno = new JLabel("Ano");
 		lblAno.setBounds(106, 192, 267, 14);
 		getContentPane().add(lblAno);
 		lblAno.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAno.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAno.setText(filmeTemp.getAno() + "");
+		lblAno.setText(producaoTemp.getAno() + "");
 		
 		JLabel lblGenero = new JLabel("Genero");
 		lblGenero.setBounds(106, 217, 267, 14);
 		getContentPane().add(lblGenero);
 		lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblGenero.setText(filmeTemp.getGenero() + "");
+		lblGenero.setText(producaoTemp.getGenero() + "");
 		
 		JLabel lblDiretor = new JLabel("Diretor");
 		lblDiretor.setBounds(106, 242, 267, 17);
 		getContentPane().add(lblDiretor);
 		lblDiretor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDiretor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDiretor.setText(filmeTemp.getDuracao() + "");
+		lblDiretor.setText(producaoTemp.getDiretor() + "");
 		
 		JLabel lblAtores = new JLabel("Atores");
 		lblAtores.setBounds(106, 267, 267, 14);
 		getContentPane().add(lblAtores);
 		lblAtores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAtores.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAtores.setText(filmeTemp.getArtistas() + "");
+		lblAtores.setText(producaoTemp.getArtistas() + "");
 		
 		JLabel lblSinopse = new JLabel("Sinopse");
 		lblSinopse.setBounds(106, 292, 267, 68);
@@ -181,7 +159,7 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(lblDurao);
 		lblDurao.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDurao.setText(filmeTemp.getDuracao() + "");
+		lblDurao.setText(producaoTemp.getDuracao() + "");
 
 		
 		JButton btnSim = new JButton("SIM");
@@ -231,16 +209,16 @@ public class TelaInicial extends JFrame {
 		
 		btnNao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				filmeTemp = buscaFilmeNaoAssistido(usuarioLogado);
+				producaoTemp = buscaFilmeNaoAssistido(usuarioLogado);
 				
-				lblTitulo.setText(filmeTemp.getTitulo());
-				lblAno.setText(filmeTemp.getAno() + "");
-				lblDiretor.setText(filmeTemp.getDuracao() + "");
-				lblGenero.setText(filmeTemp.getGenero() + "");
-//				lblNota.setText(filmeTemp.getNota());
-				lblSinopse.setText(filmeTemp.getSinopse());
-				lblAtores.setText(filmeTemp.getArtistas() + "");
-				lblDurao.setText(filmeTemp.getDuracao() + "");
+				lblTitulo.setText(producaoTemp.getTitulo());
+				lblAno.setText(producaoTemp.getAno() + "");
+				lblDiretor.setText(producaoTemp.getDuracao() + "");
+				lblGenero.setText(producaoTemp.getGenero() + "");
+//				lblNota.setText(producaoTemp.getNota());
+				lblSinopse.setText(producaoTemp.getSinopse());
+				lblAtores.setText(producaoTemp.getArtistas() + "");
+				lblDurao.setText(producaoTemp.getDuracao() + "");
 				revalidate();
 			}
 		});
@@ -260,7 +238,7 @@ public class TelaInicial extends JFrame {
 				btnS4.hide();
 				btnS5.hide();
 				
-				cadastrarFilmeAssitido(usuarioLogado, filmeTemp);
+//				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
 				
 			}
 
@@ -363,13 +341,20 @@ public class TelaInicial extends JFrame {
 		return filme;
 	}
 	
-	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Filme filmeTemp) {
+	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Filme producaoTemp) {
 		FilmesAssistidosController controle = new FilmesAssistidosController();
-		FilmesAssistidos filmeAssitido = new FilmesAssistidos(usuarioLogado, filmeTemp);
+		FilmesAssistidos filmeAssitido = new FilmesAssistidos(usuarioLogado, producaoTemp);
 		
 		controle.cadastrarFilmeAssitido(filmeAssitido);
 //		
 	}
 	
+	public static Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+	
+	public static void setUsuarioLogado(Usuario usuarioLogado) {
+		usuarioLogado = usuarioLogado;
+	}
 	
 }
