@@ -1,5 +1,5 @@
 package view;
-
+import java.nio.file.Files;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class CadastrarProducaoFrame extends JFrame {
@@ -53,6 +54,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JTable table;
 	private JButton btnRemover;
 	private JTextField textDuracaoQtdTemp;
+	private byte[] image;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -188,13 +190,13 @@ public class CadastrarProducaoFrame extends JFrame {
 
 				if (cbTipo.getSelectedIndex() == 0) 
 				{
-					Filme filme = new Filme();
-
+					Filme filme = new Filme();//					
+										
 					filme.setTitulo(textTitulo.getText());
 					filme.setSinopse(textPaneSinopse.getText());
 					filme.setDiretor(textTitulo.getText());
 					filme.setGenero((Genero) cbGenero.getSelectedItem());
-					filme.setCapa(textImage.getText());
+					filme.setCapa(image);
 					filme.setDuracao(Integer.parseInt(textDuracaoQtdTemp.getText()));
 					
 					ArrayList<Artista> listArtistas = new ArrayList<Artista>();
@@ -240,6 +242,14 @@ public class CadastrarProducaoFrame extends JFrame {
 				File f = chooser.getSelectedFile();
 				ImageIcon icon = new ImageIcon(f.getAbsolutePath());
 				textImage.setText(f.getAbsolutePath());
+				
+				try {
+					image = Files.readAllBytes(f.toPath());
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 //				lblImagem.setIcon(icon);
 				revalidate();
 

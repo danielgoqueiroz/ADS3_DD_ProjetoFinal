@@ -20,7 +20,7 @@ public class FilmeController {
 				if (bo.atualizar(filme)) {
 					validacao = "Filme atualizado com sucesso";
 				} else {
-					validacao = "Erro au atualizar o filme";
+					validacao = "Erro ao atualizar o filme";
 				}
 			} else {
 				if (bo.inserir(filme)) {
