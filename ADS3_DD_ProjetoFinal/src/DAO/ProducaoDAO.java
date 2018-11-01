@@ -7,14 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import VO.Filme;
+import VO.Producao;
 import VO.Usuario;
 
-public class FilmeDAO extends BaseDAO<Filme> {
+public class ProducaoDAO extends BaseDAO<Producao> {
 
 	@Override
 	public String getColunasDelete() {
-		return " idProducao ";
+		return "idProducao";
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class FilmeDAO extends BaseDAO<Filme> {
 	}
 
 	@Override
-	public String getValoresEntidadesUpdate(Filme entidade) {
+	public String getValoresEntidadesUpdate(Producao entidade) {
 		return " titulo = ? , ano = ? , genero = ? ,diretor = ?, sinopse = ?, capa = ?, duracao = ? ";
 	}
 
 	@Override
-	public void setValoresAtributosInsert(Filme entidade, PreparedStatement prepareStm) {
+	public void setValoresAtributosInsert(Producao entidade, PreparedStatement prepareStm) {
 		try {			
 //			File image = new File(entidade.getCapa());
 //			
@@ -65,35 +65,37 @@ public class FilmeDAO extends BaseDAO<Filme> {
 	}
 
 	@Override
-	public void setValoresAtributosUpdate(Filme entidade, PreparedStatement stmt) {
+	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
 
 	}
 
 	@Override
-	public Filme construirObjetoConsultado(ResultSet resultado) throws SQLException {
-		Filme filme = new Filme();
+	public Producao construirObjetoConsultado(ResultSet resultado) throws SQLException {
+		Producao Producao = new Producao();
 		GeneroDAO genDao = new GeneroDAO();
 		ArtistaDAO artDao = new ArtistaDAO();
 
-		filme.setIdProducao(resultado.getInt("idProducao"));
-		filme.setTitulo(resultado.getString("titulo"));
-		filme.setAno(resultado.getInt("ano"));
-		filme.setDiretor(resultado.getString("diretor"));
-		filme.setGenero(genDao.pesquisaPorId(Integer.parseInt(resultado.getString("genero"))));
-		filme.setArtistas(artDao.buscaArtistasPorProducao(filme));
-		filme.setCapa(resultado.getBytes("capa"));
-		filme.setDuracao(resultado.getInt("duracao"));
+		Producao.setIdProducao(resultado.getInt("idProducao"));
+		Producao.setTitulo(resultado.getString("titulo"));
+		Producao.setAno(resultado.getInt("ano"));
+		Producao.setDiretor(resultado.getString("diretor"));
+		Producao.setSinopse(resultado.getString("sinopse"));
+
+		Producao.setGenero(genDao.pesquisaPorDescricao(resultado.getString("genero")));		
+		Producao.setArtistas(artDao.buscaArtistasPorProducao(Producao));
+		Producao.setCapa(resultado.getBytes("capa"));
+		Producao.setDuracao(resultado.getInt("duracao"));
 		
-		return filme;
+		return Producao;
 	}
 
-	public Filme buscaFilme(int idProducao) {
+	public Producao buscaProducao(int idProducao) {
 		String sql = (" SELECT * FROM producao where idProducao = " + idProducao);
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
-		Filme objetoPesquisado = null;
+		Producao objetoPesquisado = null;
 
 		try {
 			resultado = stmt.executeQuery(sql);
@@ -101,7 +103,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 				objetoPesquisado = construirObjetoConsultado(resultado);
 			}
 		} catch (Exception e) {
-			System.out.println("Erro " + e.getMessage());
+			System.out.println("Erro busca produção " + e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeConnection(conn);
@@ -111,14 +113,14 @@ public class FilmeDAO extends BaseDAO<Filme> {
 		return objetoPesquisado;
 	}
 
-	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
-		String sql = (" SELECT idProducao,  titulo, ano, genero, diretor, sinopse, capa, duracao, qtdTemporada FROM producao "
+	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
+		String sql = (" SELECT idProducao,  titulo, genero, ano, diretor, sinopse, capa, duracao, sinopse, qtdTemporada FROM producao "
 				+ "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = " + usuario.getIdUsuario() + " ) "
 						+ "order by rand() limit 1 ");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
-		Filme objetoPesquisado = null;
+		Producao objetoPesquisado = null;
 
 		try {
 			resultado = stmt.executeQuery(sql);
@@ -126,7 +128,7 @@ public class FilmeDAO extends BaseDAO<Filme> {
 				objetoPesquisado = construirObjetoConsultado(resultado);
 			}
 		} catch (Exception e) {
-			System.out.println("Erro " + e.getMessage());
+			System.out.println("Erro buscaProd. " + e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeConnection(conn);

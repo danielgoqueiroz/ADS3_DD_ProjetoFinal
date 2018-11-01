@@ -1,11 +1,13 @@
 package controller;
 
 import BO.ProducaoAssitidasBO;
+import VO.Producao;
 import VO.ProducaoAssistida;
+import VO.Usuario;
 
-public class FilmesAssistidosController {
+public class ProduçãoAssistidaController {
 
-	public void cadastrarProducaoAssistidaPorUsuario(ProducaoAssistida producaoAssitida) {
+	public void cadastrarProducaoAssitida(ProducaoAssistida producaoAssitida) {
 		ProducaoAssitidasBO bo = new ProducaoAssitidasBO();
 		bo.cadastrarProducaoAssitida(producaoAssitida);
 		

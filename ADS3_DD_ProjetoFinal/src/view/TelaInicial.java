@@ -10,11 +10,14 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 import VO.Filme;
-import VO.FilmesAssistidos;
+import VO.ProducaoAssistida;
 import VO.Producao;
 import VO.Usuario;
 import controller.FilmeController;
 import controller.FilmesAssistidosController;
+import controller.ProducaoController;
+import controller.ProduçãoAssistidaController;
+import controller.UsuarioController;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -46,13 +49,17 @@ public class TelaInicial extends JFrame {
 	 */
 	public TelaInicial(Usuario usuario) {
 		this.usuarioLogado = usuario;
+//		usuarioLogado.setIdUsuario(1);
+		
+		ProducaoController controle = new ProducaoController();
+
+		producaoTemp = controle.buscaProducaoNaoAssistido(usuarioLogado);
 		
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 754, 518);		
-		//Método busca Filme
+		//Método busca Producao
 		
-		producaoTemp = buscaFilmeNaoAssistido(usuarioLogado);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -170,29 +177,24 @@ public class TelaInicial extends JFrame {
 		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		
-		JButton btnS1 = new JButton("");
+		JButton btnS1 = new JButton("1");
 		
 		btnS1.setBounds(645, 348, 83, 59);
 		getContentPane().add(btnS1);
-		btnS1.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-1 - Copia.png")));
 		
-		JButton btnS2 = new JButton("");
-		btnS2.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-2.png")));
+		JButton btnS2 = new JButton("2");
 		btnS2.setBounds(645, 278, 83, 59);
 		getContentPane().add(btnS2);
 		
-		JButton btnS3 = new JButton("");
-		btnS3.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-3.png")));
+		JButton btnS3 = new JButton("3");
 		btnS3.setBounds(645, 208, 83, 59);
 		getContentPane().add(btnS3);
 		
-		JButton btnS4 = new JButton("");
-		btnS4.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-4.png")));
+		JButton btnS4 = new JButton("4");
 		btnS4.setBounds(645, 138, 83, 59);
 		getContentPane().add(btnS4);
 		
-		JButton btnS5 = new JButton("");
-		btnS5.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/gold-star-png-5.png")));
+		JButton btnS5 = new JButton("5");
 		btnS5.setBounds(645, 68, 83, 59);
 		getContentPane().add(btnS5);
 		
@@ -202,14 +204,20 @@ public class TelaInicial extends JFrame {
 		lblNota.setBounds(106, 368, 267, 14);
 		getContentPane().add(lblNota);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(387, 113, 224, 294);
-		getContentPane().add(lblNewLabel);
+		JLabel lblImagem = new JLabel("New label");
+		lblImagem.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImagem.setBounds(387, 113, 224, 294);
+		getContentPane().add(lblImagem);
+		
+		JLabel lblUltimaProducao = new JLabel("\u00DAltimo filme");
+		lblUltimaProducao.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUltimaProducao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUltimaProducao.setBounds(106, 430, 529, 14);
+		getContentPane().add(lblUltimaProducao);
 		
 		btnNao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				producaoTemp = buscaFilmeNaoAssistido(usuarioLogado);
+				producaoTemp = buscaProducaoAssistida(usuarioLogado);
 				
 				lblTitulo.setText(producaoTemp.getTitulo());
 				lblAno.setText(producaoTemp.getAno() + "");
@@ -225,6 +233,7 @@ public class TelaInicial extends JFrame {
 		
 		
 		
+		
 		btnS1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -237,9 +246,28 @@ public class TelaInicial extends JFrame {
 				btnS3.hide();
 				btnS4.hide();
 				btnS5.hide();
+//				ProducaoAssistida producaoAssitida = new ProducaoAssistida(usuarioLogado, producaoTemp, 1);
+//				ProduçãoAssistidaController controle = new ProduçãoAssistidaController();
+//				controle.cadastrarProducaoAssitida(producaoAssitida);
+				
+				cadastrarFilmeAssitido(usuarioLogado, producaoTemp, 1);
 				
 //				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
 				
+					producaoTemp = buscaProducaoAssistida(usuarioLogado);
+					
+					lblTitulo.setText(producaoTemp.getTitulo());
+					lblAno.setText(producaoTemp.getAno() + "");
+					lblDiretor.setText(producaoTemp.getDuracao() + "");
+					lblGenero.setText(producaoTemp.getGenero() + "");
+//					lblNota.setText(producaoTemp.getNota());
+					lblSinopse.setText(producaoTemp.getSinopse());
+					lblAtores.setText(producaoTemp.getArtistas() + "");
+					lblDurao.setText(producaoTemp.getDuracao() + "");
+					revalidate();
+				
+				
+				btnSim.show();
 			}
 
 			
@@ -258,6 +286,25 @@ public class TelaInicial extends JFrame {
 				btnS4.hide();
 				btnS5.hide();
 				
+				cadastrarFilmeAssitido(usuarioLogado, producaoTemp, 2);
+				
+//				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
+				
+					producaoTemp = buscaProducaoAssistida(usuarioLogado);
+					
+					lblTitulo.setText(producaoTemp.getTitulo());
+					lblAno.setText(producaoTemp.getAno() + "");
+					lblDiretor.setText(producaoTemp.getDuracao() + "");
+					lblGenero.setText(producaoTemp.getGenero() + "");
+//					lblNota.setText(producaoTemp.getNota());
+					lblSinopse.setText(producaoTemp.getSinopse());
+					lblAtores.setText(producaoTemp.getArtistas() + "");
+					lblDurao.setText(producaoTemp.getDuracao() + "");
+					revalidate();
+				
+				
+				btnSim.show();
+				
 			}
 		});
 		
@@ -272,6 +319,25 @@ public class TelaInicial extends JFrame {
 				btnS3.hide();
 				btnS4.hide();
 				btnS5.hide();
+				
+				cadastrarFilmeAssitido(usuarioLogado, producaoTemp, 3);
+				
+//				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
+				
+					producaoTemp = buscaProducaoAssistida(usuarioLogado);
+					
+					lblTitulo.setText(producaoTemp.getTitulo());
+					lblAno.setText(producaoTemp.getAno() + "");
+					lblDiretor.setText(producaoTemp.getDuracao() + "");
+					lblGenero.setText(producaoTemp.getGenero() + "");
+//					lblNota.setText(producaoTemp.getNota());
+					lblSinopse.setText(producaoTemp.getSinopse());
+					lblAtores.setText(producaoTemp.getArtistas() + "");
+					lblDurao.setText(producaoTemp.getDuracao() + "");
+					revalidate();
+				
+				
+				btnSim.show();
 				
 			}
 		});
@@ -288,6 +354,25 @@ public class TelaInicial extends JFrame {
 				btnS4.hide();
 				btnS5.hide();
 				
+				cadastrarFilmeAssitido(usuarioLogado, producaoTemp, 4);
+				
+//				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
+				
+					producaoTemp = buscaProducaoAssistida(usuarioLogado);
+					
+					lblTitulo.setText(producaoTemp.getTitulo());
+					lblAno.setText(producaoTemp.getAno() + "");
+					lblDiretor.setText(producaoTemp.getDuracao() + "");
+					lblGenero.setText(producaoTemp.getGenero() + "");
+//					lblNota.setText(producaoTemp.getNota());
+					lblSinopse.setText(producaoTemp.getSinopse());
+					lblAtores.setText(producaoTemp.getArtistas() + "");
+					lblDurao.setText(producaoTemp.getDuracao() + "");
+					revalidate();
+				
+				
+				btnSim.show();
+				
 			}
 		});
 		
@@ -303,6 +388,26 @@ public class TelaInicial extends JFrame {
 				btnS4.hide();
 				btnS5.hide();
 				
+				cadastrarFilmeAssitido(usuarioLogado, producaoTemp, 5);
+				
+//				cadastrarFilmeAssistido(usuarioLogado, producaoTemp);
+					lblUltimaProducao.setText(producaoTemp.toString());
+					producaoTemp = buscaProducaoAssistida(usuarioLogado);
+					
+					lblTitulo.setText(producaoTemp.getTitulo());
+					lblAno.setText(producaoTemp.getAno() + "");
+					lblDiretor.setText(producaoTemp.getDuracao() + "");
+					lblGenero.setText(producaoTemp.getGenero() + "");
+//					lblNota.setText(producaoTemp.getNota());
+					lblSinopse.setText(producaoTemp.getSinopse());
+					lblAtores.setText(producaoTemp.getArtistas() + "");
+					lblDurao.setText(producaoTemp.getDuracao() + "");
+					
+					revalidate();
+				
+				
+				btnSim.show();
+				
 			}
 		});
 		
@@ -310,8 +415,7 @@ public class TelaInicial extends JFrame {
 		btnSim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnSim.hide();
-				revalidate();
-				
+				revalidate();	
 				
 				btnS1.show();
 				btnS2.show();
@@ -325,6 +429,7 @@ public class TelaInicial extends JFrame {
 		});
 	}
 	
+	
 
 	
 	public void setUser(Usuario usuario) {
@@ -333,19 +438,20 @@ public class TelaInicial extends JFrame {
 	}
 
 	
-	public Filme buscaFilmeNaoAssistido(Usuario usuario) {
-		FilmeController controle = new FilmeController();
-		Filme filme = controle.buscaFilmeNaoAssistido(usuario);
-		System.out.println(filme.toString());
+	public Producao buscaProducaoAssistida(Usuario usuario) {
+		ProducaoController controle = new ProducaoController();
 		
-		return filme;
+//		System.out.println(filme.toString());
+		
+		return controle.buscaProducaoNaoAssistido(usuario);
 	}
 	
-	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Filme producaoTemp) {
+	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Producao producaoTemp, int nota) {
 		FilmesAssistidosController controle = new FilmesAssistidosController();
-		FilmesAssistidos filmeAssitido = new FilmesAssistidos(usuarioLogado, producaoTemp);
+		ProducaoAssistida filmeAssitido = new ProducaoAssistida(usuarioLogado, producaoTemp, nota);
 		
-		controle.cadastrarFilmeAssitido(filmeAssitido);
+		controle.cadastrarProducaoAssistidaPorUsuario(filmeAssitido);
+		
 //		
 	}
 	
@@ -356,5 +462,4 @@ public class TelaInicial extends JFrame {
 	public static void setUsuarioLogado(Usuario usuarioLogado) {
 		usuarioLogado = usuarioLogado;
 	}
-	
 }

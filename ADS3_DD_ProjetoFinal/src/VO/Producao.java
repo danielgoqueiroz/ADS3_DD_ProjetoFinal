@@ -101,4 +101,10 @@ public class Producao {
 	public void setDuracao(int duracao) {
 		this.duracao = duracao;
 	}
+	
+	@Override 
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getTitulo() + " - "+ this.getAno() + " - "+ this.getDuracao() + "min.";
+	}
 }

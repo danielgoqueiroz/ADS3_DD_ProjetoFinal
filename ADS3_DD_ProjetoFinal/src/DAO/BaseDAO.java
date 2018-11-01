@@ -13,7 +13,7 @@ public abstract class BaseDAO<T> {
 	private static final int CODIGO_RETORNO_SQL = 1;
 	
 	public int inserir(T entidade) {
-		String sql = ("INSERT INTO " + getNomeTabela() + " ( " + getColunasInsert() + " ) VALUES ( " + getInterrogacoesInsert() + " ) ");
+		String sql = (" INSERT INTO " + getNomeTabela() + " ( " + getColunasInsert() + " ) VALUES ( " + getInterrogacoesInsert() + " ) ");
 		
 		Connection conn = Banco.getConnection();
 		PreparedStatement prepareStm = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
