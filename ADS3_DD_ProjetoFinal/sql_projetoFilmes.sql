@@ -31,7 +31,8 @@ create table artista
 );
 
 create table producaoArtista 
-(
+(	
+	idProducaoArtista int not null auto_increment primary key,
 	idProducao int not null,
     idArtista  int not null,
     FOREIGN KEY (idProducao) REFERENCES producao(idProducao),
