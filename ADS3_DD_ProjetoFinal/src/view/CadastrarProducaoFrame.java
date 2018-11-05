@@ -213,7 +213,7 @@ public class CadastrarProducaoFrame extends JFrame {
 				producao.setTipo((EnumTipoProducao) cbTipo.getSelectedItem());
 				producao.setTitulo(textTitulo.getText());
 
-				String ano = textDuracaoQtdTemp.getText();
+				String ano = textAno.getText();
 				if (ano.isEmpty())
 					ano = "0";
 

@@ -80,5 +80,9 @@ public class ProducaoController {
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
 		return bo.buscarProducaoNaoAssistido(usuario);
 	}
+	
+	public double BuscarMediaProducao(Producao p) {
+		return bo.BuscarMediaProducao(p);
+	}
 
 }

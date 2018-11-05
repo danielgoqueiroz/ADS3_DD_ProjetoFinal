@@ -29,7 +29,7 @@ public class ArtistaDAO extends BaseDAO<Artista> {
 
 	@Override
 	public String getInterrogacoesInsert() {
-		return " ?, ? ";
+		return " ? ";
 	}
 
 	@Override
