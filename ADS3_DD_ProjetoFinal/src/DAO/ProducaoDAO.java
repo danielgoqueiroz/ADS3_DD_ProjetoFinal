@@ -1,94 +1,70 @@
 package DAO;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import VO.EnumTipoProducao;
 import VO.Producao;
 import VO.Usuario;
 
 public class ProducaoDAO extends BaseDAO<Producao> {
-
+	// OK
 	@Override
 	public String getColunasDelete() {
 		return "idProducao";
 	}
 
+	// OK
 	@Override
 	public String getColunaPrimaria() {
 		return " idProducao ";
 	}
 
+	// OK
 	@Override
 	public String getInterrogacoesInsert() {
-		return " ?,?,?,?,?,?,? ";
+		return " ?,?,?,?,?,?,?,?,? ";
 	}
 
+	// OK
 	@Override
 	public String getNomeTabela() {
-		return " idProducao ";
+		return " producao ";
 	}
 
+	// OK
 	@Override
 	public String getColunasInsert() {
-		return " titulo, ano, genero, diretor, sinopse, capa, duracao ";
+		return " tipo, titulo, ano, sinopse, genero, diretor, capa, duracao, qtdTemporada ";
 	}
 
+	// OK
 	@Override
 	public String getValoresEntidadesUpdate(Producao entidade) {
-		return " titulo = ? , ano = ? , genero = ? ,diretor = ?, sinopse = ?, capa = ?, duracao = ? ";
+		return " tipo = ? , titulo = ? , ano = ? , sinopse = ? , genero = ? , diretor = ? , capa = ? , duracao = ? , qtdTemporada = ? ";
 	}
 
+	// OK
 	@Override
 	public void setValoresAtributosInsert(Producao entidade, PreparedStatement prepareStm) {
-		try {			
-//			File image = new File(entidade.getCapa());
-//			
-//			FileInputStream fis = new FileInputStream(image);
-			
-			prepareStm.setString(1, entidade.getTitulo() + "");
-			prepareStm.setInt(2, entidade.getAno());
-			prepareStm.setString(3, entidade.getGenero().getIdGenero() + "");
-			prepareStm.setString(4, entidade.getDiretor() + "");
-			prepareStm.setString(5, entidade.getSinopse() + "");
+		try {
+			prepareStm.setString(1, entidade.getTipo().toString() + "");
+			prepareStm.setString(2, entidade.getTitulo() + "");
+			prepareStm.setInt(3, entidade.getAno());
+			prepareStm.setString(4, entidade.getSinopse() + "");
+			prepareStm.setString(5, entidade.getGenero().getIdGenero() + "");
+			prepareStm.setString(6, entidade.getDiretor() + "");
 			prepareStm.setBytes(7, entidade.getCapa());
-//			prepareStm.setBinaryStream(3, (InputStream) fis, (int) (image.length()));
-			prepareStm.setInt(7, entidade.getDuracao());
-
-		}
-		catch (SQLException e) {
+			prepareStm.setInt(8, entidade.getDuracao());
+			prepareStm.setInt(9, entidade.getQtdTemporadas());
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
-
-	}
-
-	@Override
-	public Producao construirObjetoConsultado(ResultSet resultado) throws SQLException {
-		Producao Producao = new Producao();
-		GeneroDAO genDao = new GeneroDAO();
-		ArtistaDAO artDao = new ArtistaDAO();
-
-		Producao.setIdProducao(resultado.getInt("idProducao"));
-		Producao.setTitulo(resultado.getString("titulo"));
-		Producao.setAno(resultado.getInt("ano"));
-		Producao.setDiretor(resultado.getString("diretor"));
-		Producao.setSinopse(resultado.getString("sinopse"));
-
-		Producao.setGenero(genDao.pesquisaPorDescricao(resultado.getString("genero")));		
-		Producao.setArtistas(artDao.buscaArtistasPorProducao(Producao));
-		Producao.setCapa(resultado.getBytes("capa"));
-		Producao.setDuracao(resultado.getInt("duracao"));
-		
-		return Producao;
-	}
-
+	// OK
 	public Producao buscaProducao(int idProducao) {
 		String sql = (" SELECT * FROM producao where idProducao = " + idProducao);
 
@@ -113,14 +89,51 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return objetoPesquisado;
 	}
 
+	// OK
+	@Override
+	public Producao construirObjetoConsultado(ResultSet resultado) throws SQLException {
+		Producao producao = new Producao();
+		GeneroDAO genDao = new GeneroDAO();
+		ArtistaDAO artDao = new ArtistaDAO();
+
+		String tipo = resultado.getString("tipo") + "";
+
+		String qtdTemporada = resultado.getString("qtdTemporada") + "";
+		String duracao = resultado.getString("duracao") + "";
+
+		producao.setIdProducao(resultado.getInt("idProducao"));
+		producao.setTitulo(resultado.getString("titulo"));
+		producao.setAno(resultado.getInt("ano"));
+		producao.setSinopse(resultado.getString("sinopse"));
+		producao.setGenero(genDao.pesquisaPorDescricao(resultado.getString("genero")));
+		producao.setDiretor(resultado.getString("diretor"));
+		producao.setCapa(resultado.getBytes("capa"));
+
+		if (!duracao.isEmpty())
+			producao.setDuracao(resultado.getInt("duracao"));
+
+		if (!qtdTemporada.isEmpty())
+			producao.setQtdTemporadas(resultado.getInt("qtdTemporada"));
+
+		if (!tipo.isEmpty())
+			producao.setTipo(EnumTipoProducao.valueOf(resultado.getString("tipo")));
+
+		producao.setArtistas(artDao.buscaArtistasPorProducao(producao));
+
+		return producao;
+	}
+
+	// OK
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
-		String sql = (" SELECT idProducao,  titulo, genero, ano, diretor, sinopse, capa, duracao, sinopse, qtdTemporada FROM producao "
-				+ "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = " + usuario.getIdUsuario() + " ) "
-						+ "order by rand() limit 1 ");
+		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao " + "where idProducao = 6"
+		// + "where idProducao not in (select idProducao from producoesAssistidas where
+		// idUsuario = "
+		// + usuario.getIdUsuario() + " ) " + "order by rand() limit 1 "
+		);
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
-		Producao objetoPesquisado = null;
+		Producao objetoPesquisado = new Producao();
 
 		try {
 			resultado = stmt.executeQuery(sql);
@@ -138,4 +151,9 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return objetoPesquisado;
 	}
 
+	// TODO
+	@Override
+	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
+
+	}
 }

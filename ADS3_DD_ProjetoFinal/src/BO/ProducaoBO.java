@@ -1,4 +1,5 @@
 package BO;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,23 +10,28 @@ import VO.Usuario;
 public class ProducaoBO {
 
 	ProducaoDAO dao = new ProducaoDAO();
-	
+
 	public boolean inserir(Producao producao) throws SQLException {
 		int idGerado = dao.inserir(producao);
-		return idGerado > 0;
+
+		boolean inserido = false;
+
+		if (idGerado > 0) {
+			producao.setIdProducao(idGerado);
+			inserido = true;
+		}
+		return inserido;
 	}
 
 	public boolean atualizar(Producao producao) throws SQLException {
 		return true;
 	}
-	
 
 	public ArrayList<Producao> listarproducaos() {
 		ProducaoDAO dao = new ProducaoDAO();
 		return dao.listarTodos();
 	}
 
-	
 	public boolean excluirproducao(int idproducao) {
 		ProducaoDAO dao = new ProducaoDAO();
 		return dao.excluir(idproducao);
@@ -40,5 +46,4 @@ public class ProducaoBO {
 		return dao.buscaProducaoNaoAssistido(usuario);
 	}
 
-	
 }

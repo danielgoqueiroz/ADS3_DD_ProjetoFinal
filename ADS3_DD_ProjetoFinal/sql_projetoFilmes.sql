@@ -26,8 +26,7 @@ create table producao
 create table artista 
 (
 	idArtista int not null auto_increment primary key,
-    nome varchar(45),
-	dataNascimento date
+    nome varchar(45)
 );
 
 create table producaoArtista 

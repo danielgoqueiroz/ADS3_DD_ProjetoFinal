@@ -4,21 +4,24 @@ import java.util.ArrayList;
 
 public class Producao {
 	
+	
 	private int idProducao;
 	private String titulo;
 	private int ano;
 	private Genero genero;
 	private String diretor;
+	private EnumTipoProducao tipo;
 	private ArrayList<Artista> artistas;
 	private String sinopse;
 	private byte[] capa;
 	private int duracao;
+	private int qtdTemporadas;
 
 	public Producao() {
 		
 	}
 	
-	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, ArrayList<Artista> artistas, String sinopse,byte[] capa) {
+	public Producao(int idProducao, String titulo, int ano, Genero genero, String diretor, EnumTipoProducao tipo , int duracao, int qtdTemporadas, ArrayList<Artista> artistas, String sinopse,byte[] capa) {
 		super();
 		this.idProducao = idProducao;
 		this.titulo = titulo;
@@ -28,6 +31,9 @@ public class Producao {
 		this.artistas = artistas;
 		this.sinopse = sinopse;
 		this.capa=capa;
+		this.duracao = duracao;
+		this.qtdTemporadas = qtdTemporadas;
+		this.setTipo(tipo);
 	}
 	
 	public int getIdProducao() {
@@ -106,5 +112,21 @@ public class Producao {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return this.getTitulo() + " - "+ this.getAno() + " - "+ this.getDuracao() + "min.";
+	}
+
+	public int getQtdTemporadas() {
+		return qtdTemporadas;
+	}
+
+	public void setQtdTemporadas(int qtdTemporadas) {
+		this.qtdTemporadas = qtdTemporadas;
+	}
+
+	public EnumTipoProducao getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(EnumTipoProducao tipo) {
+		this.tipo = tipo;
 	}
 }

@@ -7,36 +7,30 @@ public class Usuario {
 	private String email;
 	private String telefone;
 	private String senha;
-	
-	public Usuario(int idUsuario, String nome, String nickname, String email, String telefone, String senha) {
+	private EnumNivel nivel;
+
+	public Usuario(int idUsuario, String nome, String nickname, String email, String telefone, String senha,
+			EnumNivel nivel) {
 		this.idUsuario = idUsuario;
 		this.nome = nome;
 		this.nickname = nickname;
 		this.email = email;
 		this.telefone = telefone;
 		this.senha = senha;
+		this.nivel = nivel;
 	}
-	
-	
+
 	public Usuario() {
 		super();
 	}
-
 
 	public int getIdUsuario() {
 		return idUsuario;
 	}
 
-
-
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-
-
-
-
-
 
 	public String getNome() {
 		return nome;
@@ -79,9 +73,16 @@ public class Usuario {
 	}
 
 	@Override
-	public String toString(){
-		return ("Id " +this.getIdUsuario() +" Nickname: " + this.getNickname() + "\nE-mail: " +this.getEmail());
+	public String toString() {
+		return ("Id " + this.getIdUsuario() + " Nickname: " + this.getNickname() + "\nE-mail: " + this.getEmail());
+	}
+
+	public EnumNivel getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(EnumNivel nivel) {
+		this.nivel = nivel;
 	};
-	
-	
+
 }

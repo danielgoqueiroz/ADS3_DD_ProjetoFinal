@@ -5,12 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import VO.Filme;
 import VO.Genero;
-import VO.Producao;
 
-public class GeneroDAO extends BaseDAO<Genero>{
-
+public class GeneroDAO extends BaseDAO<Genero> {
 
 	@Override
 	public String getColunasDelete() {
@@ -47,7 +44,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 		Genero genero = new Genero();
 		genero.setIdGenero(resultado.getInt("idgenero"));
 		genero.setDescricao(resultado.getString("descricao"));
-		
+
 		return genero;
 	}
 
@@ -63,7 +60,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	@Override
 	public void setValoresAtributosUpdate(Genero entidade, PreparedStatement stmt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -73,7 +70,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 	}
 
 	public Genero pesquisaPorDescricao(String string) {
-		String sql = (" SELECT * from genero where descricao = '" + string+"';");
+		String sql = (" SELECT * from genero where descricao = '" + string + "';");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
@@ -95,6 +92,7 @@ public class GeneroDAO extends BaseDAO<Genero>{
 		return objetoPesquisado;
 	}
 
+	@Override
 	public Genero pesquisaPorId(int n) {
 		String sql = (" SELECT * from genero where idgenero = " + n + " ");
 		Connection conn = Banco.getConnection();

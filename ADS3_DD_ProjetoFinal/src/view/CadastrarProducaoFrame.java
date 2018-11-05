@@ -1,46 +1,48 @@
 package view;
-import java.nio.file.Files;
+
 import java.awt.EventQueue;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import VO.Artista;
-import VO.Filme;
-import VO.Genero;
-import VO.Producao;
-import controller.ArtistaController;
-import controller.FilmeController;
-import controller.GeneroController;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import VO.Artista;
+import VO.EnumTipoProducao;
+import VO.Genero;
+import VO.Producao;
+import controller.ArtistaController;
+import controller.GeneroController;
+import controller.ProducaoController;
 
 public class CadastrarProducaoFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textDuracao;
 	private JTextField textDiretor;
 	private JTextField textAno;
 	private JTextField textTitulo;
@@ -49,7 +51,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
 	private JButton btnAdicionar;
-	private JComboBox<String> cbTipo;
+	private JComboBox<EnumTipoProducao> cbTipo;
 	private JComboBox<Artista> cbAtores;
 	private JTable table;
 	private JButton btnRemover;
@@ -58,6 +60,7 @@ public class CadastrarProducaoFrame extends JFrame {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					CadastrarProducaoFrame frame = new CadastrarProducaoFrame();
@@ -102,11 +105,6 @@ public class CadastrarProducaoFrame extends JFrame {
 		lblAtor.setBounds(348, 14, 52, 14);
 		contentPane.add(lblAtor);
 
-		JLabel lblDuracao = new JLabel("Dura\u00E7\u00E3o");
-		lblDuracao.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDuracao.setBounds(197, 71, 51, 14);
-		contentPane.add(lblDuracao);
-
 		JLabel lblSinopse = new JLabel("Sinopse");
 		lblSinopse.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSinopse.setBounds(43, 186, 52, 14);
@@ -116,15 +114,36 @@ public class CadastrarProducaoFrame extends JFrame {
 		textPaneSinopse.setBounds(105, 183, 236, 46);
 		contentPane.add(textPaneSinopse);
 
-		textDuracao = new JTextField();
-		textDuracao.setColumns(10);
-		textDuracao.setBounds(255, 65, 85, 20);
-		contentPane.add(textDuracao);
-
 		textDiretor = new JTextField();
 		textDiretor.setColumns(10);
 		textDiretor.setBounds(105, 123, 236, 20);
 		contentPane.add(textDiretor);
+
+		textDuracaoQtdTemp = new JTextField();
+		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
+		contentPane.add(textDuracaoQtdTemp);
+		textDuracaoQtdTemp.setColumns(10);
+
+		cbTipo = new JComboBox<EnumTipoProducao>();
+		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
+
+		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
+		lblDuraoqtdtemp.setBounds(201, 68, 85, 14);
+		contentPane.add(lblDuraoqtdtemp);
+
+		cbTipo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (cbTipo.getSelectedIndex() == 0) {
+					lblDuraoqtdtemp.setText("Duração");
+				} else if (cbTipo.getSelectedIndex() == 1) {
+					lblDuraoqtdtemp.setText("Temporadas");
+				}
+			}
+		});
+
+		cbTipo.setBounds(105, 11, 236, 20);
+		contentPane.add(cbTipo);
 
 		GeneroController gc = new GeneroController();
 
@@ -186,42 +205,61 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (cbTipo.getSelectedIndex() == 0) 
-				{
-					Filme filme = new Filme();//					
-										
-					filme.setTitulo(textTitulo.getText());
-					filme.setSinopse(textPaneSinopse.getText());
-					filme.setDiretor(textTitulo.getText());
-					filme.setGenero((Genero) cbGenero.getSelectedItem());
-					filme.setCapa(image);
-					filme.setDuracao(Integer.parseInt(textDuracaoQtdTemp.getText()));
-					
-					ArrayList<Artista> listArtistas = new ArrayList<Artista>();
+				Producao producao = new Producao();
 
-					for (int i = 0; i < model.getRowCount(); i++) 
-					{
-						Artista artista = new Artista();
+				producao.setTipo((EnumTipoProducao) cbTipo.getSelectedItem());
+				producao.setTitulo(textTitulo.getText());
 
-						artista.setIdArtista((int) model.getValueAt(i, 0));
-						artista.setNome((String) model.getValueAt(i, 1));
+				String ano = textDuracaoQtdTemp.getText();
+				if (ano.isEmpty())
+					ano = "0";
 
-						listArtistas.add(artista);
-					}
+				producao.setAno(Integer.parseInt(ano));
+				producao.setSinopse(textPaneSinopse.getText());
+				producao.setGenero((Genero) cbGenero.getSelectedItem());
+				producao.setDiretor(textDiretor.getText());
+				producao.setCapa(image);
 
-					filme.setArtistas(listArtistas);
-					
-					FilmeController controle = new FilmeController();
-					
-					try {
-						JOptionPane.showMessageDialog(null, controle.salvar(filme));
-					} catch (SQLException ex) {
-						JOptionPane.showMessageDialog(null, ex.getMessage() + "");
+				String duracaoQtdTemp = textDuracaoQtdTemp.getText();
+				if (duracaoQtdTemp.isEmpty())
+					duracaoQtdTemp = "0";
 
-					}					
+				if (producao.getTipo() == EnumTipoProducao.Filme) {
+
+					producao.setDuracao(Integer.parseInt(duracaoQtdTemp));
+					producao.setQtdTemporadas(0);
 				}
+
+				if (producao.getTipo() == EnumTipoProducao.Serie) {
+					producao.setQtdTemporadas(Integer.parseInt(duracaoQtdTemp));
+					producao.setDuracao(0);
+				}
+
+				ArrayList<Artista> listArtistas = new ArrayList<Artista>();
+
+				for (int i = 0; i < model.getRowCount(); i++) {
+					Artista artista = new Artista();
+
+					artista.setIdArtista((int) model.getValueAt(i, 0));
+					artista.setNome((String) model.getValueAt(i, 1));
+
+					listArtistas.add(artista);
+				}
+
+				producao.setArtistas(listArtistas);
+
+				ProducaoController controle = new ProducaoController();
+
+				try {
+					JOptionPane.showMessageDialog(null, controle.salvar(producao));
+				} catch (SQLException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
+
+				}
+
 			}
 		});
 		btnCadastrar.setBounds(565, 206, 91, 23);
@@ -236,16 +274,17 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		JButton btnImagem = new JButton("...");
 		btnImagem.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.showSaveDialog(null);
 				File f = chooser.getSelectedFile();
-				ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+				new ImageIcon(f.getAbsolutePath());
 				textImage.setText(f.getAbsolutePath());
-				
+
 				try {
 					image = Files.readAllBytes(f.toPath());
-					
+
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -268,32 +307,13 @@ public class CadastrarProducaoFrame extends JFrame {
 		lblTipo.setBounds(10, 14, 85, 14);
 		contentPane.add(lblTipo);
 
-		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
-		lblDuraoqtdtemp.setBounds(371, 155, 85, 14);
-		contentPane.add(lblDuraoqtdtemp);
-
-		cbTipo = new JComboBox<String>();
-		cbTipo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (cbTipo.getSelectedIndex() == 0) {
-					lblDuraoqtdtemp.setText("Duração");
-				} else if (cbTipo.getSelectedIndex() == 1) {
-					lblDuraoqtdtemp.setText("Temporadas");
-				}
-
-				// lblDuraoqtdtemp
-			}
-		});
-		cbTipo.setModel(new DefaultComboBoxModel<String>(new String[] { "Filme", "S\u00E9rie" }));
-		cbTipo.setBounds(105, 11, 236, 20);
-		contentPane.add(cbTipo);
-
 		btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.setBounds(565, 10, 91, 23);
 		contentPane.add(btnAdicionar);
 
 		btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.removeRow(table.getSelectedRow());
 
@@ -302,14 +322,9 @@ public class CadastrarProducaoFrame extends JFrame {
 				}
 			}
 		});
-		btnRemover.setBounds(565, 151, 91, 23);
+		btnRemover.setBounds(371, 151, 285, 23);
 		contentPane.add(btnRemover);
 		btnRemover.setEnabled(false);
-
-		textDuracaoQtdTemp = new JTextField();
-		textDuracaoQtdTemp.setBounds(469, 152, 86, 20);
-		contentPane.add(textDuracaoQtdTemp);
-		textDuracaoQtdTemp.setColumns(10);
 
 		table.removeColumn(table.getColumnModel().getColumn(0));
 
