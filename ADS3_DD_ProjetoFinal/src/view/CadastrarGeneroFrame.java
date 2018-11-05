@@ -46,7 +46,7 @@ public class CadastrarGeneroFrame extends JFrame {
 	 */
 	public CadastrarGeneroFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 109);
+		setBounds(100, 100, 450, 136);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,18 +68,24 @@ public class CadastrarGeneroFrame extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Genero genero = new Genero();
-				
 				genero.setDescricao(textNome.getText());
-				
 				
 				GeneroController controle = new GeneroController();
 				
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(genero));
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage() + "");
-					
+				Genero generoTemp = controle.buscaGeneroPorNome(textNome.getText() + "");
+				
+				if(generoTemp == null) {
+					try {
+						JOptionPane.showMessageDialog(null, controle.salvar(genero));
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage() + "");
+					}
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Genero: " + generoTemp.getDescricao() + " já cadastrado.");
+
 				}
+				
+				
 			
 			}
 

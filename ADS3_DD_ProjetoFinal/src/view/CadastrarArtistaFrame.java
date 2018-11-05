@@ -21,7 +21,6 @@ public class CadastrarArtistaFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
-	private JTextField textDtNasc;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,7 +40,7 @@ public class CadastrarArtistaFrame extends JFrame {
 	 */
 	public CadastrarArtistaFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 347, 154);
+		setBounds(100, 100, 347, 133);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,17 +56,8 @@ public class CadastrarArtistaFrame extends JFrame {
 		textNome.setColumns(10);
 		
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(217, 83, 89, 20);
+		btnSalvar.setBounds(216, 67, 89, 20);
 		contentPane.add(btnSalvar);
-		
-		JLabel lblNewLabel = new JLabel("Dt. Nasc.");
-		lblNewLabel.setBounds(34, 55, 59, 14);
-		contentPane.add(lblNewLabel);
-		
-		textDtNasc = new JTextField();
-		textDtNasc.setBounds(94, 52, 212, 20);
-		contentPane.add(textDtNasc);
-		textDtNasc.setColumns(10);
 		
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -78,15 +68,20 @@ public class CadastrarArtistaFrame extends JFrame {
 				
 				ArtistaController controle = new ArtistaController();
 				
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(artista));
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage() + "");
+				Artista artistaTemp = controle.buscarArtistaPorNome(textNome.getText() + "");
+				
+				if(artistaTemp == null) {
+					try {
+						JOptionPane.showMessageDialog(null, controle.salvar(artista));
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage() + "");
 					
-				}
+					}
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Artista: " + artistaTemp.getNome() + " já cadastrado.");
 			
+				}
 			}
-
 			
 		});
 		

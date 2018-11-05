@@ -33,7 +33,7 @@ public class Genero {
 		
 		@Override
 		public String toString() {
-			return this.getDescricao();
+			return this.getIdGenero() + " "+this.getDescricao();
 		}
 		
 }

@@ -22,9 +22,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import org.omg.PortableServer.ServantRetentionPolicyOperations;
+
 import VO.Usuario;
 import controller.UsuarioController;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Toolkit;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +56,11 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+//		Frame.getWindows().
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/extras/eye-2317618_960_720.png")));
+		setTitle("Qual filme voc\u00EA j\u00E1 assitiu?");
+		setResizable(false);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		GroupLayout groupLayout = new GroupLayout(this);

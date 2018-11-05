@@ -19,4 +19,10 @@ public class GeneroBO {
 		return dao.listarTodos();
 	}
 
+	public Genero buscaGeneroPorNome(String string) {
+		GeneroDAO dao = new GeneroDAO();
+		return dao.buscaGeneroPorNome(string);
+		
+	}
+
 }

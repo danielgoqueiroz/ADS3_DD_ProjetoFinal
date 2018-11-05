@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import VO.Artista;
+import VO.Genero;
 import VO.Producao;
 
 public class ArtistaDAO extends BaseDAO<Artista> {
@@ -91,6 +92,34 @@ public class ArtistaDAO extends BaseDAO<Artista> {
 		}
 
 		return listArtistas;
+	}
+
+	public Artista buscaArtistaPorNome(String string) {
+		String sql = (" SELECT * from artista where nome = '" + string + "' ;");
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Artista objetoPesquisado = null;
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+				objetoPesquisado = construirObjetoConsultado(resultado);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro pesquisa nome " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return objetoPesquisado;
+	}
+
+	public Artista buscaArtistasPorNome(String nome) {
+		
+		return null;
 	}
 
 }
