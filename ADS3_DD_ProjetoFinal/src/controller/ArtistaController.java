@@ -31,9 +31,19 @@ public class ArtistaController {
 		return bo.listarTodos();
 	}
 
-	private String validarArtista(Artista Artista) {
-		// TODO Auto-generated method stub
+	private String validarArtista(Artista artista) {
+		String mensagem = "";
+		if(bo.buscaArtistaPorNome(artista.getNome() + "" ) != null) {
+			mensagem += " Artista ja cadastrado ";
+		}
+		
+		bo.buscaArtistaPorNome(artista.getNome());
+		
 		return "";
+	}
+
+	public Artista buscarArtistaPorNome(String string) {
+		return bo.buscaArtistaPorNome(string);
 	}
 
 }
