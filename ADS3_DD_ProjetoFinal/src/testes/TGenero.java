@@ -12,9 +12,11 @@ public class TGenero {
 		Genero gen = new Genero();
 		GeneroController controller = new GeneroController();
 		
-		gen.setDescricao("Terror");
-		System.out.println(controller.salvar(gen) + "");
+//		gen.setDescricao("Terror");
+//		System.out.println(controller.salvar(gen) + "");
 		
+		
+		System.out.println(controller.buscaGeneroPorNome("Comédia").toString());
 	}
 
 }

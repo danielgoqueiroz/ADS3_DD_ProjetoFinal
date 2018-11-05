@@ -78,6 +78,7 @@ public class CadastrarArtistaFrame extends JFrame {
 				
 				ArtistaController controle = new ArtistaController();
 				
+				
 				try {
 					JOptionPane.showMessageDialog(null, controle.salvar(artista));
 				} catch (SQLException e) {

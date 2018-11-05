@@ -116,4 +116,27 @@ public class GeneroDAO extends BaseDAO<Genero> {
 		return objetoPesquisado;
 	}
 
+	public Genero buscaGeneroPorNome(String string) {
+		String sql = (" SELECT * from genero where descricao = '" + string + "' ;");
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Genero objetoPesquisado = null;
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+				objetoPesquisado = construirObjetoConsultado(resultado);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro pesquisa nome " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return objetoPesquisado;
+	}
+
 }

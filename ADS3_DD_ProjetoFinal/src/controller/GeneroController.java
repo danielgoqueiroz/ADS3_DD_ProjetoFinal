@@ -32,8 +32,16 @@ public class GeneroController {
 	}
 
 	private String validarGenero(Genero genero) {
-		// TODO Auto-generated method stub
+		String msg = "";
+		if (bo.buscaGeneroPorNome(genero.getDescricao()) != null) {
+			msg += "-Genero já cadastrado\n";
+		};
 		return "";
+	}
+
+	public Genero buscaGeneroPorNome(String string) {
+		return bo.buscaGeneroPorNome(string);
+		
 	}
 
 }
