@@ -16,16 +16,12 @@ import view.TelaInicial;
 public class TCadastroUsuario {
 
 	public static void main(String[] args) throws SQLException {
-		Producao p = new Producao();
-		Usuario u = new Usuario();
-		p.setIdProducao(1);
-		u.setIdUsuario(5);
-//		TelaInicial tela = new TelaInicial(u);
-//		tela.show();
-		ProducaoAssistida producaoAssitida = new ProducaoAssistida(u, p, 1);
-
-		ProduçãoAssistidaController controle = new ProduçãoAssistidaController();
-		controle.cadastrarProducaoAssitida(producaoAssitida);
+		
+		Usuario usr = new Usuario();
+		usr.setIdUsuario(1);;
+		
+		TelaInicial tela = new TelaInicial(usr);
+		tela.setVisible(true);
 		
 	}
 

@@ -29,6 +29,8 @@ import controller.UsuarioController;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.Window;
+import javax.swing.ImageIcon;
 
 public class LoginFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -57,6 +59,9 @@ public class LoginFrame extends JFrame {
 	 */
 	public LoginFrame() {
 //		Frame.getWindows().
+		
+		
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setTitle("Qual filme voc\u00EA j\u00E1 assitiu?");
 		setResizable(false);
@@ -123,11 +128,8 @@ public class LoginFrame extends JFrame {
 					usuarioLogin = controle.realizaLogin(usuario);
 					
 					if (usuarioLogin.getIdUsuario() > 0) {
-//						JOptionPane.showMessageDialog(null, "Login de " + usuarioLogin.toString() + " realizado com sucesso.");
 						TelaInicial tela = new TelaInicial(usuarioLogin);
 						tela.setVisible(true);
-						
-//						tela.setUser(usuarioLogin);
 						tela.setTitle(usuarioLogin.toString());
 						
 						hide();
@@ -162,6 +164,8 @@ public class LoginFrame extends JFrame {
 				btnNovoUsuario.setEnabled(false);
 			}
 		});
+		
+		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
 	}
 	
 	

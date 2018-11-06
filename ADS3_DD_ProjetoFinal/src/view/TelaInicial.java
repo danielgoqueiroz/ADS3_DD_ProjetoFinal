@@ -6,12 +6,16 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -30,13 +34,14 @@ import VO.Producao;
 import VO.ProducaoAssistida;
 import VO.Usuario;
 import controller.FilmesAssistidosController;
+import controller.GeneroController;
 import controller.ProducaoController;
+import java.awt.Toolkit;
+import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaInicial extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Usuario usuarioLogado;
@@ -49,8 +54,17 @@ public class TelaInicial extends JFrame {
 	private JComboBox<Genero> cbGenero;
 	private JTextArea textSinopse;
 	private FileOutputStream fos;
+	private JLabel lblTitulo;
+	private JLabel lblUltimaProducao;
+	
+	
 
 	public TelaInicial(Usuario usuario) {
+		
+		setResizable(false);
+		setFont(new Font("Tahoma", Font.PLAIN, 12));
+		setForeground(Color.WHITE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaInicial.class.getResource("/extras/eye-2317618_960_720.png")));
 
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,6 +134,7 @@ public class TelaInicial extends JFrame {
 		textAno.setColumns(10);
 
 		cbGenero = new JComboBox();
+		cbGenero.setModel(new DefaultComboBoxModel(new String[] {""}));
 		cbGenero.setEnabled(false);
 		cbGenero.setBounds(518, 66, 117, 20);
 		getContentPane().add(cbGenero);
@@ -222,13 +237,14 @@ public class TelaInicial extends JFrame {
 		btnRecarregar.setBounds(106, 336, 529, 23);
 		getContentPane().add(btnRecarregar);
 
-		usuarioLogado = usuario;
+		
 
 		producao = new Producao();
 		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
 
 		producao = buscaProducaoAssistida(usuarioLogado);
-
+		
+//		populaCamposProducaoComNovoFilme(producao);
 		for (int i = 0; i < table.getRowCount(); i++) {
 			model.removeRow(i);
 		}
@@ -238,11 +254,12 @@ public class TelaInicial extends JFrame {
 			lblTitulo.setText(producao.getTitulo() + "");
 			textAno.setText(producao.getAno() + "");
 			textDiretor.setText(producao.getDiretor() + "");
-			cbGenero.setSelectedItem(producao.getGenero());
+//			cbGenero.setSelectedItem(producao.getGenero());
+			cbGenero.addItem(producao.getGenero());
 			textSinopse.setText(producao.getSinopse());
 			textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
 			btnRecarregar.setEnabled(false);
-
+			
 			ArrayList<Artista> artistas = producao.getArtistas();
 
 			for (Artista artista : artistas) {
@@ -263,6 +280,7 @@ public class TelaInicial extends JFrame {
 				ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
 				lblImagem.setIcon(icon);
 			} catch (Exception e) {
+				System.out.println(e);
 			}
 
 		} else {
@@ -272,6 +290,7 @@ public class TelaInicial extends JFrame {
 			textDiretor.setText("");
 			textNota.setText("");
 			textSinopse.setText("");
+			cbGenero.removeAll();
 			textDuracaoQtdTempodara.setText("");
 			btnRecarregar.setEnabled(true);
 		}
@@ -324,6 +343,7 @@ public class TelaInicial extends JFrame {
 					lblTitulo.setText(producao.getTitulo() + "");
 					textAno.setText(producao.getAno() + "");
 					textDiretor.setText(producao.getDiretor() + "");
+					
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
@@ -367,6 +387,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS1.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -436,8 +457,10 @@ public class TelaInicial extends JFrame {
 			}
 
 		});
-
+		
+		
 		btnS2.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("2");
@@ -509,6 +532,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS3.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("3");
@@ -580,6 +604,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS4.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("4");
@@ -651,6 +676,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS5.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lblNota.setText("5");
@@ -717,11 +743,14 @@ public class TelaInicial extends JFrame {
 				revalidate();
 
 				btnSim.show();
-
+				
 			}
+			
+			
 		});
-
+		
 		btnSim.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				btnSim.hide();
@@ -736,12 +765,20 @@ public class TelaInicial extends JFrame {
 			}
 
 		});
-
+		
+		
+		
+		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
+		
+		
+		
 	}
-
+	
+	
+	
 	public void setUser(Usuario usuario) {
 		usuarioLogado = usuario;
-		System.out.println("Usuário logado: " + usuario.toString());
+		System.out.println("Usuário logado: " + usuario.toStringTitulo());
 	}
 
 	public Producao buscaProducaoAssistida(Usuario usuario) {
@@ -754,8 +791,22 @@ public class TelaInicial extends JFrame {
 		ProducaoAssistida filmeAssitido = new ProducaoAssistida(usuarioLogado, producao, nota);
 
 		controle.cadastrarProducaoAssistidaPorUsuario(filmeAssitido);
-
-//
+		
+		
+		
+	}
+	
+	public void populaCamposProducaoComNovoFilme(Producao producaoTemp) {
+		
+		lblTitulo.setText(producaoTemp.getTitulo() + "");
+		textAno.setText(producaoTemp.getAno() + "");
+		textDiretor.setText(producaoTemp.getDiretor() + "");
+		cbGenero.setSelectedItem(producaoTemp.getGenero().getDescricao());
+		textSinopse.setText(producaoTemp.getSinopse());
+		textDuracaoQtdTempodara.setText(producaoTemp.getDuracao() + "");
+		
+		lblUltimaProducao.setText(producaoTemp.getTitulo());
+		
 	}
 
 	public static Usuario getUsuarioLogado() {
@@ -765,4 +816,6 @@ public class TelaInicial extends JFrame {
 	public static void setUsuarioLogado(Usuario usuarioLogado) {
 		usuarioLogado = usuarioLogado;
 	}
+	
+	
 }

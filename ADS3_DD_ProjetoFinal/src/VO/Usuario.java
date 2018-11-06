@@ -74,9 +74,13 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return ("Id " + this.getIdUsuario() + " Nickname: " + this.getNickname() + "\nE-mail: " + this.getEmail());
+		return ("Usuario " + this.getIdUsuario() + " Nickname: " + this.getNickname() + "\nE-mail: " + this.getEmail());
 	}
-
+	
+	public String toStringTitulo() {
+		return ("Usuário logado: " + this.getNickname() + " - E-mail: " + this.getEmail());
+	}
+	
 	public EnumNivel getNivel() {
 		return nivel;
 	}
