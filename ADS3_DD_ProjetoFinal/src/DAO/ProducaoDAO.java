@@ -125,10 +125,8 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 	// OK
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
-		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao " + "where idProducao = 6"
-		// + "where idProducao not in (select idProducao from producoesAssistidas where
-		// idUsuario = "
-		// + usuario.getIdUsuario() + " ) " + "order by rand() limit 1 "
+		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao " 
+         + "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = " + usuario.getIdUsuario() + " ) " + "order by rand() limit 1 "
 		);
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
@@ -155,5 +153,33 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 	@Override
 	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
 
+	}
+
+	public double BuscarMediaProducao(Producao p) 
+	{
+		double valor=0;
+		
+		String sql = (" SELECT avg(nota) nota FROM danie648_db_ads3_dd_filme.producoesAssistidas where idProducao =  " + p.getIdProducao());
+
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Producao objetoPesquisado = null;
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+				valor = resultado.getDouble("nota");
+			}
+		} catch (Exception e) {
+			System.out.println("Erro busca produção " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return valor;
+		
 	}
 }

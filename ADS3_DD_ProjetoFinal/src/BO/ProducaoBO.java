@@ -33,7 +33,6 @@ public class ProducaoBO {
 	}
 
 	public boolean excluirproducao(int idproducao) {
-		ProducaoDAO dao = new ProducaoDAO();
 		return dao.excluir(idproducao);
 	}
 
@@ -41,9 +40,12 @@ public class ProducaoBO {
 		return dao.buscaProducao(idProducao);
 	}
 
-	public Producao buscarProducaoNaoAssistido(Usuario usuario) {
-		ProducaoDAO dao = new ProducaoDAO();
+	public Producao buscarProducaoNaoAssistido(Usuario usuario) {		
 		return dao.buscaProducaoNaoAssistido(usuario);
+	}
+	
+	public double BuscarMediaProducao(Producao p) {
+		return dao.BuscarMediaProducao(p);
 	}
 
 }

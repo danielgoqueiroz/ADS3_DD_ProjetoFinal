@@ -133,12 +133,31 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(textAno);
 		textAno.setColumns(10);
 
+
 		cbGenero = new JComboBox();
-		cbGenero.setModel(new DefaultComboBoxModel(new String[] {""}));
+
+		GeneroController gc = new GeneroController();
+
+		final List<Genero> generos = gc.listarTodos();
+		
+		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
+
 		cbGenero.setEnabled(false);
 		cbGenero.setBounds(518, 66, 117, 20);
 		getContentPane().add(cbGenero);
 
+		cbGenero.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public java.awt.Component getListCellRendererComponent(final JList<?> list, final Object value,
+					final int index, final boolean isSelected, final boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof Genero)
+					setText(((Genero) value).getDescricao());
+
+				return this;
+			}
+		});		
+		
 		textDiretor = new JTextField();
 		textDiretor.setEnabled(false);
 		textDiretor.setBounds(356, 90, 279, 20);
@@ -241,13 +260,30 @@ public class TelaInicial extends JFrame {
 
 		producao = new Producao();
 		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+		
+		int rowCount = table.getRowCount();
+		for (int i = 0; i < rowCount; i++) {
+			model.removeRow(0);
+		}
+
+		lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+		textAno.setText("");
+		textDiretor.setText("");
+		textNota.setText("");
+		textSinopse.setText("");
+		textDuracaoQtdTempodara.setText("");
+		lblImagem.setIcon(null);
+		btnRecarregar.setEnabled(false);
 
 		producao = buscaProducaoAssistida(usuarioLogado);
+
 		
 //		populaCamposProducaoComNovoFilme(producao);
 		for (int i = 0; i < table.getRowCount(); i++) {
 			model.removeRow(i);
 		}
+
+
 
 		if (producao.getIdProducao() > 0) {
 
@@ -258,6 +294,8 @@ public class TelaInicial extends JFrame {
 			cbGenero.addItem(producao.getGenero());
 			textSinopse.setText(producao.getSinopse());
 			textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+			textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
+
 			btnRecarregar.setEnabled(false);
 			
 			ArrayList<Artista> artistas = producao.getArtistas();
@@ -285,13 +323,6 @@ public class TelaInicial extends JFrame {
 
 		} else {
 
-			lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-			textAno.setText("");
-			textDiretor.setText("");
-			textNota.setText("");
-			textSinopse.setText("");
-			cbGenero.removeAll();
-			textDuracaoQtdTempodara.setText("");
 			btnRecarregar.setEnabled(true);
 		}
 		revalidate();
@@ -332,11 +363,23 @@ public class TelaInicial extends JFrame {
 		btnNao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
+				}
+
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
 				producao = buscaProducaoAssistida(usuarioLogado);
 
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
-				}
 
 				if (producao.getIdProducao() > 0) {
 
@@ -347,6 +390,7 @@ public class TelaInicial extends JFrame {
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 					btnRecarregar.setEnabled(false);
 
 					ArrayList<Artista> artistas = producao.getArtistas();
@@ -372,14 +416,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -402,12 +438,22 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 1);
 
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
 				}
 
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
+				producao = buscaProducaoAssistida(usuarioLogado);
+				
 				if (producao.getIdProducao() > 0) {
 
 					lblTitulo.setText(producao.getTitulo() + "");
@@ -416,7 +462,9 @@ public class TelaInicial extends JFrame {
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 					btnRecarregar.setEnabled(false);
+					
 
 					ArrayList<Artista> artistas = producao.getArtistas();
 
@@ -441,14 +489,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -475,11 +515,21 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 2);
 
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
 				}
+
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
+				producao = buscaProducaoAssistida(usuarioLogado);
 
 				if (producao.getIdProducao() > 0) {
 
@@ -489,6 +539,7 @@ public class TelaInicial extends JFrame {
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 					btnRecarregar.setEnabled(false);
 
 					ArrayList<Artista> artistas = producao.getArtistas();
@@ -514,14 +565,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -547,12 +590,22 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 3);
 
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
 				}
 
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
+				producao = buscaProducaoAssistida(usuarioLogado);
+				
 				if (producao.getIdProducao() > 0) {
 
 					lblTitulo.setText(producao.getTitulo() + "");
@@ -561,6 +614,7 @@ public class TelaInicial extends JFrame {
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 					btnRecarregar.setEnabled(false);
 
 					ArrayList<Artista> artistas = producao.getArtistas();
@@ -586,14 +640,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -619,11 +665,21 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 4);
 
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
 				}
+
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
+				producao = buscaProducaoAssistida(usuarioLogado);
 
 				if (producao.getIdProducao() > 0) {
 
@@ -633,6 +689,7 @@ public class TelaInicial extends JFrame {
 					cbGenero.setSelectedItem(producao.getGenero());
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 					btnRecarregar.setEnabled(false);
 
 					ArrayList<Artista> artistas = producao.getArtistas();
@@ -658,14 +715,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -691,12 +740,22 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 5);
 
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				for (int i = 0; i < table.getRowCount(); i++) {
-					model.removeRow(i);
+				int rowCount = table.getRowCount();
+				for (int i = 0; i < rowCount; i++) {
+					model.removeRow(0);
 				}
 
+				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+				textAno.setText("");
+				textDiretor.setText("");
+				textNota.setText("");
+				textSinopse.setText("");
+				textDuracaoQtdTempodara.setText("");
+				lblImagem.setIcon(null);
+				btnRecarregar.setEnabled(false);
+				
+				producao = buscaProducaoAssistida(usuarioLogado);
+				
 				if (producao.getIdProducao() > 0) {
 
 					lblTitulo.setText(producao.getTitulo() + "");
@@ -706,6 +765,7 @@ public class TelaInicial extends JFrame {
 					textSinopse.setText(producao.getSinopse());
 					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
 					btnRecarregar.setEnabled(false);
+					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
 
 					ArrayList<Artista> artistas = producao.getArtistas();
 
@@ -730,14 +790,6 @@ public class TelaInicial extends JFrame {
 					}
 
 				} else {
-
-					lblTitulo.setText(
-							"Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-					textAno.setText("");
-					textDiretor.setText("");
-					textNota.setText("");
-					textSinopse.setText("");
-					textDuracaoQtdTempodara.setText("");
 					btnRecarregar.setEnabled(true);
 				}
 				revalidate();
@@ -784,6 +836,11 @@ public class TelaInicial extends JFrame {
 	public Producao buscaProducaoAssistida(Usuario usuario) {
 		ProducaoController controle = new ProducaoController();
 		return controle.buscaProducaoNaoAssistido(usuario);
+	}
+	
+	public double BuscarMediaProducao(Producao p) {
+		ProducaoController controle = new ProducaoController();
+		return controle.BuscarMediaProducao(p);
 	}
 
 	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Producao producao, int nota) {
