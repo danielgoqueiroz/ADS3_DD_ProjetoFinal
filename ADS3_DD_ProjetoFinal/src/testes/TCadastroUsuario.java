@@ -18,7 +18,7 @@ public class TCadastroUsuario {
 	public static void main(String[] args) throws SQLException {
 		
 		Usuario usr = new Usuario();
-		usr.setIdUsuario(1);;
+		usr.setIdUsuario(3);;
 		
 		TelaInicial tela = new TelaInicial(usr);
 		tela.setVisible(true);

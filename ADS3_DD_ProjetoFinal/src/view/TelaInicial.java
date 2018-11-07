@@ -56,10 +56,29 @@ public class TelaInicial extends JFrame {
 	private FileOutputStream fos;
 	private JLabel lblTitulo;
 	private JLabel lblUltimaProducao;
+	private JButton btnRecarregar;
+	private JLabel lblImagem;
+	private DefaultTableModel model;
+	private JLabel lblDiretor;
+	private JLabel lblAtores;
+	private JLabel lblSinopse;
+	private JLabel lblDurao;
+	private JLabel lblNota;
+	private JButton btnNao;
+	private JButton btnSim;
+	private JLabel lblJVi;
+	private JLabel lblAno;
+	private JLabel lblGenero;
+	private JButton btnS1;
+	private JButton btnS2;
+	private JButton btnS3;
+	private JButton btnS4;
+	private JButton btnS5;
 	
 	
 
 	public TelaInicial(Usuario usuario) {
+		usuarioLogado = usuario;
 		
 		setResizable(false);
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -120,7 +139,7 @@ public class TelaInicial extends JFrame {
 		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
 		scrollPane.setViewportView(table);
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model = (DefaultTableModel) table.getModel();
 
 		scrollPane.setBounds(356, 118, 279, 75);
 		getContentPane().add(scrollPane);
@@ -181,78 +200,81 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(textDuracaoQtdTempodara);
 		textDuracaoQtdTempodara.setColumns(10);
 
-		JButton btnNao = new JButton("N\u00C3O");
+		btnNao = new JButton("N\u00C3O");
 		btnNao.setBounds(7, 7, 89, 330);
 		getContentPane().add(btnNao);
 
 		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		JLabel lblJVi = new JLabel("Voc\u00EA j\u00E1 viu?");
+		
+		
+		 lblJVi = new JLabel("Voc\u00EA j\u00E1 viu?");
 		lblJVi.setBounds(106, 11, 529, 22);
 		getContentPane().add(lblJVi);
 		lblJVi.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblJVi.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblTitulo = new JLabel("Nome");
+		lblTitulo = new JLabel("Nome");
 		lblTitulo.setBounds(106, 44, 529, 22);
 		getContentPane().add(lblTitulo);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblAno = new JLabel("Ano");
+		lblAno = new JLabel("Ano");
 		lblAno.setBounds(272, 69, 77, 14);
 		getContentPane().add(lblAno);
 		lblAno.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAno.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblGenero = new JLabel("Genero");
+		lblGenero = new JLabel("Genero");
 		lblGenero.setBounds(452, 69, 64, 14);
 		getContentPane().add(lblGenero);
 		lblGenero.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblDiretor = new JLabel("Diretor");
+		lblDiretor = new JLabel("Diretor");
 		lblDiretor.setBounds(272, 90, 77, 17);
 		getContentPane().add(lblDiretor);
 		lblDiretor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDiretor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblAtores = new JLabel("Atores");
+		lblAtores = new JLabel("Atores");
 		lblAtores.setBounds(272, 118, 77, 14);
 		getContentPane().add(lblAtores);
 		lblAtores.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAtores.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblSinopse = new JLabel("Sinopse");
+		
+		lblSinopse = new JLabel("Sinopse");
 		lblSinopse.setBounds(272, 204, 77, 22);
 		getContentPane().add(lblSinopse);
 		lblSinopse.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSinopse.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblDurao = new JLabel("Dura\u00E7\u00E3o");
+		lblDurao = new JLabel("Dura\u00E7\u00E3o");
 		lblDurao.setBounds(452, 293, 64, 14);
 		getContentPane().add(lblDurao);
 		lblDurao.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDurao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		JLabel lblNota = new JLabel("Nota");
+		lblNota = new JLabel("Nota");
 		lblNota.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNota.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNota.setBounds(272, 293, 77, 14);
 		getContentPane().add(lblNota);
 
-		JLabel lblImagem = new JLabel("");
+		lblImagem = new JLabel("");
 		lblImagem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImagem.setBounds(106, 69, 170, 241);
 		getContentPane().add(lblImagem);
 
-		JLabel lblUltimaProducao = new JLabel("\u00DAltimo filme");
+		lblUltimaProducao = new JLabel("\u00DAltimo filme");
 		lblUltimaProducao.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUltimaProducao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUltimaProducao.setBounds(106, 370, 529, 14);
 		getContentPane().add(lblUltimaProducao);
 
-		JButton btnRecarregar = new JButton("Recarregar");
+		btnRecarregar = new JButton("Recarregar");
 		btnRecarregar.setBounds(106, 336, 529, 23);
 		getContentPane().add(btnRecarregar);
 
@@ -333,92 +355,94 @@ public class TelaInicial extends JFrame {
 
 		revalidate();
 
-		JButton btnSim = new JButton("SIM");
+		btnSim = new JButton("SIM");
 		btnSim.setBounds(645, 7, 83, 330);
 		getContentPane().add(btnSim);
 
 		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		JButton btnS1 = new JButton("1");
+		btnS1 = new JButton("1");
 
 		btnS1.setBounds(645, 287, 83, 50);
 		getContentPane().add(btnS1);
 
-		JButton btnS2 = new JButton("2");
+		btnS2 = new JButton("2");
 		btnS2.setBounds(645, 217, 83, 50);
 		getContentPane().add(btnS2);
 
-		JButton btnS3 = new JButton("3");
+		btnS3 = new JButton("3");
 		btnS3.setBounds(645, 147, 83, 50);
 		getContentPane().add(btnS3);
 
-		JButton btnS4 = new JButton("4");
+		btnS4 = new JButton("4");
 		btnS4.setBounds(645, 77, 83, 50);
 		getContentPane().add(btnS4);
 
-		JButton btnS5 = new JButton("5");
+		btnS5 = new JButton("5");
 		btnS5.setBounds(645, 7, 83, 50);
 		getContentPane().add(btnS5);
 
 		btnNao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
 				
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-					btnRecarregar.setEnabled(false);
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
+				populaCamposProducaoComNovoFilme(buscaProducaoAssistida(usuarioLogado));
+				
+//				int rowCount = table.getRowCount();
+//				for (int i = 0; i < rowCount; i++) {
+//					model.removeRow(0);
+//				}
+//
+//				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+//				textAno.setText("");
+//				textDiretor.setText("");
+//				textNota.setText("");
+//				textSinopse.setText("");
+//				textDuracaoQtdTempodara.setText("");
+//				lblImagem.setIcon(null);
+//				btnRecarregar.setEnabled(false);
+//				
+//				producao = buscaProducaoAssistida(usuarioLogado);
+//
+//
+//				if (producao.getIdProducao() > 0) {
+//
+//					lblTitulo.setText(producao.getTitulo() + "");
+//					textAno.setText(producao.getAno() + "");
+//					textDiretor.setText(producao.getDiretor() + "");
+//					
+//					cbGenero.setSelectedItem(producao.getGenero());
+//					textSinopse.setText(producao.getSinopse());
+//					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+//					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
+//					btnRecarregar.setEnabled(false);
+//
+//					ArrayList<Artista> artistas = producao.getArtistas();
+//
+//					for (Artista artista : artistas) {
+//
+//						Object[] values = new Object[2];
+//
+//						values[0] = artista.getIdArtista();
+//						values[1] = artista.getNome();
+//
+//						model.addRow(values);
+//					}
+//
+//					try {
+//						File tempFile = File.createTempFile("jpg", "Maniac");
+//						fos = new FileOutputStream(tempFile);
+//						fos.write(producao.getCapa());
+//
+//						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
+//						lblImagem.setIcon(icon);
+//					} catch (Exception ex) {
+//					}
+//
+//				} else {
+//					btnRecarregar.setEnabled(true);
+//				}
+//				revalidate();
 			}
 		});
 
@@ -740,59 +764,59 @@ public class TelaInicial extends JFrame {
 
 				cadastrarFilmeAssitido(usuarioLogado, producao, 5);
 
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
-				
-				producao = buscaProducaoAssistida(usuarioLogado);
-				
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					btnRecarregar.setEnabled(false);
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
+//				int rowCount = table.getRowCount();
+//				for (int i = 0; i < rowCount; i++) {
+//					model.removeRow(0);
+//				}
+//
+//				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+//				textAno.setText("");
+//				textDiretor.setText("");
+//				textNota.setText("");
+//				textSinopse.setText("");
+//				textDuracaoQtdTempodara.setText("");
+//				lblImagem.setIcon(null);
+//				btnRecarregar.setEnabled(false);
+//				
+//				producao = buscaProducaoAssistida(usuarioLogado);
+//				
+//				if (producao.getIdProducao() > 0) {
+//
+//					lblTitulo.setText(producao.getTitulo() + "");
+//					textAno.setText(producao.getAno() + "");
+//					textDiretor.setText(producao.getDiretor() + "");
+//					cbGenero.setSelectedItem(producao.getGenero());
+//					textSinopse.setText(producao.getSinopse());
+//					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+//					btnRecarregar.setEnabled(false);
+//					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
+//
+//					ArrayList<Artista> artistas = producao.getArtistas();
+//
+//					for (Artista artista : artistas) {
+//
+//						Object[] values = new Object[2];
+//
+//						values[0] = artista.getIdArtista();
+//						values[1] = artista.getNome();
+//
+//						model.addRow(values);
+//					}
+//
+//					try {
+//						File tempFile = File.createTempFile("jpg", "Maniac");
+//						fos = new FileOutputStream(tempFile);
+//						fos.write(producao.getCapa());
+//
+//						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
+//						lblImagem.setIcon(icon);
+//					} catch (Exception ex) {
+//					}
+//
+//				} else {
+//					btnRecarregar.setEnabled(true);
+//				}
+//				revalidate();
 
 				btnSim.show();
 				
@@ -819,7 +843,7 @@ public class TelaInicial extends JFrame {
 		});
 		
 		
-		
+		//posiciona o Frame no centro da tela
 		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
 		
 		
@@ -849,21 +873,65 @@ public class TelaInicial extends JFrame {
 
 		controle.cadastrarProducaoAssistidaPorUsuario(filmeAssitido);
 		
-		
+		buscaProducaoAssistida(usuarioLogado);
 		
 	}
 	
 	public void populaCamposProducaoComNovoFilme(Producao producaoTemp) {
 		
-		lblTitulo.setText(producaoTemp.getTitulo() + "");
-		textAno.setText(producaoTemp.getAno() + "");
-		textDiretor.setText(producaoTemp.getDiretor() + "");
-		cbGenero.setSelectedItem(producaoTemp.getGenero().getDescricao());
-		textSinopse.setText(producaoTemp.getSinopse());
-		textDuracaoQtdTempodara.setText(producaoTemp.getDuracao() + "");
+		int rowCount = table.getRowCount();
+		for (int i = 0; i < rowCount; i++) {
+			model.removeRow(0);
+		}
+
+		lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+		textAno.setText("");
+		textDiretor.setText("");
+		textNota.setText("");
+		textSinopse.setText("");
+		textDuracaoQtdTempodara.setText("");
+		lblImagem.setIcon(null);
+		btnRecarregar.setEnabled(false);
 		
-		lblUltimaProducao.setText(producaoTemp.getTitulo());
+		producao = buscaProducaoAssistida(usuarioLogado);
 		
+		if (producao.getIdProducao() > 0) {
+
+			lblTitulo.setText(producao.getTitulo() + "");
+			textAno.setText(producao.getAno() + "");
+			textDiretor.setText(producao.getDiretor() + "");
+			cbGenero.setSelectedItem(producao.getGenero());
+			textSinopse.setText(producao.getSinopse());
+			textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
+			btnRecarregar.setEnabled(false);
+			textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
+
+			ArrayList<Artista> artistas = producao.getArtistas();
+
+			for (Artista artista : artistas) {
+
+				Object[] values = new Object[2];
+
+				values[0] = artista.getIdArtista();
+				values[1] = artista.getNome();
+
+				model.addRow(values);
+			}
+
+			try {
+				File tempFile = File.createTempFile("jpg", "Maniac");
+				fos = new FileOutputStream(tempFile);
+				fos.write(producao.getCapa());
+
+				ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
+				lblImagem.setIcon(icon);
+			} catch (Exception ex) {
+			}
+
+		} else {
+			btnRecarregar.setEnabled(true);
+		}
+		revalidate();
 	}
 
 	public static Usuario getUsuarioLogado() {
