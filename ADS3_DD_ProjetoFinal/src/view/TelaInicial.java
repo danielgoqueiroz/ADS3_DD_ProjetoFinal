@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,16 +25,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-
 import VO.Artista;
 import VO.EnumNivel;
 import VO.Genero;
 import VO.Producao;
-import VO.ProducaoAssistida;
+import VO.ProducoesAssistidas;
 import VO.Usuario;
-import controller.FilmesAssistidosController;
 import controller.GeneroController;
 import controller.ProducaoController;
+import controller.ProducoesAssistidasController;
+
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
@@ -99,9 +98,9 @@ public class TelaInicial extends JFrame {
 		mntmInserir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				contentPane = new CadastrarUsuarioPanel();
-				setContentPane(contentPane);
-				revalidate();
+//				contentPane = new CadastrarUsuarioPanel();
+//				setContentPane(contentPane);
+//				revalidate();
 
 			}
 		});
@@ -114,9 +113,9 @@ public class TelaInicial extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				contentPane = new CadastrarFilmePanel();
-				setContentPane(contentPane);
-				revalidate();
+//				contentPane = new CadastrarFilmePanel();
+//				setContentPane(contentPane);
+//				revalidate();
 			}
 		});
 
@@ -868,10 +867,10 @@ public class TelaInicial extends JFrame {
 	}
 
 	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Producao producao, int nota) {
-		FilmesAssistidosController controle = new FilmesAssistidosController();
-		ProducaoAssistida filmeAssitido = new ProducaoAssistida(usuarioLogado, producao, nota);
+		ProducoesAssistidasController controle = new ProducoesAssistidasController();
+		ProducoesAssistidas producaoAssitida = new ProducoesAssistidas(usuarioLogado, producao, nota);
 
-		controle.cadastrarProducaoAssistidaPorUsuario(filmeAssitido);
+		controle.cadastrarProducaoAssitida(producaoAssitida);
 		
 		buscaProducaoAssistida(usuarioLogado);
 		

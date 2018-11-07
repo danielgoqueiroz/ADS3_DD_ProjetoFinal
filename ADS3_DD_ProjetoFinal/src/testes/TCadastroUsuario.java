@@ -6,10 +6,10 @@ import com.sun.javafx.image.impl.General;
 
 import DAO.GeneroDAO;
 import VO.Producao;
-import VO.ProducaoAssistida;
+import VO.ProducoesAssistidas;
 import VO.Usuario;
 import controller.ProducaoController;
-import controller.ProduçãoAssistidaController;
+import controller.ProducoesAssistidasController;
 import controller.UsuarioController;
 import view.TelaInicial;
 

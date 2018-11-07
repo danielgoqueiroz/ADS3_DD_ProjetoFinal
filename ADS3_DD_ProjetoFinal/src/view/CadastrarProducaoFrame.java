@@ -135,7 +135,7 @@ public class CadastrarProducaoFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cbTipo.getSelectedIndex() == 0) {
-					lblDuraoqtdtemp.setText("Duração");
+					lblDuraoqtdtemp.setText("Duração (Min.)");
 				} else if (cbTipo.getSelectedIndex() == 1) {
 					lblDuraoqtdtemp.setText("Temporadas");
 				}
