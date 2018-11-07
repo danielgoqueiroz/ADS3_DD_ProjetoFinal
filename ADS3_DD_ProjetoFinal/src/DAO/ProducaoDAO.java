@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import VO.EnumTipoProducao;
 import VO.Producao;
@@ -125,9 +126,9 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 	// OK
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
-		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao " 
-         + "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = " + usuario.getIdUsuario() + " ) " + "order by rand() limit 1 "
-		);
+		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao "
+				+ "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = "
+				+ usuario.getIdUsuario() + " ) " + "order by rand() limit 1 ");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
@@ -155,11 +156,11 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 	}
 
-	public double BuscarMediaProducao(Producao p) 
-	{
-		double valor=0;
-		
-		String sql = (" SELECT avg(nota) nota FROM danie648_db_ads3_dd_filme.producoesAssistidas where idProducao =  " + p.getIdProducao());
+	public double BuscarMediaProducao(Producao p) {
+		double valor = 0;
+
+		String sql = (" SELECT avg(nota) nota FROM danie648_db_ads3_dd_filme.producoesAssistidas where idProducao =  "
+				+ p.getIdProducao());
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
@@ -180,6 +181,38 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		}
 
 		return valor;
-		
+
 	}
+
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario) {
+
+		ArrayList<Producao> producoes = new ArrayList<Producao>();
+
+		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "+ usuario.getIdUsuario());
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Producao objetoPesquisado = new Producao();
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+
+				objetoPesquisado = construirObjetoConsultado(resultado);
+				objetoPesquisado.setNota(resultado.getDouble("nota"));
+				
+				producoes.add(objetoPesquisado);
+
+			}
+		} catch (Exception e) {
+			System.out.println("Erro buscaProd. " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return producoes;
+	}
+
 }

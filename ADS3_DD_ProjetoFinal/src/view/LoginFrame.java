@@ -67,7 +67,7 @@ public class LoginFrame extends JFrame {
 		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 409, 179);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -79,25 +79,25 @@ public class LoginFrame extends JFrame {
 		);
 		
 		JLabel label = new JLabel("Senha");
-		label.setBounds(44, 109, 89, 14);
+		label.setBounds(38, 58, 89, 14);
 		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		password = new JPasswordField();
-		password.setBounds(145, 106, 186, 20);
+		password.setBounds(139, 55, 186, 20);
 		
 		textUsuario = new JTextField();
-		textUsuario.setBounds(145, 80, 186, 20);
+		textUsuario.setBounds(139, 29, 186, 20);
 		
 		textUsuario.setColumns(10);
 		
 		JLabel label_1 = new JLabel("Usuario");
-		label_1.setBounds(44, 83, 89, 14);
+		label_1.setBounds(38, 32, 89, 14);
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JButton btnNovoUsuario = new JButton("Criar Usu\u00E1rio");
-		btnNovoUsuario.setBounds(97, 138, 114, 21);
+		btnNovoUsuario.setBounds(91, 87, 114, 21);
 		btnNovoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CadastrarUsuarioFrame novoUsuarioTela = new CadastrarUsuarioFrame();
@@ -108,7 +108,7 @@ public class LoginFrame extends JFrame {
 		btnNovoUsuario.setEnabled(false);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(217, 138, 114, 21);
+		btnLogin.setBounds(211, 87, 114, 21);
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import BO.ProducaoBO;
 import VO.Artista;
@@ -85,4 +86,7 @@ public class ProducaoController {
 		return bo.BuscarMediaProducao(p);
 	}
 
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario) {
+		return bo.buscarProducoesAssistidas(usuario);
+	}
 }

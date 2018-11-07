@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAO.ProducaoDAO;
+import DAO.ProducoesAssistidasDAO;
 import VO.Producao;
 import VO.Usuario;
 
@@ -46,6 +47,10 @@ public class ProducaoBO {
 	
 	public double BuscarMediaProducao(Producao p) {
 		return dao.BuscarMediaProducao(p);
+	}
+	
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario) {
+		return dao.buscarProducoesAssistidas(usuario);
 	}
 
 }

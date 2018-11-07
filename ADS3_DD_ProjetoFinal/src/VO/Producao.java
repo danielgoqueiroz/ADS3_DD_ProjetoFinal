@@ -16,6 +16,7 @@ public class Producao {
 	private byte[] capa;
 	private int duracao;
 	private int qtdTemporadas;
+	private double nota;
 
 	public Producao() {
 		
@@ -128,5 +129,13 @@ public class Producao {
 
 	public void setTipo(EnumTipoProducao tipo) {
 		this.tipo = tipo;
+	}
+
+	public double getNota() {
+		return nota;
+	}
+
+	public void setNota(double nota) {
+		this.nota = nota;
 	}
 }
