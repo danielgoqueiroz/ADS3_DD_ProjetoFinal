@@ -42,7 +42,6 @@ import javax.swing.DefaultComboBoxModel;
 public class TelaInicial extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private static Usuario usuarioLogado;
 	private static Producao producao;
 	private JTextField textAno;
@@ -54,7 +53,6 @@ public class TelaInicial extends JFrame {
 	private JTextArea textSinopse;
 	private FileOutputStream fos;
 	private JLabel lblTitulo;
-	private JLabel lblUltimaProducao;
 	private JButton btnRecarregar;
 	private JLabel lblImagem;
 	private DefaultTableModel model;
@@ -85,7 +83,7 @@ public class TelaInicial extends JFrame {
 
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 754, 476);
+		setBounds(100, 100, 754, 424);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -198,8 +196,10 @@ public class TelaInicial extends JFrame {
 		textDuracaoQtdTempodara.setColumns(10);
 
 		btnNao = new JButton("N\u00C3O");
+
 		btnNao.setForeground(Color.BLACK);
 		btnNao.setBounds(7, 7, 89, 330);
+
 		getContentPane().add(btnNao);
 
 		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -263,81 +263,9 @@ public class TelaInicial extends JFrame {
 		lblImagem.setBounds(106, 69, 170, 241);
 		getContentPane().add(lblImagem);
 
-		lblUltimaProducao = new JLabel("\u00DAltimo filme");
-		lblUltimaProducao.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUltimaProducao.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUltimaProducao.setBounds(106, 370, 529, 14);
-		getContentPane().add(lblUltimaProducao);
-
 		btnRecarregar = new JButton("Recarregar");
 		btnRecarregar.setBounds(106, 336, 529, 23);
 		getContentPane().add(btnRecarregar);
-
-		producao = new Producao();
-		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-
-		int rowCount = table.getRowCount();
-		for (int i = 0; i < rowCount; i++) {
-			model.removeRow(0);
-		}
-
-		lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-		textAno.setText("");
-		textDiretor.setText("");
-		textNota.setText("");
-		textSinopse.setText("");
-		textDuracaoQtdTempodara.setText("");
-		lblImagem.setIcon(null);
-		btnRecarregar.setEnabled(false);
-
-		producao = buscaProducaoAssistida(usuarioLogado);
-
-//		populaCamposProducaoComNovoFilme(producao);
-		for (int i = 0; i < table.getRowCount(); i++) {
-			model.removeRow(i);
-		}
-
-		if (producao.getIdProducao() > 0) {
-
-			lblTitulo.setText(producao.getTitulo() + "");
-			textAno.setText(producao.getAno() + "");
-			textDiretor.setText(producao.getDiretor() + "");
-//			cbGenero.setSelectedItem(producao.getGenero());
-			cbGenero.addItem(producao.getGenero());
-			textSinopse.setText(producao.getSinopse());
-			textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-			textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-
-			btnRecarregar.setEnabled(false);
-
-			ArrayList<Artista> artistas = producao.getArtistas();
-
-			for (Artista artista : artistas) {
-
-				Object[] values = new Object[2];
-
-				values[0] = artista.getIdArtista();
-				values[1] = artista.getNome();
-
-				model.addRow(values);
-			}
-
-			try {
-				File tempFile = File.createTempFile("jpg", "Maniac");
-				fos = new FileOutputStream(tempFile);
-				fos.write(producao.getCapa());
-
-				ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-				lblImagem.setIcon(icon);
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-
-		} else {
-
-			btnRecarregar.setEnabled(true);
-		}
-		revalidate();
 
 		menuBar.setVisible(false);
 		if (usuarioLogado.getNivel() == EnumNivel.Admin)
@@ -346,7 +274,7 @@ public class TelaInicial extends JFrame {
 		revalidate();
 
 		btnSim = new JButton("SIM");
-		btnSim.setBounds(645, 7, 83, 330);
+		btnSim.setBounds(645, 7, 83, 352);
 		getContentPane().add(btnSim);
 
 		btnSim.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -372,160 +300,49 @@ public class TelaInicial extends JFrame {
 		btnS5.setBounds(645, 7, 83, 50);
 		getContentPane().add(btnS5);
 
+		producao = new Producao();
+		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
+
+		populaCamposProducaoComNovoFilme();
+		
 		btnNao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				populaCamposProducaoComNovoFilme(buscaProducaoAssistida(usuarioLogado));
-
-//				int rowCount = table.getRowCount();
-//				for (int i = 0; i < rowCount; i++) {
-//					model.removeRow(0);
-//				}
-//
-//				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-//				textAno.setText("");
-//				textDiretor.setText("");
-//				textNota.setText("");
-//				textSinopse.setText("");
-//				textDuracaoQtdTempodara.setText("");
-//				lblImagem.setIcon(null);
-//				btnRecarregar.setEnabled(false);
-//				
-//				producao = buscaProducaoAssistida(usuarioLogado);
-//
-//
-//				if (producao.getIdProducao() > 0) {
-//
-//					lblTitulo.setText(producao.getTitulo() + "");
-//					textAno.setText(producao.getAno() + "");
-//					textDiretor.setText(producao.getDiretor() + "");
-//					
-//					cbGenero.setSelectedItem(producao.getGenero());
-//					textSinopse.setText(producao.getSinopse());
-//					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-//					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-//					btnRecarregar.setEnabled(false);
-//
-//					ArrayList<Artista> artistas = producao.getArtistas();
-//
-//					for (Artista artista : artistas) {
-//
-//						Object[] values = new Object[2];
-//
-//						values[0] = artista.getIdArtista();
-//						values[1] = artista.getNome();
-//
-//						model.addRow(values);
-//					}
-//
-//					try {
-//						File tempFile = File.createTempFile("jpg", "Maniac");
-//						fos = new FileOutputStream(tempFile);
-//						fos.write(producao.getCapa());
-//
-//						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-//						lblImagem.setIcon(icon);
-//					} catch (Exception ex) {
-//					}
-//
-//				} else {
-//					btnRecarregar.setEnabled(true);
-//				}
-//				revalidate();
+				populaCamposProducaoComNovoFilme();
 			}
 		});
 
 		btnS1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarFilmeAssitido(usuarioLogado, producao, 1);
-//				daNota("1");
-//
-//				cadastrarFilmeAssitido(usuarioLogado, producao, 1);
-//
-//				int rowCount = table.getRowCount();
-//				for (int i = 0; i < rowCount; i++) {
-//					model.removeRow(0);
-//				}
-//
-//				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-//				textAno.setText("");
-//				textDiretor.setText("");
-//				textNota.setText("");
-//				textSinopse.setText("");
-//				textDuracaoQtdTempodara.setText("");
-//				lblImagem.setIcon(null);
-//				btnRecarregar.setEnabled(false);
-//				
-//				producao = buscaProducaoAssistida(usuarioLogado);
-//				
-//				if (producao.getIdProducao() > 0) {
-//
-//					lblTitulo.setText(producao.getTitulo() + "");
-//					textAno.setText(producao.getAno() + "");
-//					textDiretor.setText(producao.getDiretor() + "");
-//					cbGenero.setSelectedItem(producao.getGenero());
-//					textSinopse.setText(producao.getSinopse());
-//					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-//					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-//					btnRecarregar.setEnabled(false);
-//					
-//
-//					ArrayList<Artista> artistas = producao.getArtistas();
-//
-//					for (Artista artista : artistas) {
-//
-//						Object[] values = new Object[2];
-//
-//						values[0] = artista.getIdArtista();
-//						values[1] = artista.getNome();
-//
-//						model.addRow(values);
-//					}
-//
-//					try {
-//						File tempFile = File.createTempFile("jpg", "Maniac");
-//						fos = new FileOutputStream(tempFile);
-//						fos.write(producao.getCapa());
-//
-//						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-//						lblImagem.setIcon(icon);
-//					} catch (Exception ex) {
-//					}
-//
-//				} else {
-//					btnRecarregar.setEnabled(true);
-//				}
-//				revalidate();
-//
-//				btnSim.show();
+				cadastrarProducaoAssitida(usuarioLogado, producao, 1);
 			}
 
 		});
 
 		btnS2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarFilmeAssitido(usuarioLogado, producao, 2);
+				cadastrarProducaoAssitida(usuarioLogado, producao, 2);
 
 			}
 		});
 
 		btnS3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarFilmeAssitido(usuarioLogado, producao, 3);
+				cadastrarProducaoAssitida(usuarioLogado, producao, 3);
 			}
 		});
 
 		btnS4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				cadastrarFilmeAssitido(usuarioLogado, producao, 4);
+				cadastrarProducaoAssitida(usuarioLogado, producao, 4);
 			}
 		});
 
 		btnS5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarFilmeAssitido(usuarioLogado, producao, 5);
+				cadastrarProducaoAssitida(usuarioLogado, producao, 5);
 
 			}
 		});
@@ -541,10 +358,8 @@ public class TelaInicial extends JFrame {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void daNota(String string) {
-		lblNota.setText(string);
+	public void RetomaFormOriginal() {
 		btnSim.show();
-
 		btnS1.hide();
 		btnS2.hide();
 		btnS3.hide();
@@ -580,19 +395,19 @@ public class TelaInicial extends JFrame {
 		return controle.BuscarMediaProducao(p);
 	}
 
-	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Producao producao, int nota) {
+	private void cadastrarProducaoAssitida(Usuario usuarioLogado, Producao producao, int nota) {
 
 		ProducoesAssistidasController controle = new ProducoesAssistidasController();
 		ProducoesAssistidas producaoAssitida = new ProducoesAssistidas(usuarioLogado, producao, nota);
 		controle.cadastrarProducaoAssitida(producaoAssitida);
 
-		populaCamposProducaoComNovoFilme(buscaProducaoAssistida(usuarioLogado));
+		populaCamposProducaoComNovoFilme();
 
-		daNota(nota + "");
+		RetomaFormOriginal();
 
 	}
 
-	public void populaCamposProducaoComNovoFilme(Producao producaoTemp) {
+	public void populaCamposProducaoComNovoFilme() {
 
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
