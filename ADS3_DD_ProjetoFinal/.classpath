@@ -3,5 +3,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="mysql-connector-java-8.0.12.jar"/>
+	<classpathentry kind="lib" path="poi-3.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

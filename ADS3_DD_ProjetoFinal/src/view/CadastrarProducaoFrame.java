@@ -39,6 +39,7 @@ import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
 import controller.ProducaoController;
+import java.awt.Toolkit;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -73,6 +74,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	}
 
 	public CadastrarProducaoFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 703, 281);
 		contentPane = new JPanel();
@@ -357,5 +359,8 @@ public class CadastrarProducaoFrame extends JFrame {
 				btnRemover.setEnabled(true);
 			}
 		});
+		
+		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
+
 	}
 }

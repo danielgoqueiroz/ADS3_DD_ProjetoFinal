@@ -100,8 +100,9 @@ public class LoginFrame extends JFrame {
 		btnNovoUsuario.setBounds(97, 138, 114, 21);
 		btnNovoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastrarUsuarioFrame novoUsuarioTela = new CadastrarUsuarioFrame();
-				novoUsuarioTela.setVisible(true);
+//				CadastrarUsuarioFrame novoUsuarioTela = new CadastrarUsuarioFrame(textUsuario.getText());
+//				
+//				novoUsuarioTela.setVisible(true);
 			}
 		});
 		btnNovoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 10));

@@ -97,9 +97,9 @@ public class TelaInicial extends JFrame {
 		mntmInserir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-//				contentPane = new CadastrarUsuarioPanel();
-//				setContentPane(contentPane);
-//				revalidate();
+				CadastrarUsuarioFrame cadastro = new CadastrarUsuarioFrame();
+				cadastro.setVisible(true);
+				revalidate();
 
 			}
 		});
@@ -112,9 +112,9 @@ public class TelaInicial extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-//				contentPane = new CadastrarFilmePanel();
-//				setContentPane(contentPane);
-//				revalidate();
+				CadastrarProducaoFrame producao = new CadastrarProducaoFrame();
+				producao.setVisible(true);
+				
 			}
 		});
 
@@ -198,6 +198,7 @@ public class TelaInicial extends JFrame {
 		textDuracaoQtdTempodara.setColumns(10);
 
 		btnNao = new JButton("N\u00C3O");
+		btnNao.setForeground(Color.BLACK);
 		btnNao.setBounds(7, 7, 89, 330);
 		getContentPane().add(btnNao);
 
