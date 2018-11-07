@@ -206,9 +206,7 @@ public class TelaInicial extends JFrame {
 
 		btnNao.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		
-		
-		 lblJVi = new JLabel("Voc\u00EA j\u00E1 viu?");
+		lblJVi = new JLabel("Voc\u00EA j\u00E1 viu?");
 		lblJVi.setBounds(106, 11, 529, 22);
 		getContentPane().add(lblJVi);
 		lblJVi.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -447,323 +445,12 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS1.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				lblNota.setText("1");
-				btnSim.show();
-				revalidate();
-				btnS1.hide();
-				btnS2.hide();
-				btnS3.hide();
-				btnS4.hide();
-				btnS5.hide();
-
 				cadastrarFilmeAssitido(usuarioLogado, producao, 1);
-
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
-				
-				producao = buscaProducaoAssistida(usuarioLogado);
-				
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-					btnRecarregar.setEnabled(false);
-					
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
-
-				btnSim.show();
-			}
-
-		});
-		
-		
-		btnS2.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lblNota.setText("2");
-				btnSim.show();
-				revalidate();
-
-				btnS1.hide();
-				btnS2.hide();
-				btnS3.hide();
-				btnS4.hide();
-				btnS5.hide();
-
-				cadastrarFilmeAssitido(usuarioLogado, producao, 2);
-
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
-				
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-					btnRecarregar.setEnabled(false);
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
-
-				btnSim.show();
-
-			}
-		});
-
-		btnS3.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lblNota.setText("3");
-				btnSim.show();
-				revalidate();
-
-				btnS1.hide();
-				btnS2.hide();
-				btnS3.hide();
-				btnS4.hide();
-				btnS5.hide();
-
-				cadastrarFilmeAssitido(usuarioLogado, producao, 3);
-
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
-				
-				producao = buscaProducaoAssistida(usuarioLogado);
-				
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-					btnRecarregar.setEnabled(false);
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
-
-				btnSim.show();
-
-			}
-		});
-
-		btnS4.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lblNota.setText("4");
-				btnSim.show();
-				revalidate();
-
-				btnS1.hide();
-				btnS2.hide();
-				btnS3.hide();
-				btnS4.hide();
-				btnS5.hide();
-
-				cadastrarFilmeAssitido(usuarioLogado, producao, 4);
-
-				int rowCount = table.getRowCount();
-				for (int i = 0; i < rowCount; i++) {
-					model.removeRow(0);
-				}
-
-				lblTitulo.setText("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
-				textAno.setText("");
-				textDiretor.setText("");
-				textNota.setText("");
-				textSinopse.setText("");
-				textDuracaoQtdTempodara.setText("");
-				lblImagem.setIcon(null);
-				btnRecarregar.setEnabled(false);
-				
-				producao = buscaProducaoAssistida(usuarioLogado);
-
-				if (producao.getIdProducao() > 0) {
-
-					lblTitulo.setText(producao.getTitulo() + "");
-					textAno.setText(producao.getAno() + "");
-					textDiretor.setText(producao.getDiretor() + "");
-					cbGenero.setSelectedItem(producao.getGenero());
-					textSinopse.setText(producao.getSinopse());
-					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
-					btnRecarregar.setEnabled(false);
-
-					ArrayList<Artista> artistas = producao.getArtistas();
-
-					for (Artista artista : artistas) {
-
-						Object[] values = new Object[2];
-
-						values[0] = artista.getIdArtista();
-						values[1] = artista.getNome();
-
-						model.addRow(values);
-					}
-
-					try {
-						File tempFile = File.createTempFile("jpg", "Maniac");
-						fos = new FileOutputStream(tempFile);
-						fos.write(producao.getCapa());
-
-						ImageIcon icon = new ImageIcon(tempFile.getAbsolutePath());
-						lblImagem.setIcon(icon);
-					} catch (Exception ex) {
-					}
-
-				} else {
-					btnRecarregar.setEnabled(true);
-				}
-				revalidate();
-
-				btnSim.show();
-
-			}
-		});
-
-		btnS5.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lblNota.setText("5");
-				btnSim.show();
-				revalidate();
-
-				btnS1.hide();
-				btnS2.hide();
-				btnS3.hide();
-				btnS4.hide();
-				btnS5.hide();
-
-				cadastrarFilmeAssitido(usuarioLogado, producao, 5);
-
+//				daNota("1");
+//
+//				cadastrarFilmeAssitido(usuarioLogado, producao, 1);
+//
 //				int rowCount = table.getRowCount();
 //				for (int i = 0; i < rowCount; i++) {
 //					model.removeRow(0);
@@ -788,8 +475,9 @@ public class TelaInicial extends JFrame {
 //					cbGenero.setSelectedItem(producao.getGenero());
 //					textSinopse.setText(producao.getSinopse());
 //					textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
-//					btnRecarregar.setEnabled(false);
 //					textNota.setText(String.valueOf(BuscarMediaProducao(producao)));
+//					btnRecarregar.setEnabled(false);
+//					
 //
 //					ArrayList<Artista> artistas = producao.getArtistas();
 //
@@ -817,40 +505,78 @@ public class TelaInicial extends JFrame {
 //					btnRecarregar.setEnabled(true);
 //				}
 //				revalidate();
+//
+//				btnSim.show();
+			}
 
-				btnSim.show();
+			
+
+		});
+		
+		
+		btnS2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cadastrarFilmeAssitido(usuarioLogado, producao, 2);
+
+			}
+		});
+
+		btnS3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cadastrarFilmeAssitido(usuarioLogado, producao, 3);
+			}
+		});
+
+		btnS4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				cadastrarFilmeAssitido(usuarioLogado, producao, 4);
+			}
+		});
+
+		btnS5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cadastrarFilmeAssitido(usuarioLogado, producao, 5);			
 				
 			}
-			
-			
 		});
 		
 		btnSim.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnSim.hide();
-				revalidate();
-
-				btnS1.show();
-				btnS2.show();
-				btnS3.show();
-				btnS4.show();
-				btnS5.show();
-
+				escondeBotoesSim();
 			}
+
+			
 
 		});
 		
-		
-		//posiciona o Frame no centro da tela
 		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
-		
-		
-		
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void daNota(String string) {
+		lblNota.setText(string);
+		btnSim.show();
+		
+		btnS1.hide();
+		btnS2.hide();
+		btnS3.hide();
+		btnS4.hide();
+		btnS5.hide();
+		revalidate();
+	}
 	
+	@SuppressWarnings("deprecation")
+	public void escondeBotoesSim() {
+		btnSim.hide();
+		btnS1.show();
+		btnS2.show();
+		btnS3.show();
+		btnS4.show();
+		btnS5.show();
+		revalidate();
+		
+	}
 	
 	public void setUser(Usuario usuario) {
 		usuarioLogado = usuario;
@@ -870,10 +596,12 @@ public class TelaInicial extends JFrame {
 	private void cadastrarFilmeAssitido(Usuario usuarioLogado, Producao producao, int nota) {
 		FilmesAssistidosController controle = new FilmesAssistidosController();
 		ProducaoAssistida filmeAssitido = new ProducaoAssistida(usuarioLogado, producao, nota);
-
+		
 		controle.cadastrarProducaoAssistidaPorUsuario(filmeAssitido);
 		
-		buscaProducaoAssistida(usuarioLogado);
+		populaCamposProducaoComNovoFilme(buscaProducaoAssistida(usuarioLogado));
+		
+		daNota(nota + "");
 		
 	}
 	
@@ -931,7 +659,9 @@ public class TelaInicial extends JFrame {
 		} else {
 			btnRecarregar.setEnabled(true);
 		}
+		btnSim.show();
 		revalidate();
+		
 	}
 
 	public static Usuario getUsuarioLogado() {
