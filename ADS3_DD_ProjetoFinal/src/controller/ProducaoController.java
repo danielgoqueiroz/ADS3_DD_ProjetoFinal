@@ -89,4 +89,9 @@ public class ProducaoController {
 	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario) {
 		return bo.buscarProducoesAssistidas(usuario);
 	}
+
+	public ArrayList<Producao> buscarProducoes() {
+		return bo.buscarProducoes();
+	}
+
 }
