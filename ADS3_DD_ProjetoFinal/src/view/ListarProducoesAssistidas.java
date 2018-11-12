@@ -13,9 +13,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import VO.Artista;
+import VO.Geradorplanilhas;
 import VO.Producao;
 import VO.Usuario;
 import controller.ProducaoController;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListarProducoesAssistidas extends JFrame {
 
@@ -23,6 +29,8 @@ public class ListarProducoesAssistidas extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel model;
+	private JButton btnGerarRelatrio;
+	ArrayList<Producao> producoesTemp;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,7 +49,7 @@ public class ListarProducoesAssistidas extends JFrame {
 
 	public ListarProducoesAssistidas(Usuario usuario) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 366);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(ListarProducoesAssistidas.class.getResource("/extras/eye-2317618_960_720.png")));
 		contentPane = new JPanel();
@@ -60,6 +68,23 @@ public class ListarProducoesAssistidas extends JFrame {
 
 		scrollPane.setBounds(356, 118, 279, 75);
 		getContentPane().add(scrollPane);
+		
+		btnGerarRelatrio = new JButton("Gerar Relat\u00F3rio");
+		btnGerarRelatrio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Geradorplanilhas plan = new Geradorplanilhas();
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Salvar como... ");
+				int resultado = chooser.showSaveDialog(null);
+				if (resultado == JFileChooser.APPROVE_OPTION) {
+					String caminho = chooser.getSelectedFile().getAbsolutePath();
+					plan.gerarPlanilhasProducao(producoesTemp, caminho);
+				}
+				
+				
+			}
+		});
+		contentPane.add(btnGerarRelatrio, BorderLayout.SOUTH);
 
 		ProducaoController pc = new ProducaoController();
 
@@ -79,6 +104,7 @@ public class ListarProducoesAssistidas extends JFrame {
 
 			model.addRow(values);
 		}
+		producoesTemp = producoes;
 	}
 
 }
