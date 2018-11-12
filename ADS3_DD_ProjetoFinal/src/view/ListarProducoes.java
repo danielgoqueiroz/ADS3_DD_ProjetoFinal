@@ -16,6 +16,7 @@ import VO.Artista;
 import VO.Producao;
 import VO.Usuario;
 import controller.ProducaoController;
+import javax.swing.ListSelectionModel;
 
 public class ListarProducoes extends JFrame {
 
@@ -28,9 +29,7 @@ public class ListarProducoes extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Usuario usuario = new Usuario();
-					usuario.setIdUsuario(1);
-					ListarProducoes frame = new ListarProducoes(usuario);
+					ListarProducoes frame = new ListarProducoes();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +38,7 @@ public class ListarProducoes extends JFrame {
 		});
 	}
 
-	public ListarProducoes(Usuario usuario) {
+	public ListarProducoes() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setIconImage(
@@ -50,11 +49,11 @@ public class ListarProducoes extends JFrame {
 		setContentPane(contentPane);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setEnabled(false);
 
 		table = new JTable();
-		table.setEnabled(false);
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Tipo", "Produção", "Nota" }));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setEnabled(true);
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Tipo", "Produção", "Genero", "Diretor", "Ano" }));
 		scrollPane.setViewportView(table);
 		model = (DefaultTableModel) table.getModel();
 
@@ -67,11 +66,13 @@ public class ListarProducoes extends JFrame {
 
 		for (Producao producao : producoes) {
 
-			Object[] values = new Object[3];
+			Object[] values = new Object[5];
 
 			values[0] = producao.getTipo();
 			values[1] = producao.getTitulo();
-			values[2] = producao.getNota();
+			values[2] = producao.getGenero().getDescricao();
+			values[3] = producao.getDiretor();
+			values[4] = producao.getAno();
 
 			model.addRow(values);
 		}

@@ -54,7 +54,7 @@ public class ProducaoBO {
 	}
 	
 	public ArrayList<Producao> buscarProducoes() {
-		return dao.buscarProducoes();
+		return dao.listarTodos();
 	}
 
 }
