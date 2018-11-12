@@ -126,6 +126,10 @@ public class Producao {
 	public EnumTipoProducao getTipo() {
 		return tipo;
 	}
+	
+	public String getStringTipo(EnumTipoProducao tipo) {
+		return tipo.getDeclaringClass().getName();
+	}
 
 	public void setTipo(EnumTipoProducao tipo) {
 		this.tipo = tipo;
@@ -138,4 +142,5 @@ public class Producao {
 	public void setNota(double nota) {
 		this.nota = nota;
 	}
+	
 }

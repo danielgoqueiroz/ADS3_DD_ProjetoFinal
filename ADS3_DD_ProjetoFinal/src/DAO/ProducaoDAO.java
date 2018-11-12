@@ -106,7 +106,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		producao.setTitulo(resultado.getString("titulo"));
 		producao.setAno(resultado.getInt("ano"));
 		producao.setSinopse(resultado.getString("sinopse"));
-		producao.setGenero(genDao.pesquisaPorDescricao(resultado.getString("genero")));
+		producao.setGenero(genDao.pesquisaPorId(resultado.getInt("genero")));
 		producao.setDiretor(resultado.getString("diretor"));
 		producao.setCapa(resultado.getBytes("capa"));
 
