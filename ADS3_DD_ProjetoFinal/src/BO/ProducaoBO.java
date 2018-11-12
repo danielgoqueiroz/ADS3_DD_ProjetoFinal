@@ -52,5 +52,9 @@ public class ProducaoBO {
 	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario) {
 		return dao.buscarProducoesAssistidas(usuario);
 	}
+	
+	public ArrayList<Producao> buscarProducoes() {
+		return dao.listarTodos();
+	}
 
 }
