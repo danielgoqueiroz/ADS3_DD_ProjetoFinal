@@ -97,8 +97,9 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		GeneroDAO genDao = new GeneroDAO();
 		ArtistaDAO artDao = new ArtistaDAO();
 
-		String tipo = resultado.getString("tipo");
-		String qtdTemporada = resultado.getInt("qtdTemporada") + "";
+		String tipo = resultado.getString("tipo") + "";
+
+		String qtdTemporada = resultado.getString("qtdTemporada") + "";
 		String duracao = resultado.getString("duracao") + "";
 
 		producao.setIdProducao(resultado.getInt("idProducao"));
