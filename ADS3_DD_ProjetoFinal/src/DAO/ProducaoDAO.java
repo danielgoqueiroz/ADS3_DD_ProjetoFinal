@@ -106,7 +106,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		producao.setTitulo(resultado.getString("titulo"));
 		producao.setAno(resultado.getInt("ano"));
 		producao.setSinopse(resultado.getString("sinopse"));
-		producao.setGenero(genDao.pesquisaPorDescricao(resultado.getString("genero")));
+		producao.setGenero(genDao.pesquisaPorId(resultado.getInt("genero")));
 		producao.setDiretor(resultado.getString("diretor"));
 		producao.setCapa(resultado.getBytes("capa"));
 
@@ -213,6 +213,31 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		}
 
 		return producoes;
+	}
+	
+	@Override
+	public ArrayList<Producao> listarTodos() {
+		String sql = ("SELECT * FROM  producao");
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		
+		ArrayList<Producao> listaObjetos = new ArrayList<>();
+		try {
+			resultado = stmt.executeQuery();
+			while (resultado.next()){
+				Producao objeto = construirObjetoConsultado(resultado);
+				listaObjetos.add(objeto);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro : " + e.getMessage());
+		}finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return listaObjetos;
 	}
 
 	public ArrayList<Producao> buscarProducoes() {

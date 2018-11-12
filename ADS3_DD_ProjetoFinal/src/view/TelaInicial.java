@@ -148,7 +148,7 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(textAno);
 		textAno.setColumns(10);
 
-		cbGenero = new JComboBox();
+		cbGenero = new JComboBox<Genero>();
 
 		GeneroController gc = new GeneroController();
 

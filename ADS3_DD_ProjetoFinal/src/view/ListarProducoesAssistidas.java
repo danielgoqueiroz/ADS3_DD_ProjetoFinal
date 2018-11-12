@@ -54,7 +54,7 @@ public class ListarProducoesAssistidas extends JFrame {
 
 		table = new JTable();
 		table.setEnabled(false);
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Tipo", "Produção", "Nota" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Tipo", "Produção", "Nota", "Genero", "Diretor", "Ano" }));
 		scrollPane.setViewportView(table);
 		model = (DefaultTableModel) table.getModel();
 
@@ -67,11 +67,15 @@ public class ListarProducoesAssistidas extends JFrame {
 
 		for (Producao producao : producoes) {
 
-			Object[] values = new Object[3];
+			Object[] values = new Object[6];
 
 			values[0] = producao.getTipo();
 			values[1] = producao.getTitulo();
 			values[2] = producao.getNota();
+			values[3] = producao.getGenero().getDescricao();
+			values[4] = producao.getDiretor();
+			//values[5] = producao.getArtistas();
+			values[5] = producao.getAno();
 
 			model.addRow(values);
 		}
