@@ -214,5 +214,30 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 		return producoes;
 	}
+	
+	@Override
+	public ArrayList<Producao> listarTodos() {
+		String sql = ("SELECT * FROM  producao");
+		
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		
+		ArrayList<Producao> listaObjetos = new ArrayList<>();
+		try {
+			resultado = stmt.executeQuery();
+			while (resultado.next()){
+				Producao objeto = construirObjetoConsultado(resultado);
+				listaObjetos.add(objeto);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro : " + e.getMessage());
+		}finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return listaObjetos;
+	}
 
 }
