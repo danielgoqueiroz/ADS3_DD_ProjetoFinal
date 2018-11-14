@@ -100,9 +100,9 @@ public class LoginFrame extends JFrame {
 		btnNovoUsuario.setBounds(91, 87, 114, 21);
 		btnNovoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				CadastrarUsuarioFrame novoUsuarioTela = new CadastrarUsuarioFrame(textUsuario.getText());
-//				
-//				novoUsuarioTela.setVisible(true);
+				CadastrarUsuarioFrame tela = new CadastrarUsuarioFrame(textUsuario.getText() + "");
+				tela.setVisible(true);
+				
 			}
 		});
 		btnNovoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -154,6 +154,7 @@ public class LoginFrame extends JFrame {
 				
 				if (controle.verificaNickUsuario(textUsuario.getText()) == null) {
 					btnNovoUsuario.setEnabled(true);
+					btnLogin.setEnabled(false);
 					
 				} else {
 					btnLogin.setEnabled(true);

@@ -6,21 +6,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import VO.EnumNivel;
 import VO.Usuario;
 import controller.UsuarioController;
 
-public class CadastrarUsuarioFrame extends JFrame {
+
+public class CadastrarUsuarioFrame extends JFrame{
+	
 	private JTextField textTelefone;
 	private JPasswordField textConfSenha;
 	private JPasswordField textSenha;
@@ -36,26 +59,10 @@ public class CadastrarUsuarioFrame extends JFrame {
 	private JLabel lblInfo;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					CadastrarUsuarioFrame frame = new CadastrarUsuarioFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public CadastrarUsuarioFrame() {
+	public CadastrarUsuarioFrame(String nome) {
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 264);
 		getContentPane().setLayout(null);
@@ -113,7 +120,8 @@ public class CadastrarUsuarioFrame extends JFrame {
 		textNick.setColumns(10);
 		textNick.setBounds(122, 11, 207, 20);
 		getContentPane().add(textNick);
-
+		textNick.setText(nome);
+		
 		textEmail = new JTextField();
 		textEmail.setColumns(10);
 		textEmail.setBounds(122, 64, 207, 20);
@@ -138,6 +146,7 @@ public class CadastrarUsuarioFrame extends JFrame {
 				usuario.setNickname(textNick.getText());
 				usuario.setNivel(EnumNivel.User);
 				String senha = verificaCampoSenha();
+				
 				if (senha.equals("")) {
 					JOptionPane.showMessageDialog(null, "Senhas não conferem.");
 				} else {
@@ -147,9 +156,9 @@ public class CadastrarUsuarioFrame extends JFrame {
 				usuario.setTelefone(textTelefone.getText());
 
 				UsuarioController controle = new UsuarioController();
-
 				try {
 					JOptionPane.showMessageDialog(null, controle.salvar(usuario));
+					fechar();
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage() + "");
 
@@ -158,7 +167,7 @@ public class CadastrarUsuarioFrame extends JFrame {
 			}
 
 		});
-
+		
 		textEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -213,7 +222,13 @@ public class CadastrarUsuarioFrame extends JFrame {
 			}
 
 		});
+		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
 
+
+	}
+	
+	private void fechar() {
+	    this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 
 	private String verificaCampoSenha() {

@@ -95,8 +95,7 @@ public class TelaInicial extends JFrame {
 		mntmInserir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarUsuarioFrame cadastro = new CadastrarUsuarioFrame();
-				cadastro.setVisible(true);
+				CadastrarUsuarioFrame cadastro = new CadastrarUsuarioFrame("");
 				revalidate();
 
 			}
