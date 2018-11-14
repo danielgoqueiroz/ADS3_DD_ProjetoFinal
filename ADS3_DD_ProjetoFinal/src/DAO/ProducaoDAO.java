@@ -11,43 +11,37 @@ import VO.Producao;
 import VO.Usuario;
 
 public class ProducaoDAO extends BaseDAO<Producao> {
-	// OK
+	
 	@Override
 	public String getColunasDelete() {
 		return "idProducao";
 	}
 
-	// OK
 	@Override
 	public String getColunaPrimaria() {
 		return " idProducao ";
 	}
 
-	// OK
 	@Override
 	public String getInterrogacoesInsert() {
 		return " ?,?,?,?,?,?,?,?,? ";
 	}
 
-	// OK
 	@Override
 	public String getNomeTabela() {
 		return " producao ";
 	}
 
-	// OK
 	@Override
 	public String getColunasInsert() {
 		return " tipo, titulo, ano, sinopse, genero, diretor, capa, duracao, qtdTemporada ";
 	}
 
-	// OK
 	@Override
 	public String getValoresEntidadesUpdate(Producao entidade) {
 		return " tipo = ? , titulo = ? , ano = ? , sinopse = ? , genero = ? , diretor = ? , capa = ? , duracao = ? , qtdTemporada = ? ";
 	}
 
-	// OK
 	@Override
 	public void setValoresAtributosInsert(Producao entidade, PreparedStatement prepareStm) {
 		try {
@@ -65,7 +59,6 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		}
 	}
 
-	// OK
 	public Producao buscaProducao(int idProducao) {
 		String sql = (" SELECT * FROM producao where idProducao = " + idProducao);
 
@@ -90,7 +83,6 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return objetoPesquisado;
 	}
 
-	// OK
 	@Override
 	public Producao construirObjetoConsultado(ResultSet resultado) throws SQLException {
 		Producao producao = new Producao();
@@ -124,7 +116,6 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return producao;
 	}
 
-	// OK
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
 		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao "
 				+ "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = "
@@ -150,10 +141,21 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return objetoPesquisado;
 	}
 
-	// TODO
 	@Override
 	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
-
+		try {
+			stmt.setString(1, entidade.getTipo().toString() + "");
+			stmt.setString(2, entidade.getTitulo() + "");
+			stmt.setInt(3, entidade.getAno());
+			stmt.setString(4, entidade.getSinopse() + "");
+			stmt.setString(5, entidade.getGenero().getIdGenero() + "");
+			stmt.setString(6, entidade.getDiretor() + "");
+			stmt.setBytes(7, entidade.getCapa());
+			stmt.setInt(8, entidade.getDuracao());
+			stmt.setInt(9, entidade.getQtdTemporadas());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public double BuscarMediaProducao(Producao p) {

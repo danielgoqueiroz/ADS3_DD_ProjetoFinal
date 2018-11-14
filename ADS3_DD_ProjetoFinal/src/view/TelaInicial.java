@@ -110,7 +110,7 @@ public class TelaInicial extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarProducaoFrame producao = new CadastrarProducaoFrame();
+				CadastrarProducaoFrame producao = new CadastrarProducaoFrame(true, null);
 				producao.setVisible(true);
 				
 			}

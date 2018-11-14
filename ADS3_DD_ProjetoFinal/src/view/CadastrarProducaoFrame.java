@@ -51,7 +51,7 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JTextPane textPaneSinopse;
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
-	private JButton btnAdicionar;
+	private JButton btnAdicionarArtista;
 	private JComboBox<EnumTipoProducao> cbTipo;
 	private JComboBox<Artista> cbAtores;
 	private JTable table;
@@ -64,7 +64,7 @@ public class CadastrarProducaoFrame extends JFrame {
 			@Override
 			public void run() {
 				try {
-					CadastrarProducaoFrame frame = new CadastrarProducaoFrame();
+					CadastrarProducaoFrame frame = new CadastrarProducaoFrame(true, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +73,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		});
 	}
 
-	public CadastrarProducaoFrame() {
+	public CadastrarProducaoFrame(boolean adicionar, Producao prod) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 703, 281);
@@ -205,7 +205,11 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		btnCadastrar = new JButton("Cadastrar");
+		if(adicionar)		
+			btnCadastrar = new JButton("Cadastrar");
+		else		
+			btnCadastrar = new JButton("Atualizar");
+		
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -252,16 +256,18 @@ public class CadastrarProducaoFrame extends JFrame {
 				}
 
 				producao.setArtistas(listArtistas);
-
+				
 				ProducaoController controle = new ProducaoController();
-
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(producao));
-				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
-
+				
+				if(!adicionar){
+					producao.setIdProducao(prod.getIdProducao());
 				}
+					try {
+						JOptionPane.showMessageDialog(null, controle.salvar(producao));
+					} catch (SQLException ex) {
+						JOptionPane.showMessageDialog(null, ex.getMessage() + "");
 
+					}
 			}
 		});
 		btnCadastrar.setBounds(565, 206, 91, 23);
@@ -309,9 +315,9 @@ public class CadastrarProducaoFrame extends JFrame {
 		lblTipo.setBounds(10, 14, 85, 14);
 		contentPane.add(lblTipo);
 
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(565, 10, 91, 23);
-		contentPane.add(btnAdicionar);
+		btnAdicionarArtista = new JButton("Adicionar");
+		btnAdicionarArtista.setBounds(565, 10, 91, 23);
+		contentPane.add(btnAdicionarArtista);
 
 		btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
@@ -330,7 +336,7 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		table.removeColumn(table.getColumnModel().getColumn(0));
 
-		btnAdicionar.addMouseListener(new MouseAdapter() {
+		btnAdicionarArtista.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Object[] values = new Object[2];
@@ -359,6 +365,34 @@ public class CadastrarProducaoFrame extends JFrame {
 				btnRemover.setEnabled(true);
 			}
 		});
+		
+		if(!adicionar) {
+			
+			cbTipo.setSelectedItem(prod.getTipo());
+			textTitulo.setText(prod.getTitulo());
+			textAno.setText(String.valueOf(prod.getAno()));
+			textPaneSinopse.setText(prod.getSinopse());
+			cbGenero.setSelectedItem(prod.getGenero());
+			textDiretor.setText(prod.getDiretor());			
+			//producao.setCapa(image);
+			
+			if (prod.getTipo() == EnumTipoProducao.Filme) {
+				textDuracaoQtdTemp.setText(String.valueOf(prod.getDuracao()));
+			}
+
+			if (prod.getTipo() == EnumTipoProducao.Serie) {
+				textDuracaoQtdTemp.setText(String.valueOf(prod.getQtdTemporadas()));
+			}
+
+			for (Artista artista : prod.getArtistas()) {
+				Object[] values = new Object[2];
+
+				values[0] =  artista.getIdArtista();
+				values[1] = artista.getNome();
+				model.addRow(values);	
+			}		
+			
+		}
 		
 		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
 

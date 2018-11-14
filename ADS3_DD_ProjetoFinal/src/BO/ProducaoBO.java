@@ -25,7 +25,7 @@ public class ProducaoBO {
 	}
 
 	public boolean atualizar(Producao producao) throws SQLException {
-		return true;
+		return dao.atualizar(producao,producao.getIdProducao());
 	}
 
 	public ArrayList<Producao> listarproducaos() {
