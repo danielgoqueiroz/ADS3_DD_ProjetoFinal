@@ -4,36 +4,36 @@ public class Genero {
 
 	private int idGenero;
 	private String descricao;
-		
-		public Genero(int idgenero, String descricao) {
-			super();
-			this.idGenero = idgenero;
-			this.descricao = descricao;
-		}
 
-		public Genero() {
-			super();
-		}
+	public Genero(int idGenero, String descricao) {
+		super();
+		this.idGenero = idGenero;
+		this.descricao = descricao;
+	}
 
-		public int getIdGenero() {
-			return idGenero;
-		}
+	public Genero() {
+		super();
+	}
 
-		public void setIdGenero(int idGenero) {
-			this.idGenero = idGenero;
-		}
+	public int getIdGenero() {
+		return idGenero;
+	}
 
-		public String getDescricao() {
-			return descricao;
-		}
+	public void setIdGenero(int idGenero) {
+		this.idGenero = idGenero;
+	}
 
-		public void setDescricao(String descricao) {
-			this.descricao = descricao;
-		}
-		
-		@Override
-		public String toString() {
-			return this.getIdGenero() + " "+this.getDescricao();
-		}
-		
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	@Override
+	public String toString() {
+		return this.getIdGenero() + " " + this.getDescricao();
+	}
+
 }

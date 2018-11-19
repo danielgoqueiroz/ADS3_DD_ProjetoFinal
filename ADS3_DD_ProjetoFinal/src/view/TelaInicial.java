@@ -1,6 +1,9 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,6 +11,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,13 +22,13 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+
 import VO.Artista;
 import VO.EnumNivel;
 import VO.Genero;
@@ -34,10 +38,6 @@ import VO.Usuario;
 import controller.GeneroController;
 import controller.ProducaoController;
 import controller.ProducoesAssistidasController;
-
-import java.awt.Toolkit;
-import java.awt.Color;
-import javax.swing.DefaultComboBoxModel;
 
 public class TelaInicial extends JFrame {
 
@@ -71,6 +71,7 @@ public class TelaInicial extends JFrame {
 	private JButton btnS3;
 	private JButton btnS4;
 	private JButton btnS5;
+	private JMenuItem mntmAtualizar;
 
 	public TelaInicial(Usuario usuario) {
 		usuarioLogado = usuario;
@@ -95,36 +96,46 @@ public class TelaInicial extends JFrame {
 		mntmInserir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarUsuarioFrame cadastro = new CadastrarUsuarioFrame("");
+				new CadastrarUsuarioFrame("");
 				revalidate();
 
 			}
 		});
 		mnUsuario.add(mntmInserir);
 
-		JMenu mnNewMenu = new JMenu("Filme");
-		menuBar.add(mnNewMenu);
+		JMenu mnProducao = new JMenu("Produ\u00E7\u00E3o");
+		menuBar.add(mnProducao);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("Cadastrar");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				CadastrarProducaoFrame producao = new CadastrarProducaoFrame(true, null);
 				producao.setVisible(true);
-				
+
 			}
 		});
 
-		mnNewMenu.add(mntmNewMenuItem);
+		mnProducao.add(mntmCadastrar);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Escolher Filmes Assistidos");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		mntmAtualizar = new JMenuItem("Atualizar");
+		mntmAtualizar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListarProducoes producoes = new ListarProducoes();
+				producoes.setVisible(true);
+			}
+		});
+		mnProducao.add(mntmAtualizar);
+
+		JMenuItem mntmFilmesAssitidos = new JMenuItem("Escolher Filmes Assistidos");
+		mntmFilmesAssitidos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 			}
 		});
-		menuBar.add(mntmNewMenuItem_1);
+		menuBar.add(mntmFilmesAssitidos);
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -303,7 +314,7 @@ public class TelaInicial extends JFrame {
 		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
 
 		populaCamposProducaoComNovoFilme();
-		
+
 		btnNao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -313,6 +324,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				cadastrarProducaoAssitida(usuarioLogado, producao, 1);
 			}
@@ -320,6 +332,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				cadastrarProducaoAssitida(usuarioLogado, producao, 2);
 
@@ -327,12 +340,14 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS3.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				cadastrarProducaoAssitida(usuarioLogado, producao, 3);
 			}
 		});
 
 		btnS4.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				cadastrarProducaoAssitida(usuarioLogado, producao, 4);
@@ -340,6 +355,7 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnS5.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				cadastrarProducaoAssitida(usuarioLogado, producao, 5);
 
@@ -347,13 +363,15 @@ public class TelaInicial extends JFrame {
 		});
 
 		btnSim.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				escondeBotoesSim();
 			}
 
 		});
 
-		setBounds((1920 / 2) - (getWidth() / 2), (1080 / 2) - (getHeight() / 2), getWidth(), getHeight());
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -377,11 +395,6 @@ public class TelaInicial extends JFrame {
 		btnS5.show();
 		revalidate();
 
-	}
-
-	public void setUser(Usuario usuario) {
-		usuarioLogado = usuario;
-		System.out.println("Usuário logado: " + usuario.toStringTitulo());
 	}
 
 	public Producao buscaProducaoAssistida(Usuario usuario) {
@@ -472,5 +485,4 @@ public class TelaInicial extends JFrame {
 	public static void setUsuarioLogado(Usuario usuarioLogado) {
 		usuarioLogado = usuarioLogado;
 	}
-
 }

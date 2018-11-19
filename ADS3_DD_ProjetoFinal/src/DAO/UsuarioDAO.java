@@ -35,10 +35,6 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 		return " nome, nickname, email, telefone, senha, nivel ";
 	}
 
-	public Usuario buscaUsuarioPorNome(String nome) {
-		return null;
-	}
-
 	@Override
 	public String getValoresEntidadesUpdate(Usuario entidade) {
 		String clausulaSet = (" idUsuario = ?, nickname = ? , email = ?, telefone = ?, senha = ?, nivel = ? ");

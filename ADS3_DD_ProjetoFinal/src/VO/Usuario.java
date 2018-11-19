@@ -72,21 +72,16 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	@Override
-	public String toString() {
-		return ("Usuario " + this.getIdUsuario() + " Nickname: " + this.getNickname() + "\nE-mail: " + this.getEmail());
-	}
-	
-	public String toStringTitulo() {
-		return ("Usuário logado: " + this.getNickname() + " - E-mail: " + this.getEmail());
-	}
-	
 	public EnumNivel getNivel() {
 		return nivel;
 	}
 
 	public void setNivel(EnumNivel nivel) {
 		this.nivel = nivel;
-	};
+	}
 
+	@Override
+	public String toString() {
+		return "Usuário logado: " + this.getNome();
+	}
 }

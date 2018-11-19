@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,7 +41,6 @@ import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
 import controller.ProducaoController;
-import java.awt.Toolkit;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -74,8 +75,9 @@ public class CadastrarProducaoFrame extends JFrame {
 	}
 
 	public CadastrarProducaoFrame(boolean adicionar, Producao prod) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 703, 281);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -205,11 +207,11 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		if(adicionar)		
+		if (adicionar)
 			btnCadastrar = new JButton("Cadastrar");
-		else		
+		else
 			btnCadastrar = new JButton("Atualizar");
-		
+
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,18 +258,18 @@ public class CadastrarProducaoFrame extends JFrame {
 				}
 
 				producao.setArtistas(listArtistas);
-				
+
 				ProducaoController controle = new ProducaoController();
-				
-				if(!adicionar){
+
+				if (!adicionar) {
 					producao.setIdProducao(prod.getIdProducao());
 				}
-					try {
-						JOptionPane.showMessageDialog(null, controle.salvar(producao));
-					} catch (SQLException ex) {
-						JOptionPane.showMessageDialog(null, ex.getMessage() + "");
+				try {
+					JOptionPane.showMessageDialog(null, controle.salvar(producao));
+				} catch (SQLException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
 
-					}
+				}
 			}
 		});
 		btnCadastrar.setBounds(565, 206, 91, 23);
@@ -365,17 +367,17 @@ public class CadastrarProducaoFrame extends JFrame {
 				btnRemover.setEnabled(true);
 			}
 		});
-		
-		if(!adicionar) {
-			
+
+		if (!adicionar) {
+
 			cbTipo.setSelectedItem(prod.getTipo());
 			textTitulo.setText(prod.getTitulo());
 			textAno.setText(String.valueOf(prod.getAno()));
 			textPaneSinopse.setText(prod.getSinopse());
 			cbGenero.setSelectedItem(prod.getGenero());
-			textDiretor.setText(prod.getDiretor());			
-			//producao.setCapa(image);
-			
+			textDiretor.setText(prod.getDiretor());
+			// producao.setCapa(image);
+
 			if (prod.getTipo() == EnumTipoProducao.Filme) {
 				textDuracaoQtdTemp.setText(String.valueOf(prod.getDuracao()));
 			}
@@ -387,14 +389,15 @@ public class CadastrarProducaoFrame extends JFrame {
 			for (Artista artista : prod.getArtistas()) {
 				Object[] values = new Object[2];
 
-				values[0] =  artista.getIdArtista();
+				values[0] = artista.getIdArtista();
 				values[1] = artista.getNome();
-				model.addRow(values);	
-			}		
-			
+				model.addRow(values);
+			}
+
 		}
-		
-		setBounds((1920/2)-(getWidth()/2), (1080/2)-(getHeight()/2), getWidth(),getHeight());
+
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
 	}
 }
