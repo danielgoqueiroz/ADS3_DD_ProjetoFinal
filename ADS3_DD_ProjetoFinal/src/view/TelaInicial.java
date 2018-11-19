@@ -132,6 +132,8 @@ public class TelaInicial extends JFrame {
 		mntmFilmesAssitidos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				ListarProducoesAssistidas frame = new ListarProducoesAssistidas(usuarioLogado);
+				frame.setVisible(true);
 
 			}
 		});

@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import VO.EnumNivel;
 import VO.Usuario;
 import controller.UsuarioController;
+import java.awt.Toolkit;
 
 public class CadastrarUsuarioFrame extends JFrame {
 
@@ -40,6 +41,7 @@ public class CadastrarUsuarioFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastrarUsuarioFrame(String nome) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarUsuarioFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 264);

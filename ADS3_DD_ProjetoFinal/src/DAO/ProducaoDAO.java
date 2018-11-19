@@ -241,4 +241,34 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		}
 		return listaObjetos;
 	}
+
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
+		ArrayList<Producao> producoes = new ArrayList<Producao>();
+
+		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "+ usuario.getIdUsuario() + " and T0.genero = '" + genero + "'");
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Producao objetoPesquisado = new Producao();
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+
+				objetoPesquisado = construirObjetoConsultado(resultado);
+				objetoPesquisado.setNota(resultado.getDouble("nota"));
+				
+				producoes.add(objetoPesquisado);
+
+			}
+		} catch (Exception e) {
+			System.out.println("Erro buscaProd. " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return producoes;
+	}
 }

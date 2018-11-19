@@ -57,4 +57,8 @@ public class ProducaoBO {
 		return dao.listarTodos();
 	}
 
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
+		return dao.buscarProducoesAssistidas(usuario, genero);
+	}
+
 }
