@@ -44,6 +44,13 @@ import controller.ProducaoController;
 
 public class CadastrarProducaoFrame extends JFrame {
 
+	private JLabel lblTitulo;
+	private JLabel lblAno;
+	private JLabel lblGenero;
+	private JLabel lblDiretor;
+	private JLabel lblAtor;
+	private JLabel lblSinopse;
+	private JLabel lblDuraoqtdtemp;
 	private JPanel contentPane;
 	private JTextField textDiretor;
 	private JTextField textAno;
@@ -56,9 +63,15 @@ public class CadastrarProducaoFrame extends JFrame {
 	private JComboBox<EnumTipoProducao> cbTipo;
 	private JComboBox<Artista> cbAtores;
 	private JTable table;
+	private JScrollPane scrollPane;
+	private DefaultTableModel model;
 	private JButton btnRemover;
 	private JTextField textDuracaoQtdTemp;
 	private byte[] image;
+	private GeneroController gc;
+	private ArtistaController ac;
+	private List<Genero> generos;
+	private List<Artista> artistas;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -75,6 +88,15 @@ public class CadastrarProducaoFrame extends JFrame {
 	}
 
 	public CadastrarProducaoFrame(boolean adicionar, Producao prod) {
+
+		if (adicionar)
+			setTitle("Cadastrar Produ\u00E7\u00E3o");
+		else
+			setTitle("Atualizar Produ\u00E7\u00E3o");
+
+		gc = new GeneroController();
+		ac = new ArtistaController();
+
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -84,32 +106,32 @@ public class CadastrarProducaoFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblTitulo = new JLabel("Titulo");
+		lblTitulo = new JLabel("Titulo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitulo.setBounds(10, 42, 85, 14);
 		contentPane.add(lblTitulo);
 
-		JLabel lblAno = new JLabel("Ano");
+		lblAno = new JLabel("Ano");
 		lblAno.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAno.setBounds(10, 71, 85, 14);
 		contentPane.add(lblAno);
 
-		JLabel lblGenero = new JLabel("Genero");
+		lblGenero = new JLabel("Genero");
 		lblGenero.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblGenero.setBounds(10, 97, 85, 14);
 		contentPane.add(lblGenero);
 
-		JLabel lblDiretor = new JLabel("Diretor");
+		lblDiretor = new JLabel("Diretor");
 		lblDiretor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDiretor.setBounds(10, 126, 85, 14);
 		contentPane.add(lblDiretor);
 
-		JLabel lblAtor = new JLabel("Atores");
+		lblAtor = new JLabel("Atores");
 		lblAtor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAtor.setBounds(348, 14, 52, 14);
 		contentPane.add(lblAtor);
 
-		JLabel lblSinopse = new JLabel("Sinopse");
+		lblSinopse = new JLabel("Sinopse");
 		lblSinopse.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSinopse.setBounds(43, 186, 52, 14);
 		contentPane.add(lblSinopse);
@@ -131,9 +153,29 @@ public class CadastrarProducaoFrame extends JFrame {
 		cbTipo = new JComboBox<EnumTipoProducao>();
 		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
 
-		JLabel lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
+		lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
 		lblDuraoqtdtemp.setBounds(201, 68, 85, 14);
 		contentPane.add(lblDuraoqtdtemp);
+
+		textAno = new JTextField();
+		textAno.setColumns(10);
+		textAno.setBounds(105, 65, 86, 20);
+		contentPane.add(textAno);
+
+		textTitulo = new JTextField();
+		textTitulo.setColumns(10);
+		textTitulo.setBounds(105, 39, 236, 20);
+		contentPane.add(textTitulo);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(371, 39, 285, 108);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
+		scrollPane.setViewportView(table);
+
+		model = (DefaultTableModel) table.getModel();
 
 		cbTipo.addActionListener(new ActionListener() {
 			@Override
@@ -149,11 +191,8 @@ public class CadastrarProducaoFrame extends JFrame {
 		cbTipo.setBounds(105, 11, 236, 20);
 		contentPane.add(cbTipo);
 
-		GeneroController gc = new GeneroController();
+		listarGeneros();
 
-		final List<Genero> generos = gc.listarTodos();
-
-		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 		cbGenero.setBounds(105, 94, 236, 20);
 		contentPane.add(cbGenero);
 
@@ -169,9 +208,8 @@ public class CadastrarProducaoFrame extends JFrame {
 			}
 		});
 
-		ArtistaController ac = new ArtistaController();
-		final List<Artista> artistas = ac.listarTodos();
-		cbAtores = new JComboBox<Artista>(new Vector<>(artistas));
+		listarArtistas();
+
 		cbAtores.setBounds(410, 11, 145, 20);
 		contentPane.add(cbAtores);
 
@@ -187,34 +225,21 @@ public class CadastrarProducaoFrame extends JFrame {
 			}
 		});
 
-		textAno = new JTextField();
-		textAno.setColumns(10);
-		textAno.setBounds(105, 65, 86, 20);
-		contentPane.add(textAno);
-
-		textTitulo = new JTextField();
-		textTitulo.setColumns(10);
-		textTitulo.setBounds(105, 39, 236, 20);
-		contentPane.add(textTitulo);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(371, 39, 285, 108);
-		contentPane.add(scrollPane);
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
-		scrollPane.setViewportView(table);
-
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-
 		if (adicionar)
 			btnCadastrar = new JButton("Cadastrar");
 		else
 			btnCadastrar = new JButton("Atualizar");
 
+		btnCadastrar.setBounds(565, 206, 91, 23);
+		contentPane.add(btnCadastrar);
+
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				addOrUpdate(adicionar);
+			}
+
+			private void addOrUpdate(boolean adicionar) {
 
 				Producao producao = new Producao();
 
@@ -272,8 +297,6 @@ public class CadastrarProducaoFrame extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(565, 206, 91, 23);
-		contentPane.add(btnCadastrar);
 
 		textImage = new JTextField();
 		textImage.setEditable(false);
@@ -296,7 +319,7 @@ public class CadastrarProducaoFrame extends JFrame {
 					image = Files.readAllBytes(f.toPath());
 
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 //				lblImagem.setIcon(icon);
@@ -399,5 +422,15 @@ public class CadastrarProducaoFrame extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
+	}
+
+	private void listarArtistas() {
+		artistas = ac.listarTodos();
+		cbAtores = new JComboBox<Artista>(new Vector<>(artistas));
+	}
+
+	private void listarGeneros() {
+		generos = gc.listarTodos();
+		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
 }

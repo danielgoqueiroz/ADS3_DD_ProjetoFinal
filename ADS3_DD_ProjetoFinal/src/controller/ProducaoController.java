@@ -20,13 +20,13 @@ public class ProducaoController {
 			if (producao.getIdProducao() > 0) {
 
 				if (bo.atualizar(producao)) {
-					validacao = "Producao atualizado com sucesso";
+					validacao = "Produção atualizado com sucesso!";
 				} else {
-					validacao = "Erro au atualizar o Producao";
+					validacao = "Erro ao atualizar a Produção!";
 				}
 			} else {
 				if (bo.inserir(producao)) {
-					validacao = "Producao cadastrado com sucesso";
+					validacao = "Produção cadastrada com sucesso!";
 
 					ArtistaProducaoController controle = new ArtistaProducaoController();
 
@@ -41,7 +41,7 @@ public class ProducaoController {
 					}
 
 				} else {
-					validacao = "Erro ao cadastrar Producao";
+					validacao = "Erro ao cadastrar Produção";
 				}
 			}
 		} else {
@@ -81,7 +81,7 @@ public class ProducaoController {
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
 		return bo.buscarProducaoNaoAssistido(usuario);
 	}
-	
+
 	public double BuscarMediaProducao(Producao p) {
 		return bo.BuscarMediaProducao(p);
 	}

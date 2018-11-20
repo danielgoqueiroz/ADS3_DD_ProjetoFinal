@@ -9,20 +9,19 @@ import java.sql.Statement;
 
 public class Banco {
 
-	private static final String driver = "com.mysql.cj.jdbc.Driver";
-	private static final String banco = "danie648_db_ads3_dd_filme";
-	private static final String conexao = "jdbc:mysql://192.185.209.97:3306/" + banco +"?useTimezone=true&serverTimezone=UTC&useSSL=false";
-	private static final String user = "danie648_ads3";
-	private static final String password = "oa^fmgQ+6B~O";
-	
-	
-	//192.185.209.97
-	//oa^fmgQ+6B~O
-	//danie648_db_ads3_dd_filme
-	//danie648_ads3
+//	private static final String driver = "com.mysql.cj.jdbc.Driver";
+//	private static final String banco = "danie648_db_ads3_dd_filme";
+//	private static final String conexao = "jdbc:mysql://192.185.209.97:3306/" + banco +"?useTimezone=true&serverTimezone=UTC&useSSL=false";
+//	private static final String user = "danie648_ads3";
+//	private static final String password = "oa^fmgQ+6B~O";
 
-	
-	public static Connection getConnection(){
+	private static final String driver = "com.mysql.cj.jdbc.Driver";
+	private static final String banco = "trabfinal";
+	private static final String conexao = "jdbc:mysql://localhost:3306/" + banco + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
+	private static final String user = "root";
+	private static final String password = "";
+
+	public static Connection getConnection() {
 		try {
 			Connection conn = null;
 			Class.forName(driver);
@@ -36,18 +35,18 @@ public class Banco {
 			return null;
 		}
 	}
-	
-	public static void closeConnection(Connection conn){
+
+	public static void closeConnection(Connection conn) {
 		try {
-			if(conn != null){
+			if (conn != null) {
 				conn.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento da conexão.");
-		}	
+		}
 	}
-	
-	public static Statement getStatement(Connection conn){
+
+	public static Statement getStatement(Connection conn) {
 		try {
 			Statement stmt = conn.createStatement();
 			return stmt;
@@ -56,18 +55,17 @@ public class Banco {
 			return null;
 		}
 	}
-		
-	public static void closeStatement(Statement stmt){
+
+	public static void closeStatement(Statement stmt) {
 		try {
-			if(stmt != null){
+			if (stmt != null) {
 				stmt.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento do Statement.");
-		}	
+		}
 	}
-	
-	
+
 	public static PreparedStatement getPreparedStatement(Connection conn, String sql) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -77,31 +75,30 @@ public class Banco {
 			return null;
 		}
 	}
-	
+
 	public static PreparedStatement getPreparedStatement(Connection conn, String sql, int tipoRetorno) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql, tipoRetorno);
 			return stmt;
 		} catch (Exception e) {
 			System.out.println("Erro ao obter o PreparedStatement.");
- 			return null;
- 		}
- 	}
-	 
+			return null;
+		}
+	}
 
-	public static void closePreparedStatement(Statement stmt){
+	public static void closePreparedStatement(Statement stmt) {
 		try {
-			if(stmt != null){
+			if (stmt != null) {
 				stmt.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento do PreparedStatement.");
-		}	
+		}
 	}
-	
-	public static void closeResultSet(ResultSet result){
+
+	public static void closeResultSet(ResultSet result) {
 		try {
-			if(result != null){
+			if (result != null) {
 				result.close();
 			}
 		} catch (SQLException e) {

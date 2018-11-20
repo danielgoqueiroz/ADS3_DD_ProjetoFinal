@@ -1,55 +1,58 @@
-use danie648_db_ads3_dd_filme;
+CREATE DATABASE `trabfinal`;
 
-create table usuario
-(
-	idUsuario int not null auto_increment primary key,
-	nome varchar(45),
-	nickname varchar(45),
-	email varchar(45),
-	telefone varchar(45),
-	senha varchar(45)
-);
+use trabfinal;
 
-create table producao 
-(
-	idProducao int not null auto_increment primary key,
-    titulo varchar(45),
-	ano int,
-	genero varchar(45),
-	diretor varchar(45),
-	sinopse varchar(200),
-    capa blob,
-	duracao int,
-	qtdTemporada int	
-);
+CREATE TABLE `artista` (
+  `idArtista` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`idArtista`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table artista 
-(
-	idArtista int not null auto_increment primary key,
-    nome varchar(45)
-);
+CREATE TABLE `genero` (
+  `idgenero` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`idgenero`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table producaoArtista 
-(	
-	idProducaoArtista int not null auto_increment primary key,
-	idProducao int not null,
-    idArtista  int not null,
-    FOREIGN KEY (idProducao) REFERENCES producao(idProducao),
-    FOREIGN KEY (idArtista) REFERENCES artista(idArtista)
-);
+CREATE TABLE `usuario` (
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nickname` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefone` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `senha` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nivel` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`idusuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table genero 
-(
-	idGenero int not null auto_increment primary key,
-	descricao varchar(45)
-);
+CREATE TABLE `producao` (
+  `idProducao` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `titulo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ano` int(11) DEFAULT NULL,
+  `sinopse` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `genero` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `diretor` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `capa` blob,
+  `duracao` int(11) DEFAULT NULL,
+  `qtdTemporada` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idProducao`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `producaoartista` (
+  `idProducaoArtista` int(11) NOT NULL AUTO_INCREMENT,
+  `idProducao` int(11) NOT NULL,
+  `idArtista` int(11) NOT NULL,
+  PRIMARY KEY (`idProducaoArtista`),
+  KEY `idProducao` (`idProducao`),
+  KEY `idArtista` (`idArtista`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `producoesAssistidas` (
-  `idProducoesAssistidas` int(11) DEFAULT NULL,
+CREATE TABLE `producoesassistidas` (
+  `idProducoesAssistidas` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) NOT NULL DEFAULT '0',
   `idProducao` int(11) NOT NULL DEFAULT '0',
   `nota` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idUsuario`,`idProducao`),
+  PRIMARY KEY (`idProducoesAssistidas`,`idUsuario`,`idProducao`),
   KEY `idProducao` (`idProducao`)
-);
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
