@@ -393,11 +393,30 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		if (!adicionar) {
 
-			cbTipo.setSelectedItem(prod.getTipo());
+			for (int i = 0; i < cbTipo.getItemCount(); i++)
+	        {
+	        	EnumTipoProducao item = cbTipo.getItemAt(i);
+	            if (item == prod.getTipo())
+	            {
+	            	cbTipo.setSelectedIndex(i);
+	                break;
+	            }
+	        }
+			
+			for (int i = 0; i < cbGenero.getItemCount(); i++)
+	        {
+	        	Genero item = cbGenero.getItemAt(i);
+	            if (item.getDescricao().equalsIgnoreCase(prod.getGenero().getDescricao()))
+	            {
+	            	cbGenero.setSelectedIndex(i);
+	                break;
+	            }
+	        }
+			
 			textTitulo.setText(prod.getTitulo());
 			textAno.setText(String.valueOf(prod.getAno()));
-			textPaneSinopse.setText(prod.getSinopse());
-			cbGenero.setSelectedItem(prod.getGenero());
+			textPaneSinopse.setText(prod.getSinopse());					    
+			
 			textDiretor.setText(prod.getDiretor());
 			// producao.setCapa(image);
 

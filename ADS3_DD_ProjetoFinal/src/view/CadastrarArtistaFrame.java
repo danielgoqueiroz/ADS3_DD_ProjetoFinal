@@ -86,6 +86,7 @@ public class CadastrarArtistaFrame extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Artista: " + artistaTemp.getNome() + " já cadastrado.");
 				}
+				textNome.setText("");
 			}
 		});
 	}

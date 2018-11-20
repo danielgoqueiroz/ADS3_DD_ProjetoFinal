@@ -45,6 +45,10 @@ public class ProducaoBO {
 		return dao.buscaProducaoNaoAssistido(usuario);
 	}
 	
+	public ArrayList<Producao> buscaProducoesNaoAssistidas(Usuario usuario) {		
+		return dao.buscaProducoesNaoAssistidas(usuario);
+	}
+	
 	public double BuscarMediaProducao(Producao p) {
 		return dao.BuscarMediaProducao(p);
 	}

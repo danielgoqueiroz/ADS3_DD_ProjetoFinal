@@ -79,13 +79,15 @@ public class CadastrarGeneroFrame extends JFrame {
 					try {
 						JOptionPane.showMessageDialog(null, controle.salvar(genero));
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null, e.getMessage() + "");
+						JOptionPane.showMessageDialog(null, e.getMessage() + "");						
 					}
 				} else {
 					JOptionPane.showMessageDialog(contentPane,
 							"Gênero " + generoTemp.getDescricao() + " já cadastrado!");
 
 				}
+				
+				textNome.setText("");
 			}
 		});
 	}

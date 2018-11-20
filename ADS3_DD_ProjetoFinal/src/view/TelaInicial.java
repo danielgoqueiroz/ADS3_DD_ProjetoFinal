@@ -72,10 +72,14 @@ public class TelaInicial extends JFrame {
 	private JButton btnS4;
 	private JButton btnS5;
 	private JMenuItem mntmAtualizar;
+	private ArrayList<Producao> producoesListadas;
+	private ArrayList<Producao> producoesNaoAssistidas;
 
 	public TelaInicial(Usuario usuario) {
 		usuarioLogado = usuario;
 
+		
+		
 		setResizable(false);
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setForeground(Color.WHITE);
@@ -128,8 +132,8 @@ public class TelaInicial extends JFrame {
 		});
 		mnProducao.add(mntmAtualizar);
 
-		JMenuItem mntmFilmesAssitidos = new JMenuItem("Escolher Filmes Assistidos");
-		mntmFilmesAssitidos.addActionListener(new ActionListener() {
+		JMenuItem mntmProducoesAssitidos = new JMenuItem("Escolher Produções Assistidas");
+		mntmProducoesAssitidos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ListarProducoesAssistidas frame = new ListarProducoesAssistidas(usuarioLogado);
@@ -137,7 +141,7 @@ public class TelaInicial extends JFrame {
 
 			}
 		});
-		menuBar.add(mntmFilmesAssitidos);
+		menuBar.add(mntmProducoesAssitidos);
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -315,13 +319,13 @@ public class TelaInicial extends JFrame {
 		producao = new Producao();
 		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
 
-		populaCamposProducaoComNovoFilme();
+		populaCamposProducao();
 
 		btnNao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				populaCamposProducaoComNovoFilme();
+				populaCamposProducao();
 			}
 		});
 
@@ -399,9 +403,14 @@ public class TelaInicial extends JFrame {
 
 	}
 
-	public Producao buscaProducaoAssistida(Usuario usuario) {
+	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
 		ProducaoController controle = new ProducaoController();
 		return controle.buscaProducaoNaoAssistido(usuario);
+	}
+	
+	public void buscaProducoesNaoAssistidas(Usuario usuario) {
+		ProducaoController controle = new ProducaoController();
+		producoesNaoAssistidas = controle.buscaProducoesNaoAssistidas(usuario);
 	}
 
 	public double BuscarMediaProducao(Producao p) {
@@ -415,13 +424,13 @@ public class TelaInicial extends JFrame {
 		ProducoesAssistidas producaoAssitida = new ProducoesAssistidas(usuarioLogado, producao, nota);
 		controle.cadastrarProducaoAssitida(producaoAssitida);
 
-		populaCamposProducaoComNovoFilme();
+		populaCamposProducao();
 
 		RetomaFormOriginal();
 
 	}
 
-	public void populaCamposProducaoComNovoFilme() {
+	public void populaCamposProducao() {
 
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
@@ -437,14 +446,24 @@ public class TelaInicial extends JFrame {
 		lblImagem.setIcon(null);
 		btnRecarregar.setEnabled(false);
 
-		producao = buscaProducaoAssistida(usuarioLogado);
+		producao = buscaProducaoNaoAssistido(usuarioLogado);
 
 		if (producao.getIdProducao() > 0) {
 
 			lblTitulo.setText(producao.getTitulo() + "");
 			textAno.setText(producao.getAno() + "");
 			textDiretor.setText(producao.getDiretor() + "");
-			cbGenero.setSelectedItem(producao.getGenero());
+									
+			for (int i = 0; i < cbGenero.getItemCount(); i++)
+	        {
+	        	Genero item = cbGenero.getItemAt(i);
+	            if (item.getDescricao().equalsIgnoreCase(producao.getGenero().getDescricao()))
+	            {
+	            	cbGenero.setSelectedIndex(i);
+	                break;
+	            }
+	        }
+			
 			textSinopse.setText(producao.getSinopse());
 			textDuracaoQtdTempodara.setText(producao.getDuracao() + "");
 			btnRecarregar.setEnabled(false);

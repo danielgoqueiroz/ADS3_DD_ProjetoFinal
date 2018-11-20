@@ -141,6 +141,33 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return objetoPesquisado;
 	}
 
+	public ArrayList<Producao> buscaProducoesNaoAssistidas(Usuario usuario) {
+		ArrayList<Producao> producoes = new ArrayList<>();
+		String sql = (" SELECT idProducao," + getColunasInsert() + " FROM producao "
+				+ "where idProducao not in (select idProducao from producoesAssistidas where idUsuario = "
+				+ usuario.getIdUsuario() + " ) " + "order by rand()");
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
+		ResultSet resultado = null;
+		Producao objetoPesquisado = new Producao();
+
+		try {
+			resultado = stmt.executeQuery(sql);
+			while (resultado.next()) {
+				objetoPesquisado = construirObjetoConsultado(resultado);
+				producoes.add(objetoPesquisado);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro buscaProd. " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeConnection(conn);
+			Banco.closePreparedStatement(stmt);
+		}
+
+		return producoes;
+	}
+	
 	@Override
 	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
 		try {
