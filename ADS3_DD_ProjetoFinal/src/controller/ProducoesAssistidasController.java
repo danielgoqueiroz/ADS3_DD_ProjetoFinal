@@ -11,9 +11,8 @@ public class ProducoesAssistidasController {
 
 	ProducaoAssitidasBO bo = new ProducaoAssitidasBO();
 	
-	public void cadastrarProducaoAssitida(ProducoesAssistidas producaoAssitida) {
-		
-		bo.cadastrarProducaoAssitida(producaoAssitida);
-		
+	public void cadastrarProducaoAssitida(ProducoesAssistidas producaoAssitida) {		
+		bo.cadastrarProducaoAssitida(producaoAssitida);		
 	}
+
 }

@@ -156,7 +156,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		
 		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
 		contentPane.add(textDuracaoQtdTemp);
-		textDuracaoQtdTemp.setColumns(3);		
+		textDuracaoQtdTemp.setColumns(10);		
 
 		cbTipo = new JComboBox<EnumTipoProducao>();
 		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
@@ -169,7 +169,7 @@ public class CadastrarProducaoFrame extends JFrame {
 		textAno = new JFormattedTextField(decimalFormat);		
 		textAno.setBounds(105, 65, 86, 20);
 		contentPane.add(textAno);
-		textAno.setColumns(3);
+		textAno.setColumns(10);
 
 		textTitulo = new JTextField();
 		textTitulo.setColumns(10);
@@ -241,71 +241,6 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		btnCadastrar.setBounds(565, 206, 91, 23);
 		contentPane.add(btnCadastrar);
-
-		btnCadastrar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addOrUpdate(adicionar);
-			}
-
-			private void addOrUpdate(boolean adicionar) {
-
-				Producao producao = new Producao();
-
-				producao.setTipo((EnumTipoProducao) cbTipo.getSelectedItem());
-				producao.setTitulo(textTitulo.getText());
-
-				String ano = textAno.getText();
-				if (ano.isEmpty())
-					ano = "0";
-
-				producao.setAno(Integer.parseInt(ano));
-				producao.setSinopse(textPaneSinopse.getText());
-				producao.setGenero((Genero) cbGenero.getSelectedItem());
-				producao.setDiretor(textDiretor.getText());
-				producao.setCapa(image);
-
-				String duracaoQtdTemp = textDuracaoQtdTemp.getText();
-				if (duracaoQtdTemp.isEmpty())
-					duracaoQtdTemp = "0";
-
-				if (producao.getTipo() == EnumTipoProducao.Filme) {
-
-					producao.setDuracao(Integer.parseInt(duracaoQtdTemp));
-					producao.setQtdTemporadas(0);
-				}
-
-				if (producao.getTipo() == EnumTipoProducao.Serie) {
-					producao.setQtdTemporadas(Integer.parseInt(duracaoQtdTemp));
-					producao.setDuracao(0);
-				}
-
-				ArrayList<Artista> listArtistas = new ArrayList<Artista>();
-
-				for (int i = 0; i < model.getRowCount(); i++) {
-					Artista artista = new Artista();
-
-					artista.setIdArtista((int) model.getValueAt(i, 0));
-					artista.setNome((String) model.getValueAt(i, 1));
-
-					listArtistas.add(artista);
-				}
-
-				producao.setArtistas(listArtistas);
-
-				ProducaoController controle = new ProducaoController();
-
-				if (!adicionar) {
-					producao.setIdProducao(prod.getIdProducao());
-				}
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(producao));
-				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
-
-				}
-			}
-		});
 
 		textImage = new JTextField();
 		textImage.setEditable(false);
@@ -447,6 +382,19 @@ public class CadastrarProducaoFrame extends JFrame {
 
 		}
 
+		btnCadastrar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int producao = 0;				
+				if(prod != null)
+					producao = prod.getIdProducao();
+				
+				addOrUpdate(adicionar,producao);
+			}
+
+		
+		});
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
@@ -461,4 +409,83 @@ public class CadastrarProducaoFrame extends JFrame {
 		generos = gc.listarTodos();
 		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
+
+	private void addOrUpdate(boolean adicionar, int idProducao) {
+
+		Producao producao = new Producao();
+
+		producao.setTipo((EnumTipoProducao) cbTipo.getSelectedItem());
+		producao.setTitulo(textTitulo.getText());
+
+		String ano = textAno.getText();
+		if (ano.isEmpty())
+			ano = "0";
+
+		producao.setAno(Integer.parseInt(ano));
+		producao.setSinopse(textPaneSinopse.getText());
+		producao.setGenero((Genero) cbGenero.getSelectedItem());
+		producao.setDiretor(textDiretor.getText());
+		producao.setCapa(image);
+
+		String duracaoQtdTemp = textDuracaoQtdTemp.getText();
+		if (duracaoQtdTemp.isEmpty())
+			duracaoQtdTemp = "0";
+
+		if (producao.getTipo() == EnumTipoProducao.Filme) {
+
+			producao.setDuracao(Integer.parseInt(duracaoQtdTemp));
+			producao.setQtdTemporadas(0);
+		}
+
+		if (producao.getTipo() == EnumTipoProducao.Serie) {
+			producao.setQtdTemporadas(Integer.parseInt(duracaoQtdTemp));
+			producao.setDuracao(0);
+		}
+
+		ArrayList<Artista> listArtistas = new ArrayList<Artista>();
+
+		for (int i = 0; i < model.getRowCount(); i++) {
+			Artista artista = new Artista();
+
+			artista.setIdArtista((int) model.getValueAt(i, 0));
+			artista.setNome((String) model.getValueAt(i, 1));
+
+			listArtistas.add(artista);
+		}
+
+		producao.setArtistas(listArtistas);
+
+		ProducaoController controle = new ProducaoController();
+
+		if (!adicionar) {
+			producao.setIdProducao(idProducao);
+		}
+		try {
+			String msg = controle.salvar(producao);
+			JOptionPane.showMessageDialog(null, msg);
+			
+			if(msg.contains("cadastrada")) {
+				LimparDadosTela();
+			}
+			
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage() + "");
+
+		}
+	}
+
+	private void LimparDadosTela() {
+		this.textAno.setText("");
+		this.textDiretor.setText("");
+		this.textDuracaoQtdTemp.setText("");
+		this.textImage.setText("");
+		this.textPaneSinopse.setText("");
+		this.textTitulo.setText("");
+		
+		int rowCount = table.getRowCount();
+		for (int i = 0; i < rowCount; i++) {
+			model.removeRow(0);
+		}
+	}
+
 }

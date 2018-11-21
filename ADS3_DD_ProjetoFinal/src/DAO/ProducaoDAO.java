@@ -188,7 +188,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 	public double BuscarMediaProducao(Producao p) {
 		double valor = 0;
 
-		String sql = (" SELECT avg(nota) nota FROM danie648_db_ads3_dd_filme.producoesAssistidas where idProducao =  "
+		String sql = (" SELECT avg(nota) nota FROM producoesAssistidas where idProducao =  "
 				+ p.getIdProducao());
 
 		Connection conn = Banco.getConnection();

@@ -12,6 +12,7 @@ import VO.Usuario;
 public class ProducaoController {
 
 	ProducaoBO bo = new ProducaoBO();
+	ArtistaProducaoController controle = new ArtistaProducaoController();
 
 	public String salvar(Producao producao) throws SQLException {
 		String validacao = validarProducao(producao);
@@ -20,15 +21,14 @@ public class ProducaoController {
 			if (producao.getIdProducao() > 0) {
 
 				if (bo.atualizar(producao)) {
-					validacao = "Produção atualizado com sucesso!";
+					controle.ArtistasUpdate(producao);
+					validacao = "Produção atualizada com sucesso!";
 				} else {
 					validacao = "Erro ao atualizar a Produção!";
 				}
 			} else {
 				if (bo.inserir(producao)) {
 					validacao = "Produção cadastrada com sucesso!";
-
-					ArtistaProducaoController controle = new ArtistaProducaoController();
 
 					for (Artista artista : producao.getArtistas()) {
 

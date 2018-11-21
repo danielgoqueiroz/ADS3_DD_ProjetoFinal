@@ -92,40 +92,4 @@ public class ProducoesAssistidasDAO extends BaseDAO<ProducoesAssistidas> {
 
 	}
 	
-	public void ArtistasUpdate(Producao producao) throws SQLException {
-		ArtistasDelete(producao);
-		ArtistasAdd(producao);
-	}
-
-	private void ArtistasDelete(Producao producao) {
-		String sql = (" DELETE FROM producaoartista WHERE idProducao= "+ producao.getIdProducao());
-		
-		Connection conn = Banco.getConnection();
-		PreparedStatement prepareStm = Banco.getPreparedStatement(conn, sql, Statement.RETURN_GENERATED_KEYS);
-		int idEntidade = -1;
-		
-		try {			
-			prepareStm.executeUpdate();			
-		} catch (SQLException e) {
-			System.out.println("Erro " + e.getMessage());
-		} finally {
-			Banco.closeStatement(prepareStm);
-			Banco.closeConnection(conn);
-		}
-	}
-	
-	private void ArtistasAdd(Producao producao) throws SQLException {
-		
-		ArtistaProducaoController controle = new ArtistaProducaoController();
-
-		for (Artista artista : producao.getArtistas()) {
-
-			ArtistaProducao ap = new ArtistaProducao();
-
-			ap.setIdArtista(artista.getIdArtista());
-			ap.setIdProducao(producao.getIdProducao());
-
-			controle.salvar(ap);
-		}
-	}	
 }

@@ -72,9 +72,16 @@ public class TelaInicial extends JFrame {
 	private JButton btnS3;
 	private JButton btnS4;
 	private JButton btnS5;
-	private JMenuItem mntmAtualizar;
+	private JMenuItem mntmUpdateProd;
 	private ArrayList<Producao> producoesListadas;
 	private ArrayList<Producao> producoesNaoAssistidas;
+	private JMenu mnGenero;
+	private JMenu mnArtista;
+	private JMenu mnReview;
+	private JMenuItem mntmAddReview;
+	private JMenuItem mntmMinhasReviews;
+	private JMenuItem mntmAddGenero;
+	private JMenuItem mntmAddArtista;
 
 	public TelaInicial(Usuario usuario) {
 		usuarioLogado = usuario;
@@ -92,56 +99,71 @@ public class TelaInicial extends JFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+				
+						JMenu mnProducao = new JMenu("Produ\u00E7\u00E3o");
+						mnProducao.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/popcorn.png")));
+						menuBar.add(mnProducao);
+						
+								JMenuItem mntmAddProd = new JMenuItem("Cadastrar nova");
+								mntmAddProd.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent arg0) {
+										CadastrarProducaoFrame producao = new CadastrarProducaoFrame(true, null);
+										producao.setVisible(true);
 
-		JMenu mnUsuario = new JMenu("Usu\u00E1rio");
-		menuBar.add(mnUsuario);
+									}
+								});
+								
+										mnProducao.add(mntmAddProd);
+										
+												mntmUpdateProd = new JMenuItem("Atualizar produ\u00E7\u00F5es");
+												mntmUpdateProd.addActionListener(new ActionListener() {
+													@Override
+													public void actionPerformed(ActionEvent e) {
+														ListarProducoes producoes = new ListarProducoes();
+														producoes.setVisible(true);
+													}
+												});
+												mnProducao.add(mntmUpdateProd);
+				
+				mnArtista = new JMenu("Artista");
+				mnArtista.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/oscar.png")));
+				menuBar.add(mnArtista);
+				
+				mntmAddArtista = new JMenuItem("Cadastrar novo");
+				mnArtista.add(mntmAddArtista);
+		
+		mnGenero = new JMenu("G\u00EAnero");
+		mnGenero.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/feelings.png")));
+		menuBar.add(mnGenero);
+		
+		mntmAddGenero = new JMenuItem("Cadastrar novo");
+		mnGenero.add(mntmAddGenero);
+		
+				JMenu mnUsuario = new JMenu("Usu\u00E1rio");
+				mnUsuario.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/profile-user.png")));
+				menuBar.add(mnUsuario);
+				
+						JMenuItem mntmAddUsuario = new JMenuItem("Cadastrar novo");
+						mntmAddUsuario.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								new CadastrarUsuarioFrame("");
+								revalidate();
 
-		JMenuItem mntmInserir = new JMenuItem("Inserir");
-		mntmInserir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				new CadastrarUsuarioFrame("");
-				revalidate();
-
-			}
-		});
-		mnUsuario.add(mntmInserir);
-
-		JMenu mnProducao = new JMenu("Produ\u00E7\u00E3o");
-		menuBar.add(mnProducao);
-
-		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
-		mntmCadastrar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				CadastrarProducaoFrame producao = new CadastrarProducaoFrame(true, null);
-				producao.setVisible(true);
-
-			}
-		});
-
-		mnProducao.add(mntmCadastrar);
-
-		mntmAtualizar = new JMenuItem("Atualizar");
-		mntmAtualizar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ListarProducoes producoes = new ListarProducoes();
-				producoes.setVisible(true);
-			}
-		});
-		mnProducao.add(mntmAtualizar);
-
-		JMenuItem mntmProducoesAssitidos = new JMenuItem("Escolher Produções Assistidas");
-		mntmProducoesAssitidos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ListarProducoesAssistidas frame = new ListarProducoesAssistidas(usuarioLogado);
-				frame.setVisible(true);
-
-			}
-		});
-		menuBar.add(mntmProducoesAssitidos);
+							}
+						});
+						mnUsuario.add(mntmAddUsuario);
+		
+		mnReview = new JMenu("Reviews");
+		mnReview.setIcon(new ImageIcon(TelaInicial.class.getResource("/extras/review.png")));
+		menuBar.add(mnReview);
+		
+		mntmAddReview = new JMenuItem("Adicionar Reviews");
+		mnReview.add(mntmAddReview);
+		
+		mntmMinhasReviews = new JMenuItem("Relat\u00F3rio - Minhas reviews");
+		mnReview.add(mntmMinhasReviews);
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -196,6 +218,7 @@ public class TelaInicial extends JFrame {
 		textDiretor.setColumns(10);
 
 		textSinopse = new JTextArea();
+		textSinopse.setEditable(false);
 		textSinopse.setLineWrap(true);
 		textSinopse.setBounds(356, 207, 279, 75);
 		getContentPane().add(textSinopse);

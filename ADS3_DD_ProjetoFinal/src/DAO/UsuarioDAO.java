@@ -76,7 +76,7 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 	}
 
 	public Usuario buscaUsuarioPorNick(String nick) {
-		String sql = (" SELECT * FROM danie648_db_ads3_dd_filme.usuario where nickname = '" + nick + "'");
+		String sql = (" SELECT * FROM usuario where nickname = '" + nick + "'");
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
@@ -103,7 +103,7 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 		String nick = usuario.getNickname() + "";
 		String senha = usuario.getSenha() + "";
 		System.out.println(senha.toString());
-		String sql = (" SELECT * FROM danie648_db_ads3_dd_filme.usuario where nickname = '" + nick + "' and senha = "
+		String sql = (" SELECT * FROM usuario where nickname = '" + nick + "' and senha = "
 				+ senha);
 
 		Connection conn = Banco.getConnection();
@@ -129,7 +129,7 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 	}
 
 	public Usuario buscaUsuarioPorEmail(String email) {
-		String sql = (" SELECT * FROM danie648_db_ads3_dd_filme.usuario where email = '" + email + "'");
+		String sql = (" SELECT * FROM usuario where email = '" + email + "'");
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);

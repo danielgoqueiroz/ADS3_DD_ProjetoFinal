@@ -5,6 +5,7 @@ import DAO.ArtistaDAO;
 import DAO.ArtistaProducaoDAO;
 import VO.Artista;
 import VO.ArtistaProducao;
+import VO.Producao;
 
 public class ArtistaProducaoBO {
 
@@ -17,6 +18,10 @@ public class ArtistaProducaoBO {
 	public ArrayList<ArtistaProducao> listarTodos() {
 		ArtistaProducaoDAO dao = new ArtistaProducaoDAO();
 		return dao.listarTodos();
+	}
+	
+	public void ArtistasUpdate(Producao producao) {
+		dao.ArtistasUpdate(producao);
 	}
 
 }

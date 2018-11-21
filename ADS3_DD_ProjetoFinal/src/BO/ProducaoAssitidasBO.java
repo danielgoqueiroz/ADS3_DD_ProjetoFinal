@@ -8,11 +8,9 @@ import VO.ProducoesAssistidas;
 import VO.Usuario;
 
 public class ProducaoAssitidasBO {
-
-	public void cadastrarProducaoAssitida(ProducoesAssistidas producaoAssitida) {
-		ProducoesAssistidasDAO dao = new ProducoesAssistidasDAO();
+	ProducoesAssistidasDAO dao = new ProducoesAssistidasDAO();
+	public void cadastrarProducaoAssitida(ProducoesAssistidas producaoAssitida) {		
 		dao.inserir(producaoAssitida);
 		
-	}
-	
+	}	
 }
