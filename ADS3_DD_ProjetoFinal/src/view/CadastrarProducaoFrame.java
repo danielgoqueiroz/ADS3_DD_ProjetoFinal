@@ -11,8 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -144,11 +148,15 @@ public class CadastrarProducaoFrame extends JFrame {
 		textDiretor.setColumns(10);
 		textDiretor.setBounds(105, 123, 236, 20);
 		contentPane.add(textDiretor);
-
-		textDuracaoQtdTemp = new JTextField();
+				
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+		decimalFormat.setGroupingUsed(false);
+		textDuracaoQtdTemp = new JFormattedTextField(decimalFormat);
+		
 		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
 		contentPane.add(textDuracaoQtdTemp);
-		textDuracaoQtdTemp.setColumns(10);
+		textDuracaoQtdTemp.setColumns(3);		
 
 		cbTipo = new JComboBox<EnumTipoProducao>();
 		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
@@ -157,10 +165,11 @@ public class CadastrarProducaoFrame extends JFrame {
 		lblDuraoqtdtemp.setBounds(201, 68, 85, 14);
 		contentPane.add(lblDuraoqtdtemp);
 
-		textAno = new JTextField();
-		textAno.setColumns(10);
+		decimalFormat.setGroupingUsed(false);
+		textAno = new JFormattedTextField(decimalFormat);		
 		textAno.setBounds(105, 65, 86, 20);
 		contentPane.add(textAno);
+		textAno.setColumns(3);
 
 		textTitulo = new JTextField();
 		textTitulo.setColumns(10);

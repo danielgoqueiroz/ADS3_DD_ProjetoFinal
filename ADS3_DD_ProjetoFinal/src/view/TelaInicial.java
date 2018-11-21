@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -77,8 +78,7 @@ public class TelaInicial extends JFrame {
 
 	public TelaInicial(Usuario usuario) {
 		usuarioLogado = usuario;
-
-		
+		buscaListaProducoesNaoAssistidas(usuarioLogado);		
 		
 		setResizable(false);
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -159,6 +159,7 @@ public class TelaInicial extends JFrame {
 		table.removeColumn(table.getColumnModel().getColumn(0));
 
 		textAno = new JTextField();
+		
 		textAno.setEnabled(false);
 		textAno.setBounds(356, 66, 86, 20);
 		getContentPane().add(textAno);
@@ -280,6 +281,11 @@ public class TelaInicial extends JFrame {
 		getContentPane().add(lblImagem);
 
 		btnRecarregar = new JButton("Recarregar");
+		btnRecarregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscaListaProducoesNaoAssistidas(usuarioLogado);
+			}
+		});
 		btnRecarregar.setBounds(106, 336, 529, 23);
 		getContentPane().add(btnRecarregar);
 
@@ -404,11 +410,28 @@ public class TelaInicial extends JFrame {
 	}
 
 	public Producao buscaProducaoNaoAssistido(Usuario usuario) {
-		ProducaoController controle = new ProducaoController();
-		return controle.buscaProducaoNaoAssistido(usuario);
+		Producao prod = new Producao();
+		
+		if(!producoesNaoAssistidas.isEmpty()) {
+			prod = producoesNaoAssistidas.get(0);
+			producoesNaoAssistidas.remove(0);
+		}else {
+			
+			String[] buttons = { "Sim", "Não"};
+			int returnValue = JOptionPane.showOptionDialog(null, "Não foi encontrado novas produções. Deseja recomeçar as avaliações?", "",
+			        JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[1]);
+			
+			
+			if(returnValue == 0) {
+				buscaListaProducoesNaoAssistidas(usuario);
+				buscaProducaoNaoAssistido(usuario);
+			}
+		}
+		
+		return prod;
 	}
 	
-	public void buscaProducoesNaoAssistidas(Usuario usuario) {
+	public void buscaListaProducoesNaoAssistidas(Usuario usuario) {
 		ProducaoController controle = new ProducaoController();
 		producoesNaoAssistidas = controle.buscaProducoesNaoAssistidas(usuario);
 	}
