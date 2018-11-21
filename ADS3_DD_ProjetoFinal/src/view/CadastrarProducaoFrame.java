@@ -2,13 +2,23 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -18,6 +28,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileCacheImageInputStream;
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageInputStreamImpl;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -38,6 +52,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.scenario.effect.ImageData;
+
 import VO.Artista;
 import VO.EnumTipoProducao;
 import VO.Genero;
@@ -45,6 +61,8 @@ import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
 import controller.ProducaoController;
+import sun.awt.image.ByteArrayImageSource;
+import testes.testeFrameImagem;
 
 public class CadastrarProducaoFrame extends JFrame {
 
@@ -263,6 +281,9 @@ public class CadastrarProducaoFrame extends JFrame {
 				producao.setSinopse(textPaneSinopse.getText());
 				producao.setGenero((Genero) cbGenero.getSelectedItem());
 				producao.setDiretor(textDiretor.getText());
+				
+				
+				
 				producao.setCapa(image);
 
 				String duracaoQtdTemp = textDuracaoQtdTemp.getText();
@@ -322,11 +343,13 @@ public class CadastrarProducaoFrame extends JFrame {
 				chooser.showSaveDialog(null);
 				File f = chooser.getSelectedFile();
 				new ImageIcon(f.getAbsolutePath());
+				
+				
 				textImage.setText(f.getAbsolutePath());
 
 				try {
 					image = Files.readAllBytes(f.toPath());
-
+				
 				} catch (IOException e) {
 
 					e.printStackTrace();
