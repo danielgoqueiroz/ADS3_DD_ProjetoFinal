@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import VO.Artista;
 import controller.ArtistaController;
 
-public class CadastrarArtistaFrame extends JFrame {
+public class CadastrarArtistaFrame extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
@@ -39,8 +40,8 @@ public class CadastrarArtistaFrame extends JFrame {
 
 	public CadastrarArtistaFrame() {
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(CadastrarArtistaFrame.class.getResource("/extras/eye-2317618_960_720.png")));
+//		setIconImage(Toolkit.getDefaultToolkit()
+//				.getImage(CadastrarArtistaFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setTitle("Cadastrar Artista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 399, 109);

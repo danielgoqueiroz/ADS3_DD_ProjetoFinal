@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -40,7 +41,7 @@ import controller.GeneroController;
 import controller.ProducaoController;
 import controller.ProducoesAssistidasController;
 
-public class TelaInicial extends JFrame {
+public class TelaInicial extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static Usuario usuarioLogado;
@@ -90,11 +91,9 @@ public class TelaInicial extends JFrame {
 		setResizable(false);
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setForeground(Color.WHITE);
-		setIconImage(
-				Toolkit.getDefaultToolkit().getImage(TelaInicial.class.getResource("/extras/eye-2317618_960_720.png")));
 
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 754, 424);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -306,7 +305,7 @@ public class TelaInicial extends JFrame {
 		btnRecarregar = new JButton("Recarregar");
 		btnRecarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buscaListaProducoesNaoAssistidas(usuarioLogado);
+				populaCamposProducao();
 			}
 		});
 		btnRecarregar.setBounds(106, 336, 529, 23);
@@ -447,7 +446,7 @@ public class TelaInicial extends JFrame {
 			
 			if(returnValue == 0) {
 				buscaListaProducoesNaoAssistidas(usuario);
-				buscaProducaoNaoAssistido(usuario);
+				prod = buscaProducaoNaoAssistido(usuario);
 			}
 		}
 		

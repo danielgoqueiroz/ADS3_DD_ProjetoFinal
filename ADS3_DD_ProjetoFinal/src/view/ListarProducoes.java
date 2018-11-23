@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import VO.Producao;
 import controller.ProducaoController;
 
-public class ListarProducoes extends JFrame {
+public class ListarProducoes extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
@@ -45,8 +46,7 @@ public class ListarProducoes extends JFrame {
 	public ListarProducoes() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(ListarProducoes.class.getResource("/extras/eye-2317618_960_720.png")));
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

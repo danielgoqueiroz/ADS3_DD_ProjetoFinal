@@ -40,6 +40,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -64,7 +65,7 @@ import controller.ProducaoController;
 import sun.awt.image.ByteArrayImageSource;
 import testes.testeFrameImagem;
 
-public class CadastrarProducaoFrame extends JFrame {
+public class CadastrarProducaoFrame extends JInternalFrame {
 
 	private JLabel lblTitulo;
 	private JLabel lblAno;
@@ -119,8 +120,6 @@ public class CadastrarProducaoFrame extends JFrame {
 		gc = new GeneroController();
 		ac = new ArtistaController();
 
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(CadastrarProducaoFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 703, 281);
 		contentPane = new JPanel();
@@ -264,68 +263,11 @@ public class CadastrarProducaoFrame extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addOrUpdate(adicionar);
-			}
-
-			private void addOrUpdate(boolean adicionar) {
-
-				Producao producao = new Producao();
-
-				producao.setTipo((EnumTipoProducao) cbTipo.getSelectedItem());
-				producao.setTitulo(textTitulo.getText());
-
-				String ano = textAno.getText();
-				if (ano.isEmpty())
-					ano = "0";
-
-				producao.setAno(Integer.parseInt(ano));
-				producao.setSinopse(textPaneSinopse.getText());
-				producao.setGenero((Genero) cbGenero.getSelectedItem());
-				producao.setDiretor(textDiretor.getText());
+				int producao = 0;				
+				if(prod != null)
+					producao = prod.getIdProducao();
 				
-				
-				
-				producao.setCapa(image);
-
-				String duracaoQtdTemp = textDuracaoQtdTemp.getText();
-				if (duracaoQtdTemp.isEmpty())
-					duracaoQtdTemp = "0";
-
-				if (producao.getTipo() == EnumTipoProducao.Filme) {
-
-					producao.setDuracao(Integer.parseInt(duracaoQtdTemp));
-					producao.setQtdTemporadas(0);
-				}
-
-				if (producao.getTipo() == EnumTipoProducao.Serie) {
-					producao.setQtdTemporadas(Integer.parseInt(duracaoQtdTemp));
-					producao.setDuracao(0);
-				}
-
-				ArrayList<Artista> listArtistas = new ArrayList<Artista>();
-
-				for (int i = 0; i < model.getRowCount(); i++) {
-					Artista artista = new Artista();
-
-					artista.setIdArtista((int) model.getValueAt(i, 0));
-					artista.setNome((String) model.getValueAt(i, 1));
-
-					listArtistas.add(artista);
-				}
-
-				producao.setArtistas(listArtistas);
-
-				ProducaoController controle = new ProducaoController();
-
-				if (!adicionar) {
-					producao.setIdProducao(prod.getIdProducao());
-				}
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(producao));
-				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(null, ex.getMessage() + "");
-
-				}
+				addOrUpdate(adicionar,producao);
 			}
 		});
 

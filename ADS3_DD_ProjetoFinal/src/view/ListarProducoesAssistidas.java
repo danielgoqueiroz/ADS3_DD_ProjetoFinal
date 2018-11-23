@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,7 +34,7 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListarProducoesAssistidas extends JFrame {
+public class ListarProducoesAssistidas extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
@@ -48,7 +49,7 @@ public class ListarProducoesAssistidas extends JFrame {
 			public void run() {
 				try {
 					Usuario usuario = new Usuario();
-					usuario.setIdUsuario(1);
+					usuario.setIdUsuario(27);
 					ListarProducoesAssistidas frame = new ListarProducoesAssistidas(usuario);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -61,8 +62,7 @@ public class ListarProducoesAssistidas extends JFrame {
 	public ListarProducoesAssistidas(Usuario usuario) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 449, 428);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(ListarProducoesAssistidas.class.getResource("/extras/eye-2317618_960_720.png")));
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -141,13 +141,9 @@ public class ListarProducoesAssistidas extends JFrame {
 		
 		
 		for (int i = 0;i < generos.size(); i ++) {
-			cmbGenero.addItem(generos.get(i).getDescricao());
-			
+			cmbGenero.addItem(generos.get(i).getDescricao());			
 		} 
 		
-		
-		
-
 		ProducaoController pc = new ProducaoController();
 
 		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario);

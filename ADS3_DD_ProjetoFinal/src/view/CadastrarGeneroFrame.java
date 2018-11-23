@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import VO.Genero;
 import controller.GeneroController;
 
-public class CadastrarGeneroFrame extends JFrame {
+public class CadastrarGeneroFrame extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
@@ -39,8 +40,6 @@ public class CadastrarGeneroFrame extends JFrame {
 
 	public CadastrarGeneroFrame() {
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(CadastrarGeneroFrame.class.getResource("/extras/eye-2317618_960_720.png")));
 		setTitle("Cadastrar Gênero");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 398, 108);
