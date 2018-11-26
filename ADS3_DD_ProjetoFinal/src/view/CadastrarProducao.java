@@ -314,22 +314,25 @@ public class CadastrarProducao extends JInternalFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Object[] values = new Object[2];
-
-				values[0] = ((Artista) cbAtores.getSelectedItem()).getIdArtista();
+				int idArtista = ((Artista) cbAtores.getSelectedItem()).getIdArtista();
+				
+				values[0] = idArtista;
 				values[1] = ((Artista) cbAtores.getSelectedItem()).getNome();
 
 				boolean encontrado = false;
-
-				for (int i = 0; i < model.getRowCount(); i++) {
-					if (values[0] == model.getValueAt(i, 0)) {
-						encontrado = true;
-						JOptionPane.showMessageDialog(null, "Artista já inserido");
-						break;
+				
+				if(idArtista > 0)
+				{
+					for (int i = 0; i < model.getRowCount(); i++) {
+						if (values[0] == model.getValueAt(i, 0)) {
+							encontrado = true;
+							JOptionPane.showMessageDialog(null, "Artista já inserido");
+							break;
+						}
 					}
+					if (!encontrado)
+						model.addRow(values);
 				}
-
-				if (!encontrado)
-					model.addRow(values);
 			}
 		});
 
@@ -401,11 +404,27 @@ public class CadastrarProducao extends JInternalFrame {
 
 	private void listarArtistas() {
 		artistas = ac.listarTodos();
+		
+		artistas = new ArrayList<Artista>();
+		
+		Artista vazio = new Artista();
+		vazio.setNome("Selecionar...");
+		vazio.setIdArtista(0);
+		artistas.add(vazio);		
+		artistas.addAll(ac.listarTodos());
+		
 		cbAtores = new JComboBox<Artista>(new Vector<>(artistas));
 	}
 
-	private void listarGeneros() {
-		generos = gc.listarTodos();
+	private void listarGeneros() {		
+		generos = new ArrayList<Genero>();
+		
+		Genero vazio = new Genero();
+		vazio.setDescricao("Selecionar...");
+		vazio.setIdGenero(0);
+		generos.add(vazio);		
+		generos.addAll(gc.listarTodos());
+		
 		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
 

@@ -43,6 +43,7 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	private JLabel lblGenero;
 
 	public ListarProducoesAssistidas(Usuario usuario) {
+		gc = new GeneroController();
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 449, 428);
@@ -156,11 +157,14 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	}
 	
 	private void listarGeneros() {
-		generos = gc.listarTodos();
+		generos = new ArrayList<Genero>();
+		
 		Genero vazio = new Genero();
-		vazio.setDescricao("");
+		vazio.setDescricao("Selecionar...");
 		vazio.setIdGenero(0);
-		generos.add(vazio);
+		generos.add(vazio);		
+		generos.addAll(gc.listarTodos());
+		
 		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
 }

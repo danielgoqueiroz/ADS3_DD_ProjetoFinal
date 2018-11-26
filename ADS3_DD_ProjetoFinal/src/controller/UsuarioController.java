@@ -25,20 +25,29 @@ public class UsuarioController {
 					validacao = "Erro ao cadastrar usuário";
 				}
 			}
+		}else {
+			validacao = "Necessário preencher os seguintes campos: \n" + validacao;
 		}
 		return validacao;
 	}
 
 	private String validarUsuario(Usuario usuario) {
+		String msg = "";		
+		
 		if (usuario.getNome().equals("")) {
+			msg += " Nome \n";
 		}
 		if (usuario.getEmail().equals("")) {
+			msg += " E-mail \n";
 		}
 		if (usuario.getNickname().equals("")) {
+			msg += " Nickname \n";
 		}
 		if (usuario.getSenha().equals("")) {
+			msg += " Senha \n";
 		}
 		if (usuario.getTelefone().equals("")) {
+			msg += " Telefone \n";
 		}
 		return "";
 	}

@@ -61,7 +61,7 @@ public class ProducaoController {
 		if (Producao.getSinopse().isEmpty()) {
 			msg += " Sinopese \n";
 		}
-		if (Producao.getGenero().getDescricao().isEmpty()) {
+		if (Producao.getGenero().getDescricao().isEmpty() || Producao.getGenero().getIdGenero() <= 0) {
 			msg += " Gênero \n";
 		}
 		if (Producao.getDiretor().isEmpty()) {

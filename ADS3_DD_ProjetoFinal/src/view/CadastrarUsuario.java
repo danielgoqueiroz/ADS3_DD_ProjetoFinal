@@ -41,6 +41,7 @@ public class CadastrarUsuario extends JFrame {
 	private JButton btnSalvar;
 
 	public CadastrarUsuario(Usuario usuario, boolean adicionar) {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarUsuario.class.getResource("/extras/eye-2317618_960_720.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -190,7 +191,10 @@ public class CadastrarUsuario extends JFrame {
 
 		});
 		
+		setTitle("Cadastrar Usuário");
+		
 		if(!adicionar) {
+			setTitle("Atualizar Usuário");
 			btnSalvar.setText("Atualizar");
 			textNick.setText(usuario.getNickname());
 			textEmail.setText(usuario.getEmail());

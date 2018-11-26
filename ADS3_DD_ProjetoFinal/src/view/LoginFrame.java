@@ -110,7 +110,6 @@ public class LoginFrame extends JFrame {
 				if (usuarioLogin.getIdUsuario() > 0) {
 					PainelPrincipal painelPrincipal = new PainelPrincipal(usuarioLogin);
 					painelPrincipal.setVisible(true);
-					painelPrincipal.setTitle(usuarioLogin.toString());
 					dispose();
 				}
 
