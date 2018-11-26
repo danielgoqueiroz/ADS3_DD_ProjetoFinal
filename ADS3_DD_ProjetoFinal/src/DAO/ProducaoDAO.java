@@ -34,7 +34,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 	@Override
 	public String getColunasInsert() {
-		return " tipo, titulo, ano, sinopse, genero, diretor, capa, duracao, qtdTemporada ";
+		return " tipo, titulo, ano, sinopse, genero, diretor, duracao, qtdTemporada, capa ";
 	}
 
 	@Override
@@ -56,9 +56,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 			prepareStm.setString(6, entidade.getDiretor() + "");
 			prepareStm.setInt(7, entidade.getDuracao());
 			prepareStm.setInt(8, entidade.getQtdTemporadas());
-
-			if (entidade.getCapa() != null)
-				prepareStm.setBytes(9, entidade.getCapa());
+			prepareStm.setBytes(9, entidade.getCapa());	
 
 		} catch (SQLException e) {
 			e.printStackTrace();

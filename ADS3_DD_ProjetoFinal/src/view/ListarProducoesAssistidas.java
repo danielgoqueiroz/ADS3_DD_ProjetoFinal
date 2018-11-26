@@ -27,6 +27,8 @@ import VO.Producao;
 import VO.Usuario;
 import controller.GeneroController;
 import controller.ProducaoController;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
 public class ListarProducoesAssistidas extends JInternalFrame {
@@ -41,6 +43,8 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	private GeneroController gc;
 	private List<Genero> generos;
 	private JLabel lblGenero;
+	private String genero;
+	private Usuario usuario;
 
 	public ListarProducoesAssistidas(Usuario usuario) {
 		gc = new GeneroController();
@@ -104,6 +108,9 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 		cbGenero.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				
+				
+				
 				String genero = cbGenero.getSelectedItem().toString();
 
 				ProducaoController pc = new ProducaoController();
@@ -133,9 +140,16 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 		lblGenero.setBounds(5, 11, 46, 14);
 		contentPane.add(lblGenero);
 
+		populaTabelaProducao();
+
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+	}
+	
+	private void populaTabelaProducao() {
 		ProducaoController pc = new ProducaoController();
 
-		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario);
+		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario, genero);
 
 		for (Producao producao : producoes) {
 
@@ -151,11 +165,9 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 			model.addRow(values);
 		}
 		producoesTemp = producoes;
-
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+		
 	}
-	
+
 	private void listarGeneros() {
 		generos = new ArrayList<Genero>();
 		
@@ -166,5 +178,11 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 		generos.addAll(gc.listarTodos());
 		
 		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
+		cbGenero.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				
+				
+			}
+		});
 	}
 }

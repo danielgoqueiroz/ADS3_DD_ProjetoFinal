@@ -12,6 +12,7 @@ import controller.ProducaoController;
 import controller.ProducoesAssistidasController;
 import controller.UsuarioController;
 import view.CadastrarReviews;
+import view.ListarProducoesAssistidas;
 
 public class TCadastroUsuario {
 
@@ -20,8 +21,10 @@ public class TCadastroUsuario {
 		Usuario usr = new Usuario();
 		usr.setIdUsuario(3);;
 		
-		CadastrarReviews tela = new CadastrarReviews(usr);
+		ListarProducoesAssistidas  tela = new ListarProducoesAssistidas(usr);
 		tela.setVisible(true);
+		
+		
 		
 	}
 

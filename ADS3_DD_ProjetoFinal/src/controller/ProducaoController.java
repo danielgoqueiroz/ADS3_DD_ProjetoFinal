@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import BO.ProducaoBO;
 import VO.Artista;
 import VO.ArtistaProducao;
+import VO.Genero;
 import VO.Producao;
 import VO.Usuario;
 

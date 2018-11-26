@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import DAO.ProducaoDAO;
 import DAO.ProducoesAssistidasDAO;
+import VO.Genero;
 import VO.Producao;
 import VO.Usuario;
 

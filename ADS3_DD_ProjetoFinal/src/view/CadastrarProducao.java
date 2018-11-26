@@ -78,6 +78,7 @@ public class CadastrarProducao extends JInternalFrame {
 	private ArtistaController ac;
 	private List<Genero> generos;
 	private List<Artista> artistas;
+	private MaskFormatter mask;
 
 	public CadastrarProducao(boolean adicionar, Producao prod) {
 		setClosable(true);
@@ -127,67 +128,19 @@ public class CadastrarProducao extends JInternalFrame {
 		lblSinopse.setBounds(43, 186, 52, 14);
 		contentPane.add(lblSinopse);
 
-		textPaneSinopse = new JTextPane();
-		textPaneSinopse.setBounds(105, 183, 236, 46);
-		contentPane.add(textPaneSinopse);
-
-		textDiretor = new JTextField();
-		textDiretor.setColumns(10);
-		textDiretor.setBounds(105, 123, 236, 20);
-		contentPane.add(textDiretor);
-	
-		
-		textDuracaoQtdTemp = new JFormattedTextField();
-		textDuracaoQtdTemp.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				mudaMascaraDuracao(textDuracaoQtdTemp);
-			}
-			@Override
-			public void focusGained(FocusEvent e) {
-				textDuracaoQtdTemp.setFormatterFactory(null);
-			}
-		});
-
-		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
-		contentPane.add(textDuracaoQtdTemp);
-		textDuracaoQtdTemp.setColumns(10);
-
-		cbTipo = new JComboBox<EnumTipoProducao>();
-		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
-
 		lblDuraoqtdtemp = new JLabel("Dura\u00E7\u00E3o");
 		lblDuraoqtdtemp.setBounds(201, 68, 85, 14);
 		contentPane.add(lblDuraoqtdtemp);
 
-		textAno = new JFormattedTextField();
-		textAno.setBounds(105, 65, 86, 20);
-		contentPane.add(textAno);
-		textAno.setColumns(10);
-		
-		textAno.setValue(null);
-        
 		try {
-			MaskFormatter mask = new MaskFormatter();	        
-	        mask.setMask("####");
-	        textAno.setFormatterFactory(new DefaultFormatterFactory(mask));
+//			mask = new MaskFormatter();	        
+			mask.setMask("####");
 		} catch (Exception e) {
+
 		}
-		
-		textTitulo = new JTextField();
-		textTitulo.setColumns(10);
-		textTitulo.setBounds(105, 39, 236, 20);
-		contentPane.add(textTitulo);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(371, 39, 285, 108);
-		contentPane.add(scrollPane);
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
-		scrollPane.setViewportView(table);
-
-		model = (DefaultTableModel) table.getModel();
+		cbTipo = new JComboBox<EnumTipoProducao>();
+		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
 
 		cbTipo.addActionListener(new ActionListener() {
 			@Override
@@ -203,7 +156,37 @@ public class CadastrarProducao extends JInternalFrame {
 		cbTipo.setBounds(105, 11, 236, 20);
 		contentPane.add(cbTipo);
 
+		textTitulo = new JTextField();
+		textTitulo.setColumns(10);
+		textTitulo.setBounds(105, 39, 236, 20);
+		contentPane.add(textTitulo);
+
+		textAno = new JFormattedTextField();
+		textAno.setBounds(105, 65, 86, 20);
+		contentPane.add(textAno);
+		textAno.setColumns(10);
+
+		textAno.setValue(null);
+		textAno.setFormatterFactory(new DefaultFormatterFactory(mask));
+
 		listarGeneros();
+
+
+		textDuracaoQtdTemp = new JFormattedTextField();
+		textDuracaoQtdTemp.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				mudaMascaraDuracao(textDuracaoQtdTemp);
+			}
+			@Override
+			public void focusGained(FocusEvent e) {
+				textDuracaoQtdTemp.setFormatterFactory(null);
+			}
+		});
+
+		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
+		contentPane.add(textDuracaoQtdTemp);
+		textDuracaoQtdTemp.setColumns(10);
 
 		cbGenero.setBounds(105, 94, 236, 20);
 		contentPane.add(cbGenero);
@@ -222,30 +205,10 @@ public class CadastrarProducao extends JInternalFrame {
 
 		listarArtistas();
 
-		cbAtores.setBounds(410, 11, 145, 20);
-		contentPane.add(cbAtores);
-
-		cbAtores.setRenderer(new DefaultListCellRenderer() {
-			@Override
-			public java.awt.Component getListCellRendererComponent(final JList<?> list, final Object value,
-					final int index, final boolean isSelected, final boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				if (value instanceof Artista)
-					setText(((Artista) value).getNome());
-
-				return this;
-			}
-		});
-
-		if (adicionar)
-			btnCadastrar = new JButton("Cadastrar");
-		else
-			btnCadastrar = new JButton("Atualizar");
-
-		btnCadastrar.setBounds(565, 206, 91, 23);
-		contentPane.add(btnCadastrar);
-
-		this.getRootPane().setDefaultButton(btnCadastrar);
+		textDiretor = new JTextField();
+		textDiretor.setColumns(10);
+		textDiretor.setBounds(105, 123, 236, 20);
+		contentPane.add(textDiretor);
 
 		textImage = new JTextField();
 		textImage.setEditable(false);
@@ -279,19 +242,64 @@ public class CadastrarProducao extends JInternalFrame {
 		btnImagem.setBounds(300, 151, 41, 23);
 		contentPane.add(btnImagem);
 
-		lblImagemcapa = new JLabel("Imagem(capa)");
-		lblImagemcapa.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblImagemcapa.setBounds(10, 155, 85, 14);
-		contentPane.add(lblImagemcapa);
+		textPaneSinopse = new JTextPane();
+		textPaneSinopse.setBounds(105, 183, 236, 46);
+		contentPane.add(textPaneSinopse);
 
-		lblTipo = new JLabel("Tipo");
-		lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTipo.setBounds(10, 14, 85, 14);
-		contentPane.add(lblTipo);
+		cbAtores.setBounds(410, 11, 145, 20);
+		contentPane.add(cbAtores);
+
+		cbAtores.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public java.awt.Component getListCellRendererComponent(final JList<?> list, final Object value,
+					final int index, final boolean isSelected, final boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof Artista)
+					setText(((Artista) value).getNome());
+
+				return this;
+			}
+		});
+
+		if (adicionar)
+			btnCadastrar = new JButton("Cadastrar");
+		else
+			btnCadastrar = new JButton("Atualizar");
+
+		btnCadastrar.setBounds(565, 206, 91, 23);
+		contentPane.add(btnCadastrar);
+
+		this.getRootPane().setDefaultButton(btnCadastrar);
 
 		btnAdicionarArtista = new JButton("Adicionar");
 		btnAdicionarArtista.setBounds(565, 10, 91, 23);
 		contentPane.add(btnAdicionarArtista);
+
+		btnAdicionarArtista.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] values = new Object[2];
+				int idArtista = ((Artista) cbAtores.getSelectedItem()).getIdArtista();
+
+				values[0] = idArtista;
+				values[1] = ((Artista) cbAtores.getSelectedItem()).getNome();
+
+				boolean encontrado = false;
+
+				if(idArtista > 0)
+				{
+					for (int i = 0; i < model.getRowCount(); i++) {
+						if (values[0] == model.getValueAt(i, 0)) {
+							encontrado = true;
+							JOptionPane.showMessageDialog(null, "Artista já inserido");
+							break;
+						}
+					}
+					if (!encontrado)
+						model.addRow(values);
+				}
+			}
+		});
 
 		btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
@@ -308,33 +316,27 @@ public class CadastrarProducao extends JInternalFrame {
 		contentPane.add(btnRemover);
 		btnRemover.setEnabled(false);
 
+		lblImagemcapa = new JLabel("Imagem(capa)");
+		lblImagemcapa.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblImagemcapa.setBounds(10, 155, 85, 14);
+		contentPane.add(lblImagemcapa);
+
+		lblTipo = new JLabel("Tipo");
+		lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTipo.setBounds(10, 14, 85, 14);
+		contentPane.add(lblTipo);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(371, 39, 285, 108);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
+		scrollPane.setViewportView(table);
+
+		model = (DefaultTableModel) table.getModel();
+
 		table.removeColumn(table.getColumnModel().getColumn(0));
-
-		btnAdicionarArtista.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Object[] values = new Object[2];
-				int idArtista = ((Artista) cbAtores.getSelectedItem()).getIdArtista();
-				
-				values[0] = idArtista;
-				values[1] = ((Artista) cbAtores.getSelectedItem()).getNome();
-
-				boolean encontrado = false;
-				
-				if(idArtista > 0)
-				{
-					for (int i = 0; i < model.getRowCount(); i++) {
-						if (values[0] == model.getValueAt(i, 0)) {
-							encontrado = true;
-							JOptionPane.showMessageDialog(null, "Artista já inserido");
-							break;
-						}
-					}
-					if (!encontrado)
-						model.addRow(values);
-				}
-			}
-		});
 
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
@@ -404,27 +406,27 @@ public class CadastrarProducao extends JInternalFrame {
 
 	private void listarArtistas() {
 		artistas = ac.listarTodos();
-		
+
 		artistas = new ArrayList<Artista>();
-		
+
 		Artista vazio = new Artista();
 		vazio.setNome("Selecionar...");
 		vazio.setIdArtista(0);
 		artistas.add(vazio);		
 		artistas.addAll(ac.listarTodos());
-		
+
 		cbAtores = new JComboBox<Artista>(new Vector<>(artistas));
 	}
 
 	private void listarGeneros() {		
 		generos = new ArrayList<Genero>();
-		
+
 		Genero vazio = new Genero();
 		vazio.setDescricao("Selecionar...");
 		vazio.setIdGenero(0);
 		generos.add(vazio);		
 		generos.addAll(gc.listarTodos());
-		
+
 		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
 
@@ -507,29 +509,29 @@ public class CadastrarProducao extends JInternalFrame {
 	}
 
 	private void mudaMascaraDuracao(JFormattedTextField format) {
-        try {
-            format.setValue(null);
-            String nome = format.getText().replaceAll("-", "").replaceAll("\\(", "").replaceAll("\\)", "");
-            final MaskFormatter mask = new MaskFormatter();
-            switch (nome.length()) {
-                case 1:
-                    mask.setMask("#");
-                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
-                    break;
-                case 2:
-                    mask.setMask("##");
-                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
-                    break;
-                case 3:
-                    mask.setMask("###");
-                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
-                    break;
-                default:
-                    break;
-            }
-            format.setText(nome);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
+		try {
+			format.setValue(null);
+			String nome = format.getText().replaceAll("-", "").replaceAll("\\(", "").replaceAll("\\)", "");
+			final MaskFormatter mask = new MaskFormatter();
+			switch (nome.length()) {
+			case 1:
+				mask.setMask("#");
+				format.setFormatterFactory(new DefaultFormatterFactory(mask));
+				break;
+			case 2:
+				mask.setMask("##");
+				format.setFormatterFactory(new DefaultFormatterFactory(mask));
+				break;
+			case 3:
+				mask.setMask("###");
+				format.setFormatterFactory(new DefaultFormatterFactory(mask));
+				break;
+			default:
+				break;
+			}
+			format.setText(nome);
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+	}
 }
