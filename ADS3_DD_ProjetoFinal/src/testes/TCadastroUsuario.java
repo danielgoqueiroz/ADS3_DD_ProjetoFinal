@@ -11,7 +11,7 @@ import VO.Usuario;
 import controller.ProducaoController;
 import controller.ProducoesAssistidasController;
 import controller.UsuarioController;
-import view.TelaInicial;
+import view.CadastrarReviews;
 
 public class TCadastroUsuario {
 
@@ -20,7 +20,7 @@ public class TCadastroUsuario {
 		Usuario usr = new Usuario();
 		usr.setIdUsuario(3);;
 		
-		TelaInicial tela = new TelaInicial(usr);
+		CadastrarReviews tela = new CadastrarReviews(usr);
 		tela.setVisible(true);
 		
 	}

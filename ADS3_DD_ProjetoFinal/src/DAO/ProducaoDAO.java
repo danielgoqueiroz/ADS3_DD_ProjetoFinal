@@ -11,7 +11,7 @@ import VO.Producao;
 import VO.Usuario;
 
 public class ProducaoDAO extends BaseDAO<Producao> {
-	
+
 	@Override
 	public String getColunasDelete() {
 		return "idProducao";
@@ -39,7 +39,10 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 	@Override
 	public String getValoresEntidadesUpdate(Producao entidade) {
-		return " tipo = ? , titulo = ? , ano = ? , sinopse = ? , genero = ? , diretor = ? , capa = ? , duracao = ? , qtdTemporada = ? ";
+		if (entidade.getCapa() != null)
+			return " tipo = ? , titulo = ? , ano = ? , sinopse = ? , genero = ? , diretor = ? , duracao = ? , qtdTemporada = ? , capa = ? ";
+
+		return " tipo = ? , titulo = ? , ano = ? , sinopse = ? , genero = ? , diretor = ? , duracao = ? , qtdTemporada = ? ";
 	}
 
 	@Override
@@ -51,9 +54,12 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 			prepareStm.setString(4, entidade.getSinopse() + "");
 			prepareStm.setString(5, entidade.getGenero().getIdGenero() + "");
 			prepareStm.setString(6, entidade.getDiretor() + "");
-			prepareStm.setBytes(7, entidade.getCapa());
-			prepareStm.setInt(8, entidade.getDuracao());
-			prepareStm.setInt(9, entidade.getQtdTemporadas());
+			prepareStm.setInt(7, entidade.getDuracao());
+			prepareStm.setInt(8, entidade.getQtdTemporadas());
+
+			if (entidade.getCapa() != null)
+				prepareStm.setBytes(9, entidade.getCapa());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -167,7 +173,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 		return producoes;
 	}
-	
+
 	@Override
 	public void setValoresAtributosUpdate(Producao entidade, PreparedStatement stmt) {
 		try {
@@ -177,9 +183,11 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 			stmt.setString(4, entidade.getSinopse() + "");
 			stmt.setString(5, entidade.getGenero().getIdGenero() + "");
 			stmt.setString(6, entidade.getDiretor() + "");
-			stmt.setBytes(7, entidade.getCapa());
-			stmt.setInt(8, entidade.getDuracao());
-			stmt.setInt(9, entidade.getQtdTemporadas());
+			stmt.setInt(7, entidade.getDuracao());
+			stmt.setInt(8, entidade.getQtdTemporadas());
+			if (entidade.getCapa() != null)
+				stmt.setBytes(9, entidade.getCapa());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -188,14 +196,11 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 	public double BuscarMediaProducao(Producao p) {
 		double valor = 0;
 
-		String sql = (" SELECT avg(nota) nota FROM producoesAssistidas where idProducao =  "
-				+ p.getIdProducao());
+		String sql = (" SELECT avg(nota) nota FROM producoesAssistidas where idProducao =  " + p.getIdProducao());
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
-		Producao objetoPesquisado = null;
-
 		try {
 			resultado = stmt.executeQuery(sql);
 			while (resultado.next()) {
@@ -217,7 +222,8 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 		ArrayList<Producao> producoes = new ArrayList<Producao>();
 
-		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "+ usuario.getIdUsuario());
+		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "
+				+ usuario.getIdUsuario());
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
@@ -229,7 +235,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 				objetoPesquisado = construirObjetoConsultado(resultado);
 				objetoPesquisado.setNota(resultado.getDouble("nota"));
-				
+
 				producoes.add(objetoPesquisado);
 
 			}
@@ -243,25 +249,25 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 		return producoes;
 	}
-	
+
 	@Override
 	public ArrayList<Producao> listarTodos() {
 		String sql = ("SELECT * FROM  producao");
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
-		
+
 		ArrayList<Producao> listaObjetos = new ArrayList<>();
 		try {
 			resultado = stmt.executeQuery();
-			while (resultado.next()){
+			while (resultado.next()) {
 				Producao objeto = construirObjetoConsultado(resultado);
 				listaObjetos.add(objeto);
 			}
 		} catch (Exception e) {
 			System.out.println("Erro : " + e.getMessage());
-		}finally {
+		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
@@ -272,7 +278,8 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
 		ArrayList<Producao> producoes = new ArrayList<Producao>();
 
-		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "+ usuario.getIdUsuario() + " and T0.genero = '" + genero + "'");
+		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "
+				+ usuario.getIdUsuario() + " and T0.genero = '" + genero + "'");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
@@ -284,7 +291,7 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 				objetoPesquisado = construirObjetoConsultado(resultado);
 				objetoPesquisado.setNota(resultado.getDouble("nota"));
-				
+
 				producoes.add(objetoPesquisado);
 
 			}

@@ -1,19 +1,21 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,13 +28,6 @@ import VO.Geradorplanilhas;
 import VO.Producao;
 import VO.Usuario;
 import controller.ProducaoController;
-import sun.reflect.generics.repository.GenericDeclRepository;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ListarProducoesAssistidas extends JInternalFrame {
 
@@ -60,6 +55,7 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	}
 
 	public ListarProducoesAssistidas(Usuario usuario) {
+		setClosable(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 449, 428);
 
@@ -98,17 +94,17 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 			}
 		});
 		contentPane.add(btnGerarRelatrio);
-		
+
 		JComboBox cmbGenero = new JComboBox();
 		cmbGenero.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String genero = cmbGenero.getSelectedItem().toString();
-				
+
 				ProducaoController pc = new ProducaoController();
 
 				ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario, genero);
-				
+
 				for (Producao producao : producoes) {
 
 					Object[] values = new Object[6];
@@ -127,23 +123,22 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 				revalidate();
 			}
 		});
-		
-		cmbGenero.setModel(new DefaultComboBoxModel(new String[] {""}));
+
+		cmbGenero.setModel(new DefaultComboBoxModel(new String[] { "" }));
 		cmbGenero.setBounds(5, 36, 211, 20);
 		contentPane.add(cmbGenero);
-		
+
 		JLabel lblNewLabel = new JLabel("Genero");
 		lblNewLabel.setBounds(5, 11, 46, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		GeneroDAO genDAO = new GeneroDAO();
 		ArrayList<Genero> generos = generos = genDAO.listarTodos();
-		
-		
-		for (int i = 0;i < generos.size(); i ++) {
-			cmbGenero.addItem(generos.get(i).getDescricao());			
-		} 
-		
+
+		for (int i = 0; i < generos.size(); i++) {
+			cmbGenero.addItem(generos.get(i).getDescricao());
+		}
+
 		ProducaoController pc = new ProducaoController();
 
 		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario);

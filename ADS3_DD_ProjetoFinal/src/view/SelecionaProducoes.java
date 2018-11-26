@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -16,12 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import VO.Producao;
 import controller.ProducaoController;
 
-public class ListarProducoes extends JInternalFrame {
+public class SelecionaProducoes extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
@@ -34,7 +37,7 @@ public class ListarProducoes extends JInternalFrame {
 			@Override
 			public void run() {
 				try {
-					ListarProducoes frame = new ListarProducoes();
+					SelecionaProducoes frame = new SelecionaProducoes(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +46,10 @@ public class ListarProducoes extends JInternalFrame {
 		});
 	}
 
-	public ListarProducoes() {
+	public SelecionaProducoes(JDesktopPane desktopPane) {
+		setTitle("Selecione para editar produ\u00E7\u00E3o");
+		setBorder(new LineBorder(new Color(0, 0, 0)));
+		setClosable(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -81,8 +87,12 @@ public class ListarProducoes extends JInternalFrame {
 					}
 
 					dispose();
-					CadastrarProducaoFrame producao = new CadastrarProducaoFrame(false, prod);
-					producao.setVisible(true);
+
+					CadastrarProducao producao = new CadastrarProducao(false, prod);
+					if (desktopPane != null) {
+						desktopPane.add(producao);
+					}
+					producao.show();
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha.");

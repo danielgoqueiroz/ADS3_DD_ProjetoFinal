@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import VO.Artista;
-import controller.ArtistaController;
+import VO.Genero;
+import controller.GeneroController;
 
-public class CadastrarArtistaFrame extends JInternalFrame {
+public class CadastrarGenero extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
@@ -29,7 +29,7 @@ public class CadastrarArtistaFrame extends JInternalFrame {
 			@Override
 			public void run() {
 				try {
-					CadastrarArtistaFrame frame = new CadastrarArtistaFrame();
+					CadastrarGenero frame = new CadastrarGenero();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,20 +38,19 @@ public class CadastrarArtistaFrame extends JInternalFrame {
 		});
 	}
 
-	public CadastrarArtistaFrame() {
+	public CadastrarGenero() {
+		setClosable(true);
 		setResizable(false);
-//		setIconImage(Toolkit.getDefaultToolkit()
-//				.getImage(CadastrarArtistaFrame.class.getResource("/extras/eye-2317618_960_720.png")));
-		setTitle("Cadastrar Artista");
+		setTitle("Cadastrar Gênero");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 399, 109);
+		setBounds(100, 100, 398, 108);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(28, 28, 34, 14);
+		lblNome.setBounds(25, 28, 39, 14);
 		contentPane.add(lblNome);
 
 		textNome = new JTextField();
@@ -63,30 +62,33 @@ public class CadastrarArtistaFrame extends JInternalFrame {
 		btnSalvar.setBounds(280, 25, 89, 20);
 		contentPane.add(btnSalvar);
 
+		this.getRootPane().setDefaultButton(btnSalvar);
+
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Artista artista = new Artista();
+				Genero genero = new Genero();
+				genero.setDescricao(textNome.getText());
 
-				artista.setNome(textNome.getText());
+				GeneroController controle = new GeneroController();
 
-				ArtistaController controle = new ArtistaController();
+				Genero generoTemp = controle.buscaGeneroPorNome(textNome.getText() + "");
 
-				Artista artistaTemp = controle.buscarArtistaPorNome(textNome.getText() + "");
-
-				if (artistaTemp == null) {
+				if (generoTemp == null) {
 					try {
-						JOptionPane.showMessageDialog(null, controle.salvar(artista));
+						JOptionPane.showMessageDialog(null, controle.salvar(genero));
 					} catch (SQLException e) {
 						JOptionPane.showMessageDialog(null, e.getMessage() + "");
-
 					}
 				} else {
-					JOptionPane.showMessageDialog(contentPane, "Artista: " + artistaTemp.getNome() + " já cadastrado.");
+					JOptionPane.showMessageDialog(contentPane,
+							"Gênero " + generoTemp.getDescricao() + " já cadastrado!");
+
 				}
+
 				textNome.setText("");
 			}
 		});

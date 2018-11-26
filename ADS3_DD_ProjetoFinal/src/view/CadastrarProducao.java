@@ -2,23 +2,13 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Frame;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -28,10 +18,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileCacheImageInputStream;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.ImageInputStreamImpl;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -53,8 +39,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.scenario.effect.ImageData;
-
 import VO.Artista;
 import VO.EnumTipoProducao;
 import VO.Genero;
@@ -62,10 +46,8 @@ import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
 import controller.ProducaoController;
-import sun.awt.image.ByteArrayImageSource;
-import testes.testeFrameImagem;
 
-public class CadastrarProducaoFrame extends JInternalFrame {
+public class CadastrarProducao extends JInternalFrame {
 
 	private JLabel lblTitulo;
 	private JLabel lblAno;
@@ -101,7 +83,7 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 			@Override
 			public void run() {
 				try {
-					CadastrarProducaoFrame frame = new CadastrarProducaoFrame(true, null);
+					CadastrarProducao frame = new CadastrarProducao(true, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -110,11 +92,12 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		});
 	}
 
-	public CadastrarProducaoFrame(boolean adicionar, Producao prod) {
+	public CadastrarProducao(boolean adicionar, Producao prod) {
+		setClosable(true);
 
-		if (adicionar)
+		if (adicionar) {
 			setTitle("Cadastrar Produ\u00E7\u00E3o");
-		else
+		} else
 			setTitle("Atualizar Produ\u00E7\u00E3o");
 
 		gc = new GeneroController();
@@ -165,15 +148,15 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		textDiretor.setColumns(10);
 		textDiretor.setBounds(105, 123, 236, 20);
 		contentPane.add(textDiretor);
-				
+
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
 		decimalFormat.setGroupingUsed(false);
 		textDuracaoQtdTemp = new JFormattedTextField(decimalFormat);
-		
+
 		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
 		contentPane.add(textDuracaoQtdTemp);
-		textDuracaoQtdTemp.setColumns(10);		
+		textDuracaoQtdTemp.setColumns(10);
 
 		cbTipo = new JComboBox<EnumTipoProducao>();
 		cbTipo.setModel(new DefaultComboBoxModel<>(EnumTipoProducao.values()));
@@ -183,7 +166,7 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		contentPane.add(lblDuraoqtdtemp);
 
 		decimalFormat.setGroupingUsed(false);
-		textAno = new JFormattedTextField(decimalFormat);		
+		textAno = new JFormattedTextField(decimalFormat);
 		textAno.setBounds(105, 65, 86, 20);
 		contentPane.add(textAno);
 		textAno.setColumns(10);
@@ -259,17 +242,7 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		btnCadastrar.setBounds(565, 206, 91, 23);
 		contentPane.add(btnCadastrar);
 
-
-		btnCadastrar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int producao = 0;				
-				if(prod != null)
-					producao = prod.getIdProducao();
-				
-				addOrUpdate(adicionar,producao);
-			}
-		});
+		this.getRootPane().setDefaultButton(btnCadastrar);
 
 		textImage = new JTextField();
 		textImage.setEditable(false);
@@ -286,13 +259,12 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 				chooser.showSaveDialog(null);
 				File f = chooser.getSelectedFile();
 				new ImageIcon(f.getAbsolutePath());
-				
-				
+
 				textImage.setText(f.getAbsolutePath());
 
 				try {
 					image = Files.readAllBytes(f.toPath());
-				
+
 				} catch (IOException e) {
 
 					e.printStackTrace();
@@ -368,30 +340,26 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 
 		if (!adicionar) {
 
-			for (int i = 0; i < cbTipo.getItemCount(); i++)
-	        {
-	        	EnumTipoProducao item = cbTipo.getItemAt(i);
-	            if (item == prod.getTipo())
-	            {
-	            	cbTipo.setSelectedIndex(i);
-	                break;
-	            }
-	        }
-			
-			for (int i = 0; i < cbGenero.getItemCount(); i++)
-	        {
-	        	Genero item = cbGenero.getItemAt(i);
-	            if (item.getDescricao().equalsIgnoreCase(prod.getGenero().getDescricao()))
-	            {
-	            	cbGenero.setSelectedIndex(i);
-	                break;
-	            }
-	        }
-			
+			for (int i = 0; i < cbTipo.getItemCount(); i++) {
+				EnumTipoProducao item = cbTipo.getItemAt(i);
+				if (item == prod.getTipo()) {
+					cbTipo.setSelectedIndex(i);
+					break;
+				}
+			}
+
+			for (int i = 0; i < cbGenero.getItemCount(); i++) {
+				Genero item = cbGenero.getItemAt(i);
+				if (item.getDescricao().equalsIgnoreCase(prod.getGenero().getDescricao())) {
+					cbGenero.setSelectedIndex(i);
+					break;
+				}
+			}
+
 			textTitulo.setText(prod.getTitulo());
 			textAno.setText(String.valueOf(prod.getAno()));
-			textPaneSinopse.setText(prod.getSinopse());					    
-			
+			textPaneSinopse.setText(prod.getSinopse());
+
 			textDiretor.setText(prod.getDiretor());
 			// producao.setCapa(image);
 
@@ -416,16 +384,15 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int producao = 0;				
-				if(prod != null)
+				int producao = 0;
+				if (prod != null)
 					producao = prod.getIdProducao();
-				
-				addOrUpdate(adicionar,producao);
+
+				addOrUpdate(adicionar, producao);
 			}
 
-		
 		});
-		
+
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
@@ -494,11 +461,11 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 		try {
 			String msg = controle.salvar(producao);
 			JOptionPane.showMessageDialog(null, msg);
-			
-			if(msg.contains("cadastrada")) {
+
+			if (msg.contains("cadastrada")) {
 				LimparDadosTela();
 			}
-			
+
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage() + "");
 
@@ -506,13 +473,13 @@ public class CadastrarProducaoFrame extends JInternalFrame {
 	}
 
 	private void LimparDadosTela() {
-		this.textAno.setText("");
-		this.textDiretor.setText("");
-		this.textDuracaoQtdTemp.setText("");
-		this.textImage.setText("");
-		this.textPaneSinopse.setText("");
-		this.textTitulo.setText("");
-		
+		textAno.setText("");
+		textDiretor.setText("");
+		textDuracaoQtdTemp.setText("");
+		textImage.setText("");
+		textPaneSinopse.setText("");
+		textTitulo.setText("");
+
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
 			model.removeRow(0);

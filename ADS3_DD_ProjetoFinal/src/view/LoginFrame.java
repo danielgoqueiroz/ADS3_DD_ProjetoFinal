@@ -53,11 +53,11 @@ public class LoginFrame extends JFrame {
 
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/extras/eye-2317618_960_720.png")));
-		setTitle("Qual filme voc\u00EA j\u00E1 assitiu?");
+		setTitle("Quais produções cinematográficas você já assistiu?");
 		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 409, 179);
+		setBounds(100, 100, 469, 179);
 
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout
@@ -66,29 +66,29 @@ public class LoginFrame extends JFrame {
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 354, Short.MAX_VALUE));
 
 		JLabel label = new JLabel("Senha");
-		label.setBounds(38, 58, 89, 14);
+		label.setBounds(65, 57, 89, 14);
 		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		password = new JPasswordField();
-		password.setBounds(139, 55, 186, 20);
+		password.setBounds(166, 54, 186, 20);
 
 		textUsuario = new JTextField();
-		textUsuario.setBounds(139, 29, 186, 20);
+		textUsuario.setBounds(166, 28, 186, 20);
 
 		textUsuario.setColumns(10);
 
 		JLabel label_1 = new JLabel("Usuario");
-		label_1.setBounds(38, 32, 89, 14);
+		label_1.setBounds(65, 31, 89, 14);
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JButton btnNovoUsuario = new JButton("Criar Usu\u00E1rio");
-		btnNovoUsuario.setBounds(91, 87, 114, 21);
+		btnNovoUsuario.setBounds(118, 86, 114, 21);
 		btnNovoUsuario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CadastrarUsuarioFrame tela = new CadastrarUsuarioFrame(textUsuario.getText() + "");
+				CadastrarUsuario tela = new CadastrarUsuario(textUsuario.getText() + "");
 				tela.setVisible(true);
 
 			}
@@ -97,7 +97,7 @@ public class LoginFrame extends JFrame {
 		btnNovoUsuario.setEnabled(false);
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(211, 87, 114, 21);
+		btnLogin.setBounds(238, 86, 114, 21);
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
@@ -117,10 +117,9 @@ public class LoginFrame extends JFrame {
 				usuarioLogin = controle.realizaLogin(usuario);
 
 				if (usuarioLogin.getIdUsuario() > 0) {
-					TelaInicial tela = new TelaInicial(usuarioLogin);
-					tela.setVisible(true);
-					tela.setTitle(usuarioLogin.toString());
-
+					PainelPrincipal painelPrincipal = new PainelPrincipal(usuarioLogin);
+					painelPrincipal.setVisible(true);
+					painelPrincipal.setTitle(usuarioLogin.toString());
 					hide();
 				}
 
@@ -135,6 +134,7 @@ public class LoginFrame extends JFrame {
 		getContentPane().add(btnNovoUsuario);
 		getContentPane().add(btnLogin);
 
+		this.getRootPane().setDefaultButton(btnLogin);
 		textUsuario.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
