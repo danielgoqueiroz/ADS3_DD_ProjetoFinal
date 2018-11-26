@@ -1,12 +1,9 @@
 package view;
-
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -19,24 +16,13 @@ import javax.swing.border.EmptyBorder;
 import VO.Genero;
 import controller.GeneroController;
 
+@SuppressWarnings("serial")
 public class CadastrarGenero extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					CadastrarGenero frame = new CadastrarGenero();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JLabel lblNome;
+	private JButton btnSalvar;
 
 	public CadastrarGenero() {
 		setClosable(true);
@@ -49,7 +35,7 @@ public class CadastrarGenero extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNome = new JLabel("Nome");
+		lblNome = new JLabel("Nome");
 		lblNome.setBounds(25, 28, 39, 14);
 		contentPane.add(lblNome);
 
@@ -58,7 +44,7 @@ public class CadastrarGenero extends JInternalFrame {
 		contentPane.add(textNome);
 		textNome.setColumns(10);
 
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(280, 25, 89, 20);
 		contentPane.add(btnSalvar);
 

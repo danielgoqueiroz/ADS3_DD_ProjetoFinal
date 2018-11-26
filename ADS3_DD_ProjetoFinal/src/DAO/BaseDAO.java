@@ -47,7 +47,7 @@ public abstract class BaseDAO<T> {
 		boolean sucessoUpdate = false;
 		
 		try {
-			this.setValoresAtributosInsert(entidade, stmt);
+			this.setValoresAtributosUpdate(entidade, stmt);
 			int retorno = stmt.executeUpdate();
 			sucessoUpdate = (retorno == CODIGO_RETORNO_SQL);
 		}catch (SQLException e) {

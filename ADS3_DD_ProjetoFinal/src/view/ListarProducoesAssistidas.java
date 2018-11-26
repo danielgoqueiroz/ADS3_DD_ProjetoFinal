@@ -1,34 +1,34 @@
 package view;
-
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
-import javax.swing.DefaultComboBoxModel;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import DAO.GeneroDAO;
 import VO.Genero;
 import VO.Geradorplanilhas;
 import VO.Producao;
 import VO.Usuario;
+import controller.GeneroController;
 import controller.ProducaoController;
 
+@SuppressWarnings("serial")
 public class ListarProducoesAssistidas extends JInternalFrame {
 
 	private JPanel contentPane;
@@ -36,23 +36,11 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	private JTable table;
 	private DefaultTableModel model;
 	private JButton btnGerarRelatrio;
+	private JComboBox<Genero> cbGenero;
 	ArrayList<Producao> producoesTemp;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Usuario usuario = new Usuario();
-					usuario.setIdUsuario(27);
-					ListarProducoesAssistidas frame = new ListarProducoesAssistidas(usuario);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private GeneroController gc;
+	private List<Genero> generos;
+	private JLabel lblGenero;
 
 	public ListarProducoesAssistidas(Usuario usuario) {
 		setClosable(true);
@@ -95,11 +83,27 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 		});
 		contentPane.add(btnGerarRelatrio);
 
-		JComboBox cmbGenero = new JComboBox();
-		cmbGenero.addMouseListener(new MouseAdapter() {
+		listarGeneros();
+		
+		cbGenero.setBounds(5, 36, 211, 20);
+		contentPane.add(cbGenero);		
+
+		cbGenero.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public java.awt.Component getListCellRendererComponent(final JList<?> list, final Object value,
+					final int index, final boolean isSelected, final boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof Genero)
+					setText(((Genero) value).getDescricao());
+
+				return this;
+			}
+		});
+		
+		cbGenero.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String genero = cmbGenero.getSelectedItem().toString();
+				String genero = cbGenero.getSelectedItem().toString();
 
 				ProducaoController pc = new ProducaoController();
 
@@ -124,20 +128,9 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 			}
 		});
 
-		cmbGenero.setModel(new DefaultComboBoxModel(new String[] { "" }));
-		cmbGenero.setBounds(5, 36, 211, 20);
-		contentPane.add(cmbGenero);
-
-		JLabel lblNewLabel = new JLabel("Genero");
-		lblNewLabel.setBounds(5, 11, 46, 14);
-		contentPane.add(lblNewLabel);
-
-		GeneroDAO genDAO = new GeneroDAO();
-		ArrayList<Genero> generos = generos = genDAO.listarTodos();
-
-		for (int i = 0; i < generos.size(); i++) {
-			cmbGenero.addItem(generos.get(i).getDescricao());
-		}
+		lblGenero = new JLabel("Genero");
+		lblGenero.setBounds(5, 11, 46, 14);
+		contentPane.add(lblGenero);
 
 		ProducaoController pc = new ProducaoController();
 
@@ -152,7 +145,6 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 			values[2] = producao.getNota();
 			values[3] = producao.getGenero().getDescricao();
 			values[4] = producao.getDiretor();
-			// values[5] = producao.getArtistas();
 			values[5] = producao.getAno();
 
 			model.addRow(values);
@@ -161,5 +153,14 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+	}
+	
+	private void listarGeneros() {
+		generos = gc.listarTodos();
+		Genero vazio = new Genero();
+		vazio.setDescricao("");
+		vazio.setIdGenero(0);
+		generos.add(vazio);
+		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
 	}
 }

@@ -1,13 +1,10 @@
 package view;
-
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -20,31 +17,18 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 import VO.Producao;
 import controller.ProducaoController;
 
+@SuppressWarnings("serial")
 public class SelecionaProducoes extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel model;
+	private JButton btnEditar;
 	ArrayList<Producao> producoes;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					SelecionaProducoes frame = new SelecionaProducoes(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public SelecionaProducoes(JDesktopPane desktopPane) {
 		setTitle("Selecione para editar produ\u00E7\u00E3o");
@@ -71,7 +55,7 @@ public class SelecionaProducoes extends JInternalFrame {
 		scrollPane.setBounds(5, 5, 424, 216);
 		getContentPane().add(scrollPane);
 
-		JButton btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -85,7 +69,6 @@ public class SelecionaProducoes extends JInternalFrame {
 							break;
 						}
 					}
-
 					dispose();
 
 					CadastrarProducao producao = new CadastrarProducao(false, prod);

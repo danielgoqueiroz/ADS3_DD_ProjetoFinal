@@ -1,12 +1,9 @@
 package view;
-
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -15,34 +12,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import VO.Artista;
 import controller.ArtistaController;
 
+@SuppressWarnings("serial")
 public class CadastrarArtista extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField textNome;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					CadastrarArtista frame = new CadastrarArtista();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JLabel lblNome;
+	private JButton btnSalvar;
 
 	public CadastrarArtista() {
 		setClosable(true);
 		setResizable(false);
-//		setIconImage(Toolkit.getDefaultToolkit()
-//				.getImage(CadastrarArtistaFrame.class.getResource("/extras/eye-2317618_960_720.png")));
+
 		setTitle("Cadastrar Artista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 399, 109);
@@ -51,7 +35,7 @@ public class CadastrarArtista extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNome = new JLabel("Nome");
+		lblNome = new JLabel("Nome");
 		lblNome.setBounds(28, 28, 34, 14);
 		contentPane.add(lblNome);
 
@@ -60,7 +44,7 @@ public class CadastrarArtista extends JInternalFrame {
 		contentPane.add(textNome);
 		textNome.setColumns(10);
 
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(280, 25, 89, 20);
 		contentPane.add(btnSalvar);
 
@@ -94,4 +78,5 @@ public class CadastrarArtista extends JInternalFrame {
 			}
 		});
 	}
+
 }

@@ -1,7 +1,5 @@
 package view;
-
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Vector;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -38,7 +32,8 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import VO.Artista;
 import VO.EnumTipoProducao;
 import VO.Genero;
@@ -46,7 +41,10 @@ import VO.Producao;
 import controller.ArtistaController;
 import controller.GeneroController;
 import controller.ProducaoController;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
+@SuppressWarnings("serial")
 public class CadastrarProducao extends JInternalFrame {
 
 	private JLabel lblTitulo;
@@ -56,41 +54,30 @@ public class CadastrarProducao extends JInternalFrame {
 	private JLabel lblAtor;
 	private JLabel lblSinopse;
 	private JLabel lblDuraoqtdtemp;
+	private JLabel lblImagemcapa;
 	private JPanel contentPane;
+	private JLabel lblTipo;
 	private JTextField textDiretor;
-	private JTextField textAno;
+	private JFormattedTextField textAno;
 	private JTextField textTitulo;
 	private JTextField textImage;
 	private JTextPane textPaneSinopse;
 	private JComboBox<Genero> cbGenero;
 	private JButton btnCadastrar;
 	private JButton btnAdicionarArtista;
+	private JButton btnImagem;
 	private JComboBox<EnumTipoProducao> cbTipo;
 	private JComboBox<Artista> cbAtores;
 	private JTable table;
 	private JScrollPane scrollPane;
 	private DefaultTableModel model;
 	private JButton btnRemover;
-	private JTextField textDuracaoQtdTemp;
+	private JFormattedTextField textDuracaoQtdTemp;
 	private byte[] image;
 	private GeneroController gc;
 	private ArtistaController ac;
 	private List<Genero> generos;
 	private List<Artista> artistas;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					CadastrarProducao frame = new CadastrarProducao(true, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public CadastrarProducao(boolean adicionar, Producao prod) {
 		setClosable(true);
@@ -148,11 +135,19 @@ public class CadastrarProducao extends JInternalFrame {
 		textDiretor.setColumns(10);
 		textDiretor.setBounds(105, 123, 236, 20);
 		contentPane.add(textDiretor);
-
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-		decimalFormat.setGroupingUsed(false);
-		textDuracaoQtdTemp = new JFormattedTextField(decimalFormat);
+	
+		
+		textDuracaoQtdTemp = new JFormattedTextField();
+		textDuracaoQtdTemp.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				mudaMascaraDuracao(textDuracaoQtdTemp);
+			}
+			@Override
+			public void focusGained(FocusEvent e) {
+				textDuracaoQtdTemp.setFormatterFactory(null);
+			}
+		});
 
 		textDuracaoQtdTemp.setBounds(277, 65, 64, 20);
 		contentPane.add(textDuracaoQtdTemp);
@@ -165,12 +160,20 @@ public class CadastrarProducao extends JInternalFrame {
 		lblDuraoqtdtemp.setBounds(201, 68, 85, 14);
 		contentPane.add(lblDuraoqtdtemp);
 
-		decimalFormat.setGroupingUsed(false);
-		textAno = new JFormattedTextField(decimalFormat);
+		textAno = new JFormattedTextField();
 		textAno.setBounds(105, 65, 86, 20);
 		contentPane.add(textAno);
 		textAno.setColumns(10);
-
+		
+		textAno.setValue(null);
+        
+		try {
+			MaskFormatter mask = new MaskFormatter();	        
+	        mask.setMask("####");
+	        textAno.setFormatterFactory(new DefaultFormatterFactory(mask));
+		} catch (Exception e) {
+		}
+		
 		textTitulo = new JTextField();
 		textTitulo.setColumns(10);
 		textTitulo.setBounds(105, 39, 236, 20);
@@ -251,7 +254,7 @@ public class CadastrarProducao extends JInternalFrame {
 		contentPane.add(textImage);
 		textImage.setColumns(10);
 
-		JButton btnImagem = new JButton("...");
+		btnImagem = new JButton("...");
 		btnImagem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -269,7 +272,6 @@ public class CadastrarProducao extends JInternalFrame {
 
 					e.printStackTrace();
 				}
-//				lblImagem.setIcon(icon);
 				revalidate();
 
 			}
@@ -277,12 +279,12 @@ public class CadastrarProducao extends JInternalFrame {
 		btnImagem.setBounds(300, 151, 41, 23);
 		contentPane.add(btnImagem);
 
-		JLabel lblImagemcapa = new JLabel("Imagem(capa)");
+		lblImagemcapa = new JLabel("Imagem(capa)");
 		lblImagemcapa.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblImagemcapa.setBounds(10, 155, 85, 14);
 		contentPane.add(lblImagemcapa);
 
-		JLabel lblTipo = new JLabel("Tipo");
+		lblTipo = new JLabel("Tipo");
 		lblTipo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTipo.setBounds(10, 14, 85, 14);
 		contentPane.add(lblTipo);
@@ -361,7 +363,6 @@ public class CadastrarProducao extends JInternalFrame {
 			textPaneSinopse.setText(prod.getSinopse());
 
 			textDiretor.setText(prod.getDiretor());
-			// producao.setCapa(image);
 
 			if (prod.getTipo() == EnumTipoProducao.Filme) {
 				textDuracaoQtdTemp.setText(String.valueOf(prod.getDuracao()));
@@ -486,4 +487,30 @@ public class CadastrarProducao extends JInternalFrame {
 		}
 	}
 
+	private void mudaMascaraDuracao(JFormattedTextField format) {
+        try {
+            format.setValue(null);
+            String nome = format.getText().replaceAll("-", "").replaceAll("\\(", "").replaceAll("\\)", "");
+            final MaskFormatter mask = new MaskFormatter();
+            switch (nome.length()) {
+                case 1:
+                    mask.setMask("#");
+                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
+                    break;
+                case 2:
+                    mask.setMask("##");
+                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
+                    break;
+                case 3:
+                    mask.setMask("###");
+                    format.setFormatterFactory(new DefaultFormatterFactory(mask));
+                    break;
+                default:
+                    break;
+            }
+            format.setText(nome);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
 }

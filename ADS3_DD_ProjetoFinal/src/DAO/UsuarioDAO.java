@@ -37,7 +37,7 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public String getValoresEntidadesUpdate(Usuario entidade) {
-		String clausulaSet = (" idUsuario = ?, nickname = ? , email = ?, telefone = ?, senha = ?, nivel = ? ");
+		String clausulaSet = (" nome = ? , email = ?, telefone = ?, senha = ?, nickname = ? ");
 		return clausulaSet;
 	}
 
@@ -57,7 +57,15 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 
 	@Override
 	public void setValoresAtributosUpdate(Usuario entidade, PreparedStatement stmt) {
-
+		try {
+			stmt.setString(1, entidade.getNome()+ "");			
+			stmt.setString(2, entidade.getEmail());
+			stmt.setString(3, entidade.getTelefone() + "");
+			stmt.setString(4, entidade.getSenha() + "");
+			stmt.setString(5, entidade.getNickname() + "");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -114,7 +122,6 @@ public class UsuarioDAO extends BaseDAO<Usuario> {
 			resultado = stmt.executeQuery(sql);
 			while (resultado.next()) {
 				usuario = construirObjetoConsultado(resultado);
-//				usuario.setNome(resultado.getString(2));
 
 			}
 		} catch (Exception e) {

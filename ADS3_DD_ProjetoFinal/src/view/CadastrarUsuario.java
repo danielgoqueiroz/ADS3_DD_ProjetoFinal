@@ -1,6 +1,6 @@
 package view;
-
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,22 +8,24 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import VO.EnumNivel;
 import VO.Usuario;
 import controller.UsuarioController;
 
+@SuppressWarnings("serial")
 public class CadastrarUsuario extends JFrame {
 
-	private JTextField textTelefone;
+	private JFormattedTextField  textTelefone;
 	private JPasswordField textConfSenha;
 	private JPasswordField textSenha;
 	private JTextField textNick;
@@ -36,13 +38,10 @@ public class CadastrarUsuario extends JFrame {
 	private JLabel lblSenha;
 	private JLabel lblTelefone;
 	private JLabel lblInfo;
+	private JButton btnSalvar;
 
-	/**
-	 * Create the frame.
-	 */
-	public CadastrarUsuario(String nome) {
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(CadastrarUsuario.class.getResource("/extras/eye-2317618_960_720.png")));
+	public CadastrarUsuario(Usuario usuario, boolean adicionar) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CadastrarUsuario.class.getResource("/extras/eye-2317618_960_720.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 264);
@@ -83,10 +82,20 @@ public class CadastrarUsuario extends JFrame {
 		lblInfo.setBounds(10, 195, 322, 14);
 		getContentPane().add(lblInfo);
 
-		textTelefone = new JTextField();
+		textTelefone = new JFormattedTextField();
 		textTelefone.setColumns(10);
 		textTelefone.setBounds(122, 141, 207, 20);
 		getContentPane().add(textTelefone);
+		
+		textTelefone.setValue(null);
+        
+		try {
+			MaskFormatter mask = new MaskFormatter();
+	        
+	        mask.setMask("(##)#####-####");
+	        textTelefone.setFormatterFactory(new DefaultFormatterFactory(mask));
+		} catch (Exception e) {
+		}
 
 		textConfSenha = new JPasswordField();
 		textConfSenha.setBounds(122, 115, 207, 20);
@@ -101,7 +110,7 @@ public class CadastrarUsuario extends JFrame {
 		textNick.setColumns(10);
 		textNick.setBounds(122, 11, 207, 20);
 		getContentPane().add(textNick);
-
+		
 		textEmail = new JTextField();
 		textEmail.setColumns(10);
 		textEmail.setBounds(122, 64, 207, 20);
@@ -112,40 +121,20 @@ public class CadastrarUsuario extends JFrame {
 		textNome.setBounds(122, 36, 207, 20);
 		getContentPane().add(textNome);
 
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(236, 172, 96, 23);
 		getContentPane().add(btnSalvar);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Usuario usuario = new Usuario();
-
-				usuario.setNome(textNome.getText());
-				usuario.setEmail(textEmail.getText());
-				usuario.setNickname(textNick.getText());
-				usuario.setNivel(EnumNivel.User);
-				String senha = verificaCampoSenha();
-
-				if (senha.equals("")) {
-					JOptionPane.showMessageDialog(null, "Senhas não conferem.");
-				} else {
-					usuario.setSenha(senha);
-
-				}
-				usuario.setTelefone(textTelefone.getText());
-
-				UsuarioController controle = new UsuarioController();
-				try {
-					JOptionPane.showMessageDialog(null, controle.salvar(usuario));
-					fechar();
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage() + "");
-
-				}
+				int _usuario = 0;
+				if (usuario != null)
+					_usuario = usuario.getIdUsuario();
+				
+				addOrUpdate(adicionar, _usuario);
 
 			}
-
 		});
 
 		textEmail.addFocusListener(new FocusAdapter() {
@@ -154,18 +143,20 @@ public class CadastrarUsuario extends JFrame {
 				UsuarioController controller = new UsuarioController();
 				Usuario usuario = controller.verificaEmailUsuario(textEmail.getText() + "");
 
-				if (usuario != null) {
-					textEmail.setForeground(Color.RED);
-					lblInfo.setText("Email já cadastrado.");
-					textConfSenha.setEnabled(false);
-					textTelefone.setEnabled(false);
-					btnSalvar.setEnabled(false);
-				} else {
-					textEmail.setForeground(Color.BLACK);
-					lblInfo.setText("Email valido.");
-					textConfSenha.setEnabled(true);
-					textTelefone.setEnabled(true);
-					btnSalvar.setEnabled(true);
+				if (adicionar) {
+					if (usuario != null) {
+						textEmail.setForeground(Color.RED);
+						lblInfo.setText("Email já cadastrado.");
+						textConfSenha.setEnabled(false);
+						textTelefone.setEnabled(false);
+						btnSalvar.setEnabled(false);
+					} else {
+						textEmail.setForeground(Color.BLACK);
+						lblInfo.setText("Email valido.");
+						textConfSenha.setEnabled(true);
+						textTelefone.setEnabled(true);
+						btnSalvar.setEnabled(true);
+					}
 				}
 			}
 		});
@@ -176,40 +167,78 @@ public class CadastrarUsuario extends JFrame {
 				UsuarioController controller = new UsuarioController();
 				Usuario usuario = controller.verificaNickUsuario(textNick.getText() + "");
 
-				if (usuario != null) {
-					textNick.setForeground(Color.RED);
-					lblInfo.setText("Usuário já cadastrado.");
-//					textNome.setText(usuario.getNome());
-//					textTelefone.setText(usuario.getTelefone());
-//					textEmail.setText(usuario.getEmail());
-//					textNick.setSelectedTextColor(Color.red);
-					textEmail.setEnabled(false);
-					textSenha.setEnabled(false);
-					textConfSenha.setEnabled(false);
-					textTelefone.setEnabled(false);
-					btnSalvar.setEnabled(false);
-				} else if (usuario == null) {
-					textNick.setForeground(Color.BLACK);
-					lblInfo.setText("Usuário valido.");
-					textEmail.setEnabled(true);
-					textSenha.setEnabled(true);
-					textConfSenha.setEnabled(true);
-					textTelefone.setEnabled(true);
-					btnSalvar.setEnabled(true);
-
+				if (adicionar) {
+					if (usuario != null) {
+						textNick.setForeground(Color.RED);
+						lblInfo.setText("Usuário já cadastrado.");
+						textEmail.setEnabled(false);
+						textSenha.setEnabled(false);
+						textConfSenha.setEnabled(false);
+						textTelefone.setEnabled(false);
+						btnSalvar.setEnabled(false);
+					} else if (usuario == null) {
+						textNick.setForeground(Color.BLACK);
+						lblInfo.setText("Usuário valido.");
+						textEmail.setEnabled(true);
+						textSenha.setEnabled(true);
+						textConfSenha.setEnabled(true);
+						textTelefone.setEnabled(true);
+						btnSalvar.setEnabled(true);	
+					}
 				}
-
 			}
 
 		});
-		setBounds((1920 / 2) - (getWidth() / 2), (1080 / 2) - (getHeight() / 2), getWidth(), getHeight());
-
+		
+		if(!adicionar) {
+			btnSalvar.setText("Atualizar");
+			textNick.setText(usuario.getNickname());
+			textEmail.setText(usuario.getEmail());
+			textNome.setText(usuario.getNome());
+			textSenha.setText(usuario.getSenha());
+			textConfSenha.setText(usuario.getSenha());
+			textTelefone.setText(usuario.getTelefone());
+		}		
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 	}
 
 	private void fechar() {
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 
+	private void addOrUpdate(boolean adicionar,int idUsuario) {
+		Usuario usuario = new Usuario();
+
+		usuario.setNome(textNome.getText());
+		usuario.setEmail(textEmail.getText());
+		usuario.setNickname(textNick.getText());
+		usuario.setNivel(EnumNivel.User);
+		String senha = verificaCampoSenha();
+
+		if (senha.equals("")) {
+			JOptionPane.showMessageDialog(null, "Senhas não conferem.");
+		} else {
+			usuario.setSenha(senha);
+
+		}
+		usuario.setTelefone(textTelefone.getText());
+
+		if (!adicionar) {
+			usuario.setIdUsuario(idUsuario);
+		}
+		
+		UsuarioController controle = new UsuarioController();
+		try {
+			JOptionPane.showMessageDialog(null, controle.salvar(usuario));
+			fechar();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() + "");
+
+		}
+	}
+	
 	private String verificaCampoSenha() {
 		char[] senhaChar = textSenha.getPassword();
 		char[] senha2Char = textConfSenha.getPassword();

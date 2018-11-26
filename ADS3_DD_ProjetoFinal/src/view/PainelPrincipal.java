@@ -1,5 +1,4 @@
 package view;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,11 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -21,33 +16,28 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-
 import VO.EnumNivel;
-import VO.Genero;
-import VO.Producao;
 import VO.Usuario;
-import controller.GeneroController;
 
+@SuppressWarnings("serial")
 public class PainelPrincipal extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private static Usuario usuarioLogado;
-	private static Producao producao;
-	private JComboBox<Genero> cbGenero;
-	private FileOutputStream fos;
-	private DefaultTableModel model;
 	private JMenuItem mntmUpdateProd;
-	private ArrayList<Producao> producoesListadas;
-	private ArrayList<Producao> producoesNaoAssistidas;
 	private JMenu mnGenero;
 	private JMenu mnArtista;
 	private JMenu mnReview;
+	private JMenu mnProducao;
+	private JMenu mnUsuario;
 	private JMenuItem mntmAddReview;
 	private JMenuItem mntmMinhasReviews;
 	private JMenuItem mntmAddGenero;
 	private JMenuItem mntmAddArtista;
+	private JMenuItem mntmAddProd;
+	private JMenuItem mntmAddUsuario;
 	private JDesktopPane desktopPane;
+	private JMenuBar menuBar;
+	private JMenuItem mntmUpdateUsuario;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -69,9 +59,8 @@ public class PainelPrincipal extends JFrame {
 	}
 
 	public PainelPrincipal(Usuario usuario) {
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(PainelPrincipal.class.getResource("/extras/eye-2317618_960_720.png")));
 		usuarioLogado = usuario;
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PainelPrincipal.class.getResource("/extras/eye-2317618_960_720.png")));		
 		setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,7 +68,7 @@ public class PainelPrincipal extends JFrame {
 
 		this.setTitle("Quais produções cinematográficas você já assistiu?  [" + usuario.toString() + "]");
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		mnReview = new JMenu("Reviews");
@@ -110,11 +99,11 @@ public class PainelPrincipal extends JFrame {
 		});
 		mnReview.add(mntmMinhasReviews);
 
-		JMenu mnProducao = new JMenu("Produ\u00E7\u00E3o");
+		mnProducao = new JMenu("Produ\u00E7\u00E3o");
 		mnProducao.setIcon(new ImageIcon(PainelPrincipal.class.getResource("/extras/popcorn.png")));
 		menuBar.add(mnProducao);
 
-		JMenuItem mntmAddProd = new JMenuItem("Cadastrar nova");
+		mntmAddProd = new JMenuItem("Cadastrar nova");
 		mntmAddProd.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		mntmAddProd.addActionListener(new ActionListener() {
 			@Override
@@ -171,34 +160,39 @@ public class PainelPrincipal extends JFrame {
 		});
 		mnGenero.add(mntmAddGenero);
 
-		JMenu mnUsuario = new JMenu("Usu\u00E1rio");
+		mnUsuario = new JMenu("Usu\u00E1rio");
 		mnUsuario.setIcon(new ImageIcon(PainelPrincipal.class.getResource("/extras/profile-user.png")));
 		menuBar.add(mnUsuario);
 
-		JMenuItem mntmAddUsuario = new JMenuItem("Cadastrar novo");
+		mntmAddUsuario = new JMenuItem("Cadastrar novo");
 		mntmAddUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
 		mntmAddUsuario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new CadastrarUsuario("");
-				revalidate();
-
+				CadastrarUsuario tela = new CadastrarUsuario(usuarioLogado, true);
+				tela.setVisible(true);
 			}
 		});
 		mnUsuario.add(mntmAddUsuario);
-
-		cbGenero = new JComboBox<Genero>();
-
-		GeneroController gc = new GeneroController();
-
-		gc.listarTodos();
-		if (usuarioLogado.getNivel() == EnumNivel.Admin)
-			menuBar.setVisible(true);
-
+		
+		mntmUpdateUsuario = new JMenuItem("Atualizar usu\u00E1rio");
+		mntmUpdateUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastrarUsuario tela = new CadastrarUsuario(usuarioLogado, false);
+				tela.setVisible(true);
+			}
+		});
+		mntmUpdateUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
+		mnUsuario.add(mntmUpdateUsuario);
+		
+		if (usuarioLogado.getNivel() == EnumNivel.User) {
+			mnProducao.setEnabled(false);
+			mnArtista.setEnabled(false);
+			mnUsuario.setEnabled(false);
+			mnGenero.setEnabled(false);			
+		}
+		
 		revalidate();
-
-		producao = new Producao();
-		producao.setTitulo("Por enquanto é isso! Volte a avaliar assim que novas produções forem cadastradas.");
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
@@ -208,13 +202,5 @@ public class PainelPrincipal extends JFrame {
 		getContentPane().add(desktopPane, BorderLayout.CENTER);
 
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	}
-
-	public static Usuario getUsuarioLogado() {
-		return usuarioLogado;
-	}
-
-	public static void setUsuarioLogado(Usuario usuarioLogado) {
-		usuarioLogado = usuarioLogado;
 	}
 }
