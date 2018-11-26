@@ -62,7 +62,7 @@ public class ProducaoBO {
 		return dao.listarTodos();
 	}
 
-	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, int genero) {
 		return dao.buscarProducoesAssistidas(usuario, genero);
 	}
 

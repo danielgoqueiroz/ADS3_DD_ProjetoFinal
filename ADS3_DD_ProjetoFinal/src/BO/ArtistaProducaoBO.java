@@ -1,9 +1,7 @@
 package BO;
 
 import java.util.ArrayList;
-import DAO.ArtistaDAO;
 import DAO.ArtistaProducaoDAO;
-import VO.Artista;
 import VO.ArtistaProducao;
 import VO.Producao;
 

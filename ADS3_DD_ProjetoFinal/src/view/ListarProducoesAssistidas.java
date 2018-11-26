@@ -27,6 +27,8 @@ import VO.Producao;
 import VO.Usuario;
 import controller.GeneroController;
 import controller.ProducaoController;
+import jdk.nashorn.internal.objects.annotations.Where;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -47,6 +49,7 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 	private Usuario usuario;
 
 	public ListarProducoesAssistidas(Usuario usuario) {
+		this.usuario = usuario;
 		gc = new GeneroController();
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -89,7 +92,7 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 		contentPane.add(btnGerarRelatrio);
 
 		listarGeneros();
-		
+
 		cbGenero.setBounds(5, 36, 211, 20);
 		contentPane.add(cbGenero);		
 
@@ -104,52 +107,76 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 				return this;
 			}
 		});
-		
-		cbGenero.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				
-				
-				String genero = cbGenero.getSelectedItem().toString();
 
-				ProducaoController pc = new ProducaoController();
 
-				ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario, genero);
 
-				for (Producao producao : producoes) {
-
-					Object[] values = new Object[6];
-
-					values[0] = producao.getTipo();
-					values[1] = producao.getTitulo();
-					values[2] = producao.getNota();
-					values[3] = producao.getGenero().getDescricao();
-					values[4] = producao.getDiretor();
-					// values[5] = producao.getArtistas();
-					values[5] = producao.getAno();
-
-					model.addRow(values);
-				}
-				producoesTemp = producoes;
-				revalidate();
-			}
-		});
 
 		lblGenero = new JLabel("Genero");
 		lblGenero.setBounds(5, 11, 46, 14);
 		contentPane.add(lblGenero);
 
-		populaTabelaProducao();
+		buscaTodasProducoes();
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 	}
-	
-	private void populaTabelaProducao() {
+
+
+	private void listarGeneros() {
+		generos = new ArrayList<Genero>();
+
+		Genero vazio = new Genero();
+		vazio.setDescricao("Todos");
+		vazio.setIdGenero(0);
+		generos.add(vazio);		
+		generos.addAll(gc.listarTodos());
+
+		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
+		cbGenero.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+
+				Genero generoSelecionado = cbGenero.getItemAt(cbGenero.getSelectedIndex());
+				int idgen = generoSelecionado.getIdGenero();
+
+				if (idgen == 0) {
+					resetaTabela();
+					buscaTodasProducoes();
+
+				} else {
+					resetaTabela();
+
+
+					ProducaoController pc = new ProducaoController();
+
+					ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario, idgen);
+
+					for (Producao producao : producoes) {
+
+						Object[] values = new Object[6];
+
+						values[0] = producao.getTipo();
+						values[1] = producao.getTitulo();
+						values[2] = producao.getNota();
+						values[3] = producao.getGenero().getDescricao();
+						values[4] = producao.getDiretor();
+						values[5] = producao.getAno();
+
+						model.addRow(values);
+					}
+					producoesTemp = producoes;
+				}
+
+				
+
+
+			}
+		});
+	}
+
+	public void buscaTodasProducoes() {
 		ProducaoController pc = new ProducaoController();
 
-		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario, genero);
+		ArrayList<Producao> producoes = pc.buscarProducoesAssistidas(usuario);
 
 		for (Producao producao : producoes) {
 
@@ -165,24 +192,14 @@ public class ListarProducoesAssistidas extends JInternalFrame {
 			model.addRow(values);
 		}
 		producoesTemp = producoes;
-		
+
 	}
 
-	private void listarGeneros() {
-		generos = new ArrayList<Genero>();
-		
-		Genero vazio = new Genero();
-		vazio.setDescricao("Selecionar...");
-		vazio.setIdGenero(0);
-		generos.add(vazio);		
-		generos.addAll(gc.listarTodos());
-		
-		cbGenero = new JComboBox<Genero>(new Vector<>(generos));
-		cbGenero.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				
-				
-			}
-		});
+	public void resetaTabela() {
+		while (model.getRowCount() > 0) {
+			model.removeRow(0);
+		}
+
+
 	}
 }

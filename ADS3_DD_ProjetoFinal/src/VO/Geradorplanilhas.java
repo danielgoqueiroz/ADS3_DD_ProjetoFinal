@@ -34,7 +34,7 @@ public class Geradorplanilhas {
 				novaLinha.createCell(2).setCellValue(prod.getTitulo());
 				novaLinha.createCell(3).setCellValue(prod.getAno());
 				novaLinha.createCell(4).setCellValue(prod.getSinopse());
-				novaLinha.createCell(5).setCellValue(prod.getGenero().toString());
+				novaLinha.createCell(5).setCellValue(prod.getGenero().getDescricao());
 				novaLinha.createCell(6).setCellValue(prod.getDiretor());
 				novaLinha.createCell(7).setCellValue(prod.getDuracao());
 				novaLinha.createCell(0).setCellValue(prod.getQtdTemporadas());

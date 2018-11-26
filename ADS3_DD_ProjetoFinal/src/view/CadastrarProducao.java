@@ -43,6 +43,8 @@ import controller.GeneroController;
 import controller.ProducaoController;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 @SuppressWarnings("serial")
 public class CadastrarProducao extends JInternalFrame {
@@ -333,6 +335,7 @@ public class CadastrarProducao extends JInternalFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Codigo", "Artista" }));
 		scrollPane.setViewportView(table);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbTipo, textTitulo, textAno, textDuracaoQtdTemp, cbGenero, textDiretor, btnImagem, textPaneSinopse, cbAtores, btnAdicionarArtista, btnRemover, scrollPane}));
 
 		model = (DefaultTableModel) table.getModel();
 

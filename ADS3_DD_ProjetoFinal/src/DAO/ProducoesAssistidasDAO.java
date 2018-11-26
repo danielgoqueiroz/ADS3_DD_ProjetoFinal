@@ -1,18 +1,14 @@
 package DAO;
 
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-import VO.Artista;
-import VO.ArtistaProducao;
+
 import VO.Producao;
 import VO.ProducoesAssistidas;
 import VO.Usuario;
-import controller.ArtistaProducaoController;
 
 public class ProducoesAssistidasDAO extends BaseDAO<ProducoesAssistidas> {
 

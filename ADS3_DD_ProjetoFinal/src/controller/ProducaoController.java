@@ -99,7 +99,7 @@ public class ProducaoController {
 		return bo.buscarProducoes();
 	}
 
-	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, int genero) {
 		return bo.buscarProducoesAssistidas(usuario, genero);
 	}
 

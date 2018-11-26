@@ -220,8 +220,8 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 
 		ArrayList<Producao> producoes = new ArrayList<Producao>();
 
-		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "
-				+ usuario.getIdUsuario());
+		String sql = (" SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idproducao = producao.idproducao "
+				+ "inner join usuario on usuario.idusuario = producoesAssistidas.idusuario where usuario.idusuario = "+ usuario.getIdUsuario()+"; ");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;
@@ -273,11 +273,11 @@ public class ProducaoDAO extends BaseDAO<Producao> {
 		return listaObjetos;
 	}
 
-	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, String genero) {
+	public ArrayList<Producao> buscarProducoesAssistidas(Usuario usuario, int genero) {
 		ArrayList<Producao> producoes = new ArrayList<Producao>();
 
-		String sql = ("SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "
-				+ usuario.getIdUsuario() + " and T0.genero = '" + genero + "'");
+		String sql = ("SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idproducao = producao.idproducao "
+				+ "inner join usuario on usuario.idusuario = producoesAssistidas.idusuario where usuario.idusuario = "+ usuario.getIdUsuario() + " and producao.genero = '" + genero + "'");
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, sql);
 		ResultSet resultado = null;

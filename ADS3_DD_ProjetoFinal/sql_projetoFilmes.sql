@@ -56,3 +56,20 @@ CREATE TABLE `producoesassistidas` (
   PRIMARY KEY (`idProducoesAssistidas`,`idUsuario`,`idProducao`),
   KEY `idProducao` (`idProducao`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+use trabfinal;
+
+select * from usuario;
+
+select * from producao;
+
+insert into usuario (nome, nickname, email, seha, nivel) values ("daniel", "");
+
+SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idproducao = producao.idproducao 
+	inner join usuario on usuario.idusuario = producoesAssistidas.idusuario where usuario.idusuario = 27 and producao.genero = "17";
+
+
+
+SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idproducao = producao.idproducao inner join usuario on usuario.idusuario = producoesAssistidas.idusuario where usuario.nome = "daniel";
+
+SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "daniel";
