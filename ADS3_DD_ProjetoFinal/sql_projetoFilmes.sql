@@ -2,7 +2,7 @@ drop database trabfinal;
 CREATE DATABASE `trabfinal`;
 
 use trabfinal;
-
+#drop table usuario;
 CREATE TABLE `artista` (
   `idArtista` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -60,7 +60,20 @@ CREATE TABLE `producoesassistidas` (
 
 
 
-insert into usuario (nickname, nome, senha, nivel) values ('', '654', '654', 'User');
+insert into usuario (nickname, nome, senha, nivel) values ('teste', 'teste', '123', 'User');
+insert into usuario (nickname, nome, senha, nivel) values ('admin', 'admin', '123', 'Admin');
+
+insert into genero (descricao) values ('Ação');
+insert into genero (descricao) values ('Terror');
+insert into genero (descricao) values ('Aventura');
+insert into genero (descricao) values ('Romance');
+insert into genero (descricao) values ('Ficção científica');
+
+insert into artista (nome) values ('Tom Hardy');
+insert into artista (nome) values ('Angelina');
+insert into artista (nome) values ('Vandame');
+
+
 #insert into producao
 select * from usuario;
 
