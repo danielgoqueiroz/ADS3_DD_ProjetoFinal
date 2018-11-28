@@ -1,3 +1,4 @@
+drop database trabfinal;
 CREATE DATABASE `trabfinal`;
 
 use trabfinal;
@@ -57,8 +58,15 @@ CREATE TABLE `producoesassistidas` (
   KEY `idProducao` (`idProducao`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-use trabfinal;
 
+
+insert into usuario (nickname, nome, senha, nivel) values ('', '654', '654', 'User');
+#insert into producao
+select * from usuario;
+
+
+
+/*
 select * from usuario;
 
 select * from producao;
@@ -73,3 +81,4 @@ SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idp
 SELECT * from producao inner join producoesAssistidas on producoesAssistidas.idproducao = producao.idproducao inner join usuario on usuario.idusuario = producoesAssistidas.idusuario where usuario.nome = "daniel";
 
 SELECT T0.idProducao, T0.tipo, T0.titulo, T0.ano, T0.sinopse, T0.genero, T0.diretor, T0.capa, T0.duracao, T0.qtdTemporada, T1.nota FROM producao T0 inner join producoesAssistidas T1 on T1.idProducao = T0.idProducao where T1.idUsuario = "daniel";
+*/
