@@ -68,15 +68,16 @@ insert into genero (descricao) values ('Terror');
 insert into genero (descricao) values ('Aventura');
 insert into genero (descricao) values ('Romance');
 insert into genero (descricao) values ('Ficção científica');
+insert into genero (descricao) values ('Drama');
+
 
 insert into artista (nome) values ('Tom Hardy');
-insert into artista (nome) values ('Angelina');
-insert into artista (nome) values ('Vandame');
+insert into artista (nome) values ('Michelle Williams');
+insert into artista (nome) values ('Riz Ahmed');
 
-
+select * from producao;
 #insert into producao
 select * from usuario;
-
 
 
 /*
